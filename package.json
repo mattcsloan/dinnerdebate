@@ -1,5 +1,5 @@
 {
-  "name": "mean-boilerplate",
+  "name": "dinnerdebate",
   "main": "server.js",
   "scripts": {
     "start": "gulp && node server.js",

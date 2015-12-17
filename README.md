@@ -1,5 +1,5 @@
-# MEAN Boilerplate
-a barebones app built on the MEAN stack to use as a base for new apps
+# DinnerDebate
+Recipe Application
 
 ##setup
 npm install
@@ -9,4 +9,4 @@ bower install
 npm start
 
 ## Port
-8000
+3000
