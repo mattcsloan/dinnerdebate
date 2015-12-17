@@ -1,4 +1,4 @@
-angular.module('PostsCreateCtrl', []).controller('PostsCreateController', function(Page, Post) {
+angular.module('PostsCreateCtrl', []).controller('PostsCreateController', function(Page, Post, $location) {
   var vm = this;
 
   Page.setTitle('Create New Post');   
@@ -14,6 +14,9 @@ angular.module('PostsCreateCtrl', []).controller('PostsCreateController', functi
     { 
      name: vm.postTitle,
      content: vm.postContent
+    })
+    .success(function (res) {
+      $location.url('/posts/view/' + res._id);
     });
   }
 
