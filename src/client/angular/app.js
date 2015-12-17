@@ -13,9 +13,7 @@ var app = angular.module('app', [
   'PostsCtrl',
   'PostsCreateCtrl',
   'PostsEditCtrl',
-  'PostsViewCtrl',
-  'PortfolioCtrl',
-  'PortfolioDetailCtrl'
+  'PostsViewCtrl'
 ]);
 
 app.run(function($stormpath){

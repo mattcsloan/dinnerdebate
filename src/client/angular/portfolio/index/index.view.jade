@@ -1,7 +1,0 @@
-h6.breadcrumb
-  a(data-ui-sref="home") home
-  span  &raquo; 
-h1(data-ng-bind="portfolio.title")
-.portfolio.list
-  div(data-ng-repeat="item in portfolio.list | orderBy: $index: true")
-    a(data-ui-sref="portfolio.detail({portfolioBase: item.urlBase, portfolioTitle: item.urlTitle})", data-ng-bind="item.project")
