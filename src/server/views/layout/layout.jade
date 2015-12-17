@@ -1,0 +1,10 @@
+doctype html
+html(ng-app="app", ng-controller="MainController as main")
+	head
+		title(data-ng-bind="main.Page.title()")
+		include header-stylesheets
+	body
+		include body-header
+		include body-content
+		include body-footer
+		include body-scripts

@@ -1,0 +1,11 @@
+{
+  "name": "mean-boilerplate",
+  "version": "1.0.0",
+  "dependencies": {
+    "angular": "latest",
+    "angular-resource": "~1.4.7",
+    "angular-animate": "~1.4.7",
+    "angular-ui-router": "~0.2.15",
+    "stormpath-sdk-angularjs": "latest"
+  }
+}

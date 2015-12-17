@@ -1,0 +1,8 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="posts") posts
+  span  &raquo; 
+h1(data-ng-bind="viewpost.postDetail.name")
+div(data-ng-bind="viewpost.postDetail.content")
+a(data-ui-sref="posts.edit({postId: viewpost.postId})") Edit Post

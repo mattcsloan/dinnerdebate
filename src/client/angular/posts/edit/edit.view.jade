@@ -1,0 +1,18 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="posts") posts
+  span  &raquo; 
+  a(data-ui-sref="posts.view({postId: editpost.postId})", data-ng-bind="editpost.postDetail.name | lowercase")
+  span  &raquo; 
+h1 Edit
+div
+  label Name
+  input(value="editpost.postDetail.name", data-ng-model="editpost.postTitle")
+div
+  label Content
+  textarea(value="editpost.postDetail.content", data-ng-model="editpost.postContent")
+p
+  a(data-ng-click="editpost.updatePost()") Update Post
+  span  | 
+  a(data-ng-click="editpost.deletePost()") Delete Post

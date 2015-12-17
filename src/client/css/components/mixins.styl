@@ -1,0 +1,54 @@
+// MIXINS
+
+vendor(prop, args)
+  -webkit-{prop} args
+  -moz-{prop} args
+  -o-{prop} args
+  -ms-{prop} args
+  {prop} args
+
+animation()
+  vendor('animation', arguments)
+
+transition()
+  vendor('transition', arguments)
+
+transform()
+  vendor('transform', arguments)
+  
+box-shadow() 
+  -moz-box-shadow arguments
+  -webkit-box-shadow arguments
+  box-shadow arguments
+
+box-sizing()
+  vendor('box-sizing', arguments)
+
+border-radius()
+  vendor('border-radius', arguments)
+  
+display-flex()
+  display -webkit-box
+  display -moz-box
+  display -ms-flexbox
+  display -webkit-flex
+  display flex
+
+flex()
+  vendor('flex', arguments)
+
+flex-wrap()
+  vendor('flex-wrap', arguments)
+
+justify-content()
+  vendor('justify-content', arguments)
+
+align-items()
+  vendor('align-items', arguments)
+
+background-linear-gradient(start_position, start_color, end_color)
+  background start_color
+  background -webkit-linear-gradient(start_position, start_color, end_color)
+  background -moz-linear-gradient(start_position, start_color, end_color)
+  background -ms-linear-gradient(start_position, start_color, end_color)
+  background linear-gradient(start_position, start_color, end_color)

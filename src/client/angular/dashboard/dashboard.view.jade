@@ -1,0 +1,9 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+h1(data-ng-bind="dashboard.title")
+div(data-ng-if="main.user") 
+  p Welcome, 
+    span(data-ng-bind="main.user.fullName")
+    |  | 
+    a(data-ui-sref="logout") Logout
