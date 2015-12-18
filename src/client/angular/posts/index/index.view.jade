@@ -5,4 +5,4 @@ h1(data-ng-bind="posts.title")
 p(data-ng-repeat="post in posts.posts") 
   a(data-ui-sref="posts.view({postId: post._id})", data-ng-bind="post.name")
 p
-  a(data-ui-sref="posts.create") Create New Post
+  a.btn(data-ui-sref="posts.create") Create New Post

@@ -1,7 +1,7 @@
 .wrapper
   ul.navigation
     li(data-ng-repeat="item in main.navigation")
-      a.btn.btn-primary(data-ui-sref="{{item.url}}", data-ng-bind="item.key", data-ui-sref-active="active")
+      a(data-ui-sref="{{item.url}}", data-ng-bind="item.key", data-ui-sref-active="active")
     li(data-if-user)
       a(data-ui-sref="dashboard", data-ui-sref-active="active") dashboard
     li(data-if-not-user)
