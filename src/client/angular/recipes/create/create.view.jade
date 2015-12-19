@@ -1,0 +1,12 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="recipes") recipes
+  span  &raquo; 
+h1(data-ng-bind="createrecipe.title")
+form
+  label Recipe Title:
+  input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle")
+  label Recipe Content:
+  textarea(data-ng-model="createrecipe.recipeContent")
+a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

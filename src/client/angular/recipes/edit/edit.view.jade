@@ -1,0 +1,18 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="recipes") recipes
+  span  &raquo; 
+  a(data-ui-sref="recipes.view({recipeId: editrecipe.recipeId})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
+  span  &raquo; 
+h1 Edit
+div
+  label Name
+  input(value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.recipeTitle")
+div
+  label Content
+  textarea(value="editrecipe.recipeDetail.content", data-ng-model="editrecipe.recipeContent")
+p
+  a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
+  span  | 
+  a.btn(data-ng-click="editrecipe.deleteRecipe()") Delete Recipe

@@ -1,0 +1,8 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+h1(data-ng-bind="recipes.title")
+p(data-ng-repeat="recipe in recipes.recipes") 
+  a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-bind="recipe.name")
+p
+  a.btn(data-ui-sref="recipes.create") Create New Recipe

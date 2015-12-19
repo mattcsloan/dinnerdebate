@@ -1,0 +1,8 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="recipes") recipes
+  span  &raquo; 
+h1(data-ng-bind="viewrecipe.recipeDetail.name")
+div(data-ng-bind="viewrecipe.recipeDetail.content")
+a.btn(data-ui-sref="recipes.edit({recipeId: viewrecipe.recipeId})") Edit Recipe

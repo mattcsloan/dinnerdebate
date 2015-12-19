@@ -10,10 +10,10 @@ var app = angular.module('app', [
   'RegisterCtrl', 
   'HomeCtrl', 
   'DashboardCtrl', 
-  'PostsCtrl',
-  'PostsCreateCtrl',
-  'PostsEditCtrl',
-  'PostsViewCtrl'
+  'RecipesCtrl',
+  'RecipesCreateCtrl',
+  'RecipesEditCtrl',
+  'RecipesViewCtrl'
 ]);
 
 app.run(function($stormpath){
