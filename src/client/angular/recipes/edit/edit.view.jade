@@ -10,7 +10,7 @@ h1 Edit
 label Title:
 input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name")
 label Description:
-input(type="text", value="editrecipe.recipeDetail.description", data-ng-model="editrecipe.description")
+textarea(value="editrecipe.recipeDetail.description", data-ng-model="editrecipe.description")
 label Key:
 input(type="text", value="editrecipe.recipeDetail.key", data-ng-model="editrecipe.key")
 label Date:
@@ -22,9 +22,15 @@ input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="edit
 label Cook Time:
 input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
 label Ingredients:
-input(type="text", value="editrecipe.recipeDetail.ingredients", data-ng-model="editrecipe.ingredients")
+ul.ingredients
+  li(data-ng-repeat="ingredient in editrecipe.ingredients")
+    span(data-ng-bind="ingredient")
+    a(data-ng-click="editrecipe.removeIngredient($index)").helper-text.remove Remove
+form(data-ng-submit="editrecipe.addIngredient()")
+  input(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient")
+  input.btn.inline(type="submit", value="+ Add")
 label Directions:
-input(type="text", value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
+textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
 label Recipe Pairings:
 input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 label Image:

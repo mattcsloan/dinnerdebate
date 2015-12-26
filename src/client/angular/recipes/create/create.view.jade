@@ -8,7 +8,7 @@ form
   label Title:
   input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle")
   label Description:
-  input(type="text", placeholder="Description", data-ng-model="createrecipe.recipeDescription")
+  textarea(placeholder="Recipe Description", data-ng-model="createrecipe.recipeDescription")
   label Key:
   input(type="text", placeholder="Key", data-ng-model="createrecipe.recipeKey")
   label Source:
@@ -18,16 +18,14 @@ form
   label Cook Time:
   input(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   label Ingredients:
-  //- input(type="text", placeholder="Ingredients", data-ng-model="createrecipe.recipeIngredients")
-  ul
+  ul.ingredients
     li(data-ng-repeat="ingredient in createrecipe.ingredients")
       span(data-ng-bind="ingredient")
-      a(data-ng-click="createrecipe.removeIngredient($index)") Remove
+      a(data-ng-click="createrecipe.removeIngredient($index)").helper-text.remove Remove
   input(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
   button.btn(data-ng-click="createrecipe.addIngredient()") + Add
-
   label Directions:
-  input(type="text", placeholder="Directions", data-ng-model="createrecipe.recipeDirections")
+  textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   label Recipe Pairings:
   input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   label Upload Image:

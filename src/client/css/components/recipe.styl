@@ -40,4 +40,26 @@
   .media
     width 48%
     float right
-    
+.remove
+  margin-left 8px
+  &:before
+  &:after
+    content '[ '
+    display inline
+    color #999
+    &:hover
+      text-decoration none
+  &:after
+    content ' ]'
+ul.ingredients
+  list-style none
+  margin 16px 0
+  padding 0
+  border-top 1px solid $border-color-lighten
+  &.list
+    border-top none
+  li
+    display block
+    padding 6px 0
+    margin 0
+    border-bottom 1px solid $border-color-lighten

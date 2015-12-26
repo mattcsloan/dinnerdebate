@@ -6,6 +6,8 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.recipeId = recipeId;
   vm.updateRecipe = updateRecipe;
   vm.deleteRecipe = deleteRecipe;
+  vm.addIngredient = addIngredient;
+  vm.removeIngredient = removeIngredient;
 
   Recipe.getOne(recipeId)
     .success(function(data, status) {
@@ -60,6 +62,15 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   function deleteRecipe() {
     Recipe.delete(recipeId);
     $location.url('/recipes');
+  }
+
+  function addIngredient() {
+    vm.ingredients.push(vm.newIngredient);
+    vm.newIngredient = '';
+  }
+
+  function removeIngredient(item) {
+    vm.ingredients.splice(item, 1);
   }
 
 });
