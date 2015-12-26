@@ -1,9 +1,27 @@
 .header
-  background #fff
+  background $primary-color
   border-bottom 1px solid #e3e3e3
-  img
-    height 24px
-    padding 16px 0
+  text-align center
+  position relative
+  &:after
+    content ''
+    display block
+    clear both
+  .logo
+    position absolute
+    top 0
+    left 50%
+    margin-left -80px
+    width 160px
+    padding 0 24px
+    box-sizing(border-box)
+    background #fff
+    border 3px solid $border-color
+    border-top none
+    box-shadow(0 2px 4px rgba(0,0,0,0.2))
+    border-radius(0 0 4px 4px)
+    img
+      padding 12px 0
   .wrapper
     padding 0 16px
 .navigation
@@ -14,6 +32,8 @@
     content ''
     display block
     clear both
+  &:first-child
+    float left
   li
     list-style none
     margin 0
@@ -21,9 +41,15 @@
     float left
     display block
     a
-      padding 16px
+      padding 28px
       display block
       line-height 24px
+      color #fff
       &:hover
         text-decoration none
-        background #fafafa
+        background $primary-darken
+        color $secondary-lighten
+      &.active
+        color $secondary-lighten
+        padding-top 25px
+        border-top 3px solid $secondary-lighten

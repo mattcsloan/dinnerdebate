@@ -1,0 +1,43 @@
+.recipe
+  padding-top 16px
+  border-top 1px solid $border-color
+  &:after
+    content ''
+    display block
+    clear both
+  .info
+    font-size 12px
+    color $copy-lighten
+    margin-bottom 16px
+    &:after
+      content ''
+      display block
+      clear both
+    p
+      margin-bottom 0
+    .timestamp
+      float right
+      text-align right
+      width 50%    
+    .source
+      float left
+      width 50%    
+  .details
+    width 48%
+    float left
+    &.full
+      float none
+      width auto
+      display block
+    .full-table
+      margin-bottom 24px
+      th
+        background #fefefe
+        border-bottom 1px solid #f8f8f8
+        font-size 12px
+        &:first-child
+          text-align center
+  .media
+    width 48%
+    float right
+    

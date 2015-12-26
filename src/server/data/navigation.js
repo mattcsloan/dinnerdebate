@@ -9,5 +9,6 @@ module.exports = {
       key: 'recipes',
       label: 'Recipes',
       url: 'recipes'
-    }  ]
+    }  
+  ]
 };

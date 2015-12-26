@@ -7,13 +7,26 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.addRecipe = addRecipe;
 
   vm.recipeTitle;
-  vm.recipeContent;
 
   function addRecipe() {
+    vm.recipeDate = Date.now();
     Recipe.createNew( 
     { 
-     name: vm.recipeTitle,
-     content: vm.recipeContent
+      name: vm.recipeTitle,
+      description: vm.recipeDescription,
+      key: vm.recipeKey,
+      date: vm.recipeDate,
+      source: vm.recipeSource,
+      prepTime: vm.recipePrepTime,
+      cookTime: vm.recipeCookTime,
+      ingredients: vm.recipeIngredients,
+      directions: vm.recipeDirections,
+      pairings: vm.recipePairings,
+      image: vm.recipeImage,
+      servings: vm.recipeServings,
+      tags: vm.recipeTags,
+      categories: vm.recipeCategories,
+      featured: vm.recipeFeatured
     })
     .success(function (res) {
       $location.url('/recipes/view/' + res._id);

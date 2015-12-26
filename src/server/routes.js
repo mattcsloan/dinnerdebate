@@ -25,7 +25,20 @@ module.exports = function(app) {
     app.post('/api/recipes', stormpath.loginRequired, function(req, res) {
         var recipe = new Recipes({
             name: req.body.name,
-            content: req.body.content
+            description: req.body.description,
+            key: req.body.key,
+            date: req.body.date,
+            source: req.body.source,
+            prepTime: req.body.prepTime,
+            cookTime: req.body.cookTime,
+            ingredients: req.body.ingredients,
+            directions: req.body.directions,
+            pairings: req.body.pairings,
+            image: req.body.image,
+            servings: req.body.servings,
+            tags: req.body.tags,
+            categories: req.body.categories,
+            featured: req.body.featured
         });
 
         // use mongoose to add a new recipe in the database
@@ -53,7 +66,20 @@ module.exports = function(app) {
         var recipeId = req.params.recipeId;
         Recipes.findById(recipeId, function(err, recipe) {
             recipe.name = req.body.name;
-            recipe.content = req.body.content;
+            recipe.description = req.body.description;
+            recipe.key = req.body.key;
+            recipe.date = req.body.date;
+            recipe.source = req.body.source;
+            recipe.prepTime = req.body.prepTime;
+            recipe.cookTime = req.body.cookTime;
+            recipe.ingredients = req.body.ingredients;
+            recipe.directions = req.body.directions;
+            recipe.pairings = req.body.pairings;
+            recipe.image = req.body.image;
+            recipe.servings = req.body.servings;
+            recipe.tags = req.body.tags;
+            recipe.categories = req.body.categories;
+            recipe.featured = req.body.featured;
             if (err) {
                 res.send(err);
             }

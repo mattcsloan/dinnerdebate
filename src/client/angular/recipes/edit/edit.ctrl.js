@@ -13,8 +13,23 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.recipeTitle = "error";
       } else {
         vm.recipeDetail = data;
-        vm.recipeTitle = vm.recipeDetail.name;
-        vm.recipeContent = vm.recipeDetail.content;
+
+        vm.name = vm.recipeDetail.name;
+        vm.description = vm.recipeDetail.description;
+        vm.key = vm.recipeDetail.key;
+        vm.date = vm.recipeDetail.date;
+        vm.source = vm.recipeDetail.source;
+        vm.prepTime = vm.recipeDetail.prepTime;
+        vm.cookTime = vm.recipeDetail.cookTime;
+        vm.ingredients = vm.recipeDetail.ingredients;
+        vm.directions = vm.recipeDetail.directions;
+        vm.pairings = vm.recipeDetail.pairings;
+        vm.image = vm.recipeDetail.image;
+        vm.servings = vm.recipeDetail.servings;
+        vm.tags = vm.recipeDetail.tags;
+        vm.categories = vm.recipeDetail.categories;
+        vm.featured = vm.recipeDetail.featured;
+
       }
     })
     .error(function(data, status) {
@@ -23,8 +38,21 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   function updateRecipe() {
     Recipe.update(recipeId, {
-      name: vm.recipeTitle,
-      content: vm.recipeContent
+      name: vm.name,
+      description: vm.description,
+      key: vm.key,
+      date: vm.date,
+      source: vm.source,
+      prepTime: vm.prepTime,
+      cookTime: vm.cookTime,
+      ingredients: vm.ingredients,
+      directions: vm.directions,
+      pairings: vm.pairings,
+      image: vm.image,
+      servings: vm.servings,
+      tags: vm.tags,
+      categories: vm.categories,
+      featured: vm.featured
     });
     $location.url('/recipes/view/' + recipeId);
   }

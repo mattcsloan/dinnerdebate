@@ -6,13 +6,38 @@ h6.breadcrumb
   a(data-ui-sref="recipes.view({recipeId: editrecipe.recipeId})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
   span  &raquo; 
 h1 Edit
-div
-  label Name
-  input(value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.recipeTitle")
-div
-  label Content
-  textarea(value="editrecipe.recipeDetail.content", data-ng-model="editrecipe.recipeContent")
-p
+
+label Title:
+input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name")
+label Description:
+input(type="text", value="editrecipe.recipeDetail.description", data-ng-model="editrecipe.description")
+label Key:
+input(type="text", value="editrecipe.recipeDetail.key", data-ng-model="editrecipe.key")
+label Date:
+p(data-ng-bind="editrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
+label Source:
+input(type="text", value="editrecipe.recipeDetail.source", data-ng-model="editrecipe.source")
+label Prep Time:
+input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
+label Cook Time:
+input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
+label Ingredients:
+input(type="text", value="editrecipe.recipeDetail.ingredients", data-ng-model="editrecipe.ingredients")
+label Directions:
+input(type="text", value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
+label Recipe Pairings:
+input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
+label Image:
+input(type="text", value="editrecipe.recipeDetail.image", data-ng-model="editrecipe.image")
+label Number of Servings:
+input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
+label Tags:
+input(type="text", value="editrecipe.recipeDetail.tags", data-ng-model="editrecipe.tags")
+label Categories:
+input(type="text", value="editrecipe.recipeDetail.categories", data-ng-model="editrecipe.categories")
+label Feature this item?:
+input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
+
+.btn-panel
   a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
-  span  | 
-  a.btn(data-ng-click="editrecipe.deleteRecipe()") Delete Recipe
+  a.btn.btn-subtle(data-ng-click="editrecipe.deleteRecipe()") Delete Recipe

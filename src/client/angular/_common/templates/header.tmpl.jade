@@ -1,14 +1,15 @@
 .wrapper
   ul.navigation
     li(data-ng-repeat="item in main.navigation")
-      a(data-ui-sref="{{item.url}}", data-ng-bind="item.key", data-ui-sref-active="active")
-    li(data-if-user)
-      a(data-ui-sref="dashboard", data-ui-sref-active="active") dashboard
-    li(data-if-not-user)
-      a(data-ui-sref="register", data-ui-sref-active="active") register
-    li(data-if-not-user)
-      a(data-ui-sref="login", data-ui-sref-active="active") login
-    li(data-if-user)
-      a(data-ui-sref="logout", data-ui-sref-active="active") logout
-  a(data-ui-sref="home")
+      a(data-ui-sref="{{item.url}}", data-ng-bind="item.label", data-ui-sref-active="active")
+  a.logo(data-ui-sref="home")
     img(src="/img/logo.png", alt="Matt Sloan")
+  ul.navigation
+    li(data-if-user)
+      a(data-ui-sref="dashboard", data-ui-sref-active="active") Dashboard
+    li(data-if-not-user)
+      a(data-ui-sref="register", data-ui-sref-active="active") Register
+    li(data-if-not-user)
+      a(data-ui-sref="login", data-ui-sref-active="active") Login
+    li(data-if-user)
+      a(data-ui-sref="logout", data-ui-sref-active="active") Logout

@@ -9,5 +9,6 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
   $http.get('/api/recipes/' + recipeId)
     .success(function (res) {
       vm.recipeDetail = res;
+      console.log(vm.recipeDetail.pairings.length);
     });
 });
