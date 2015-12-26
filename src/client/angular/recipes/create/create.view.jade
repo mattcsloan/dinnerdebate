@@ -18,7 +18,14 @@ form
   label Cook Time:
   input(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   label Ingredients:
-  input(type="text", placeholder="Ingredients", data-ng-model="createrecipe.recipeIngredients")
+  //- input(type="text", placeholder="Ingredients", data-ng-model="createrecipe.recipeIngredients")
+  ul
+    li(data-ng-repeat="ingredient in createrecipe.ingredients")
+      span(data-ng-bind="ingredient")
+      a(data-ng-click="createrecipe.removeIngredient($index)") Remove
+  input(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
+  button.btn(data-ng-click="createrecipe.addIngredient()") + Add
+
   label Directions:
   input(type="text", placeholder="Directions", data-ng-model="createrecipe.recipeDirections")
   label Recipe Pairings:

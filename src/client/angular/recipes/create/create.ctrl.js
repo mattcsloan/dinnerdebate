@@ -5,8 +5,19 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.title = 'Create New Recipe';
 
   vm.addRecipe = addRecipe;
+  vm.addIngredient = addIngredient;
+  vm.removeIngredient = removeIngredient;
 
-  vm.recipeTitle;
+  vm.ingredients = [];
+
+  function addIngredient() {
+    vm.ingredients.push(vm.newIngredient);
+    vm.newIngredient = '';
+  }
+
+  function removeIngredient(item) {
+    vm.ingredients.splice(item, 1);
+  }
 
   function addRecipe() {
     vm.recipeDate = Date.now();
@@ -19,7 +30,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       source: vm.recipeSource,
       prepTime: vm.recipePrepTime,
       cookTime: vm.recipeCookTime,
-      ingredients: vm.recipeIngredients,
+      ingredients: vm.ingredients,
       directions: vm.recipeDirections,
       pairings: vm.recipePairings,
       image: vm.recipeImage,

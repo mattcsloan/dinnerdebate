@@ -34,7 +34,8 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
       em(data-ng-bind="viewrecipe.recipeDetail.description")
     div(data-ng-if="viewrecipe.recipeDetail.ingredients")
       h2 Ingredients:
-      p(data-ng-bind="viewrecipe.recipeDetail.ingredients")
+      ul
+        li(data-ng-repeat="ingredient in viewrecipe.recipeDetail.ingredients", data-ng-bind="ingredient")
     div(data-ng-if="viewrecipe.recipeDetail.directions")
       h2 Directions:
       p(data-ng-bind="viewrecipe.recipeDetail.directions")
