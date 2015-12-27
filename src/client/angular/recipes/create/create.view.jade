@@ -4,7 +4,7 @@ h6.breadcrumb
   a(data-ui-sref="recipes") recipes
   span  &raquo; 
 h1(data-ng-bind="createrecipe.title")
-form
+.form
   label Title:
   input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()")
   label Category:
@@ -31,8 +31,9 @@ form
     li(data-ng-repeat="ingredient in createrecipe.ingredients")
       span(data-ng-bind="ingredient")
       a(data-ng-click="createrecipe.removeIngredient($index)").helper-text.remove Remove
-  input(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
-  button.btn(data-ng-click="createrecipe.addIngredient()") + Add
+  form(data-ng-submit="createrecipe.addIngredient()")
+    input.inline.push-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
+    input.btn.inline.mgn-left-16(type="submit", value="+ Add")
   label Directions:
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   label Recipe Pairings:
@@ -42,7 +43,13 @@ form
   label Number of Servings:
   input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
   label Tags:
-  input(type="text", placeholder="Tags", data-ng-model="createrecipe.recipeTags")
+  .pills
+    .pill(data-ng-repeat="tag in createrecipe.tags")
+      span(data-ng-bind="tag")
+      a(data-ng-click="createrecipe.removeTag($index)").helper-text.remove Remove
+  form(data-ng-submit="createrecipe.addTag()")
+    input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
+    input.btn.inline.mgn-left-16(type="submit", value="+ Add")
   label Feature this item?:
   input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
 a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

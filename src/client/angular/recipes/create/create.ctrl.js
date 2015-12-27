@@ -6,7 +6,9 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
+  vm.addTag = addTag;
   vm.removeIngredient = removeIngredient;
+  vm.removeTag = removeTag;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
 
@@ -37,12 +39,27 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.ingredients = [];
 
   function addIngredient() {
-    vm.ingredients.push(vm.newIngredient);
-    vm.newIngredient = '';
+    if(vm.newIngredient) {
+      vm.ingredients.push(vm.newIngredient);
+      vm.newIngredient = '';
+    }
   }
 
   function removeIngredient(item) {
     vm.ingredients.splice(item, 1);
+  }
+
+  vm.tags = [];
+
+  function addTag() {
+    if(vm.newTag) {
+      vm.tags.push(vm.newTag);
+      vm.newTag = '';
+    }
+  }
+
+  function removeTag(item) {
+    vm.tags.splice(item, 1);
   }
 
   function createKey() {
@@ -73,7 +90,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       pairings: vm.recipePairings,
       image: vm.recipeImage,
       servings: vm.recipeServings,
-      tags: vm.recipeTags,
+      tags: vm.tags,
       featured: vm.recipeFeatured
     })
     .success(function (res) {
