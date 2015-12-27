@@ -6,11 +6,18 @@ h6.breadcrumb
 h1(data-ng-bind="createrecipe.title")
 form
   label Title:
-  input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle")
+  input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()")
+  label Category:
+  select(data-ng-model="createrecipe.recipeCategory")
+    option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+  label Recipe URL: 
+    span.text-muted(data-ng-bind="createrecipe.urlBase")
+    span.text-muted /recipes/view/
+    span.text-muted(data-ng-bind="createrecipe.recipeCategory")
+    span.text-muted /
+    span.text-muted(data-ng-bind="createrecipe.recipeKey")
   label Description:
   textarea(placeholder="Recipe Description", data-ng-model="createrecipe.recipeDescription")
-  label Key:
-  input(type="text", placeholder="Key", data-ng-model="createrecipe.recipeKey")
   label Source:
   input(type="text", placeholder="Source", data-ng-model="createrecipe.recipeSource")
   label Prep Time:
@@ -34,8 +41,6 @@ form
   input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
   label Tags:
   input(type="text", placeholder="Tags", data-ng-model="createrecipe.recipeTags")
-  label Category:
-  input(type="text", placeholder="Category", data-ng-model="createrecipe.recipeCategory")
   label Feature this item?:
   input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
 a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

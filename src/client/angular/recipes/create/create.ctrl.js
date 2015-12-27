@@ -7,6 +7,30 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
   vm.removeIngredient = removeIngredient;
+  vm.createKey = createKey;
+  vm.categoryOptions = [
+    "Appetizers",
+    "Breads & Muffins",
+    "Breakfast",
+    "Cakes",
+    "Cookies",
+    "Desserts",
+    "Drinks",
+    "Entrees",
+    "Kids",
+    "Pies",
+    "Pets",
+    "Salads",
+    "Sauces & Marinades",
+    "Sides",
+    "Soups"
+  ]
+
+  if(!vm.recipeCategory) {
+    vm.recipeCategory = 'uncategorized';
+  }
+
+  vm.urlBase = location.host;
 
   vm.ingredients = [];
 
@@ -17,6 +41,12 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   function removeIngredient(item) {
     vm.ingredients.splice(item, 1);
+  }
+
+  function createKey() {
+    var recipeTitle = vm.recipeTitle;
+    recipeTitle = recipeTitle.replace(/\W+/g, '-').toLowerCase();
+    vm.recipeKey = recipeTitle;
   }
 
   function addRecipe() {
