@@ -8,12 +8,12 @@ form
   label Title:
   input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()")
   label Category:
-  select(data-ng-model="createrecipe.recipeCategory")
+  select(data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()")
     option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
-  label Recipe URL: 
+  label.recipe-url Recipe URL: 
     span.text-muted(data-ng-bind="createrecipe.urlBase")
     span.text-muted /recipes/view/
-    span.text-muted(data-ng-bind="createrecipe.recipeCategory")
+    span.text-muted(data-ng-bind="createrecipe.categoryKey")
     span.text-muted /
     span.text-muted(data-ng-bind="createrecipe.recipeKey")
   label Description:
@@ -21,9 +21,11 @@ form
   label Source:
   input(type="text", placeholder="Source", data-ng-model="createrecipe.recipeSource")
   label Prep Time:
-  input(type="text", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+  input.inline.push-left(type="text", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+  span.mgn-left-16 Minutes
   label Cook Time:
-  input(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+  input.inline.push-left(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+  span.mgn-left-16 Minutes
   label Ingredients:
   ul.ingredients
     li(data-ng-repeat="ingredient in createrecipe.ingredients")
