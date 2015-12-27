@@ -46,9 +46,9 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
     .pills(data-ng-if="viewrecipe.recipeDetail.tags.length")
       label.pill-label Tags:
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
-    .pills(data-ng-if="viewrecipe.recipeDetail.categories.length")
-      label.pill-label Categories:
-      span.pill(data-ng-repeat="category in viewrecipe.recipeDetail.categories", data-ng-bind="category")
+    .pills(data-ng-if="viewrecipe.recipeDetail.category")
+      label.pill-label Category:
+      span.pill(data-ng-bind="viewrecipe.recipeDetail.category")
   .media(data-ng-if="viewrecipe.recipeDetail.image")
     img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
 a.btn(data-ui-sref="recipes.edit({recipeId: viewrecipe.recipeId})") Edit Recipe

@@ -4,6 +4,7 @@ var mongoose = require('mongoose');
 module.exports = mongoose.model('Recipes', {
     name : {type : String, default: ''},
     description : {type : String, default: ''},
+    category : {type : String, default: ''},
     key : {type : String, default: ''},
     date : {type : Date},
     source : {type : String, default: ''},
@@ -15,6 +16,5 @@ module.exports = mongoose.model('Recipes', {
     image : {type : String, default: ''},
     servings : {type : String, default: ''},
     tags : {type : Array, default: []},
-    categories : {type : Array, default: []},
     featured : {type : Boolean, default: false}
 });

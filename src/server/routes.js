@@ -37,7 +37,7 @@ module.exports = function(app) {
             image: req.body.image,
             servings: req.body.servings,
             tags: req.body.tags,
-            categories: req.body.categories,
+            category: req.body.category,
             featured: req.body.featured
         });
 
@@ -78,7 +78,7 @@ module.exports = function(app) {
             recipe.image = req.body.image;
             recipe.servings = req.body.servings;
             recipe.tags = req.body.tags;
-            recipe.categories = req.body.categories;
+            recipe.category = req.body.category;
             recipe.featured = req.body.featured;
             if (err) {
                 res.send(err);

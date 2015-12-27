@@ -25,6 +25,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     { 
       name: vm.recipeTitle,
       description: vm.recipeDescription,
+      category: vm.recipeCategory,
       key: vm.recipeKey,
       date: vm.recipeDate,
       source: vm.recipeSource,
@@ -36,7 +37,6 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       image: vm.recipeImage,
       servings: vm.recipeServings,
       tags: vm.recipeTags,
-      categories: vm.recipeCategories,
       featured: vm.recipeFeatured
     })
     .success(function (res) {

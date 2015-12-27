@@ -29,7 +29,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.image = vm.recipeDetail.image;
         vm.servings = vm.recipeDetail.servings;
         vm.tags = vm.recipeDetail.tags;
-        vm.categories = vm.recipeDetail.categories;
+        vm.category = vm.recipeDetail.category;
         vm.featured = vm.recipeDetail.featured;
 
       }
@@ -53,7 +53,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       image: vm.image,
       servings: vm.servings,
       tags: vm.tags,
-      categories: vm.categories,
+      category: vm.category,
       featured: vm.featured
     });
     $location.url('/recipes/view/' + recipeId);
