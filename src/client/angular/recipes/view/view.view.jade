@@ -1,0 +1,54 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="recipes") recipes
+  span  &raquo;
+h1(data-ng-bind="viewrecipe.recipeDetail.name")
+.recipe
+  .details(data-ng-class="{ 'full': !viewrecipe.recipeDetail.image }")
+    .info
+      p.timestamp Added on 
+        span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
+      p.source Recipe by 
+        em(data-ng-bind="viewrecipe.recipeDetail.source")
+    table.full-table(cellpadding="0", cellspacing="0")
+      thead
+        tr
+          th(data-ng-if="viewrecipe.recipeDetail.prepTime") Prep Time
+          th(data-ng-if="viewrecipe.recipeDetail.cookTime") Cook Time
+          th(data-ng-if="viewrecipe.recipeDetail.servings") Servings
+        tr
+          td(data-ng-if="viewrecipe.recipeDetail.prepTime")
+            a
+              strong(data-ng-bind="viewrecipe.recipeDetail.prepTime")
+              span Minutes
+          td(data-ng-if="viewrecipe.recipeDetail.cookTime")
+            a
+              strong(data-ng-bind="viewrecipe.recipeDetail.cookTime")
+              span Minutes
+          td(data-ng-if="viewrecipe.recipeDetail.servings")
+            a
+              strong(data-ng-bind="viewrecipe.recipeDetail.servings")
+              span Servings
+    p.multiline(data-ng-if="viewrecipe.recipeDetail.description")
+      em(data-ng-bind="viewrecipe.recipeDetail.description")
+    div(data-ng-if="viewrecipe.recipeDetail.ingredients")
+      h2 Ingredients:
+      ul.ingredients.list
+        li(data-ng-repeat="ingredient in viewrecipe.recipeDetail.ingredients", data-ng-bind="ingredient")
+    div(data-ng-if="viewrecipe.recipeDetail.directions")
+      h2 Directions:
+      p.multiline(data-ng-bind="viewrecipe.recipeDetail.directions")
+      hr
+    div(data-ng-if="viewrecipe.recipeDetail.pairings.length")
+      label Recipe Pairings:
+      p(data-ng-bind="viewrecipe.recipeDetail.pairings")
+    .pills(data-ng-if="viewrecipe.recipeDetail.tags.length")
+      label.pill-label Tags:
+      span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
+    .pills(data-ng-if="viewrecipe.recipeDetail.category")
+      label.pill-label Category:
+      span.pill(data-ng-bind="viewrecipe.recipeDetail.category")
+  .media(data-ng-if="viewrecipe.recipeDetail.image")
+    img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
+a.btn(data-ui-sref="recipes.edit({recipeId: viewrecipe.recipeId})") Edit Recipe

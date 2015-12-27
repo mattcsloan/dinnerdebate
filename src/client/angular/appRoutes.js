@@ -41,40 +41,40 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             }
         })
 
-        .state('posts', {
-            url: '/posts',
+        .state('recipes', {
+            url: '/recipes',
             views: {
                 header: {
                     templateUrl: '/templates/_common/templates/header.tmpl.html',
                 },
                 content: {
-                    templateUrl: '/templates/posts/posts.view.html',
+                    templateUrl: '/templates/recipes/recipes.view.html',
                 },
                 footer: {
                     templateUrl: '/templates/_common/templates/footer.tmpl.html',
                 }
             },
-            redirectTo: 'posts.index'
+            redirectTo: 'recipes.index'
         })
 
-            .state('posts.index', {
+            .state('recipes.index', {
                 url: '',
                 views: {
-                    posts: {
-                        templateUrl: '/templates/posts/index/index.view.html',
-                        controller: 'PostsController',
-                        controllerAs: 'posts'
+                    recipes: {
+                        templateUrl: '/templates/recipes/index/index.view.html',
+                        controller: 'RecipesController',
+                        controllerAs: 'recipes'
                     }
                 }
             })
 
-            .state('posts.create', {
+            .state('recipes.create', {
                 url: '/create',
                 views: {
-                    posts: {
-                        templateUrl: '/templates/posts/create/create.view.html',
-                        controller: 'PostsCreateController',
-                        controllerAs: 'createpost'
+                    recipes: {
+                        templateUrl: '/templates/recipes/create/create.view.html',
+                        controller: 'RecipesCreateController',
+                        controllerAs: 'createrecipe'
                     }
                 },
                 sp: {
@@ -82,19 +82,19 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
                 }
             })
 
-            .state('posts.view', {
-                url: '/view/:postId',
+            .state('recipes.view', {
+                url: '/view/:recipeId',
                 views: {
-                    posts: {
-                        templateUrl: '/templates/posts/view/view.view.html',
-                        controller: 'PostsViewController',
-                        controllerAs: 'viewpost',
+                    recipes: {
+                        templateUrl: '/templates/recipes/view/view.view.html',
+                        controller: 'RecipesViewController',
+                        controllerAs: 'viewrecipe',
                         resolve: {
-                            postId: ['$stateParams', '$state', function($stateParams, $state){
-                                if(!$stateParams.postId) {
-                                    $state.go('posts');
+                            recipeId: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.recipeId) {
+                                    $state.go('recipes');
                                 }  else {
-                                    return $stateParams.postId;
+                                    return $stateParams.recipeId;
                                 }                               
                             }]
                         }
@@ -102,19 +102,19 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
                 }
             })
 
-            .state('posts.edit', {
-                url: '/edit/:postId',
+            .state('recipes.edit', {
+                url: '/edit/:recipeId',
                 views: {
-                    posts: {
-                        templateUrl: '/templates/posts/edit/edit.view.html',
-                        controller: 'PostsEditController',
-                        controllerAs: 'editpost',
+                    recipes: {
+                        templateUrl: '/templates/recipes/edit/edit.view.html',
+                        controller: 'RecipesEditController',
+                        controllerAs: 'editrecipe',
                         resolve: {
-                            postId: ['$stateParams', '$state', function($stateParams, $state){
-                                if(!$stateParams.postId) {
-                                    $state.go('posts');
+                            recipeId: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.recipeId) {
+                                    $state.go('recipes');
                                 }  else {
-                                    return $stateParams.postId;
+                                    return $stateParams.recipeId;
                                 }                               
                             }]
                         }

@@ -3,15 +3,15 @@
 
   angular
     .module('app.factories')
-    .factory('Post', post)
+    .factory('Recipe', recipe)
   ;
 
   /* @ngInject */
-  function post($http) {
-    var uri = '/api/posts';
+  function recipe($http) {
+    var uri = '/api/recipes';
 
     var o = {
-      post: []
+      recipe: []
     };
 
     o.getAll = function() {

@@ -1,0 +1,55 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="recipes") recipes
+  span  &raquo; 
+h1(data-ng-bind="createrecipe.title")
+.form
+  label Title:
+  input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()")
+  label Category:
+  select(data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()")
+    option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+  label.recipe-url Recipe URL: 
+    span.text-muted(data-ng-bind="createrecipe.urlBase")
+    span.text-muted /recipes/view/
+    span.text-muted(data-ng-bind="createrecipe.categoryKey")
+    span.text-muted /
+    span.text-muted(data-ng-bind="createrecipe.recipeKey")
+  label Description:
+  textarea(placeholder="Recipe Description", data-ng-model="createrecipe.recipeDescription")
+  label Source:
+  input(type="text", placeholder="Source", data-ng-model="createrecipe.recipeSource")
+  label Prep Time:
+  input.inline.push-left(type="text", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+  span.mgn-left-16 Minutes
+  label Cook Time:
+  input.inline.push-left(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+  span.mgn-left-16 Minutes
+  label Ingredients:
+  ul.ingredients
+    li(data-ng-repeat="ingredient in createrecipe.ingredients")
+      span(data-ng-bind="ingredient")
+      a(data-ng-click="createrecipe.removeIngredient($index)").helper-text.remove Remove
+  form(data-ng-submit="createrecipe.addIngredient()")
+    input.inline.push-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
+    input.btn.inline.mgn-left-16(type="submit", value="+ Add")
+  label Directions:
+  textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
+  label Recipe Pairings:
+  input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
+  label Upload Image:
+  input(type="text", placeholder="Upload Image", data-ng-model="createrecipe.recipeImage")
+  label Number of Servings:
+  input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
+  label Tags:
+  .pills
+    .pill(data-ng-repeat="tag in createrecipe.tags")
+      span(data-ng-bind="tag")
+      a(data-ng-click="createrecipe.removeTag($index)").helper-text.remove Remove
+  form(data-ng-submit="createrecipe.addTag()")
+    input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
+    input.btn.inline.mgn-left-16(type="submit", value="+ Add")
+  label Feature this item?:
+  input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
+a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

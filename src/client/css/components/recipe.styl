@@ -1,0 +1,67 @@
+.recipe
+  padding-top 16px
+  border-top 1px solid $border-color
+  &:after
+    content ''
+    display block
+    clear both
+  .info
+    font-size 12px
+    color $copy-lighten
+    margin-bottom 16px
+    &:after
+      content ''
+      display block
+      clear both
+    p
+      margin-bottom 0
+    .timestamp
+      float right
+      text-align right
+      width 50%    
+    .source
+      float left
+      width 50%    
+  .details
+    width 48%
+    float left
+    &.full
+      float none
+      width auto
+      display block
+    .full-table
+      margin-bottom 24px
+      th
+        background #fefefe
+        border-bottom 1px solid #f8f8f8
+        font-size 12px
+        &:first-child
+          text-align center
+  .media
+    width 48%
+    float right
+.remove
+  margin-left 8px
+  &:before
+  &:after
+    content '[ '
+    display inline
+    color #999
+    &:hover
+      text-decoration none
+  &:after
+    content ' ]'
+ul.ingredients
+  list-style none
+  margin 16px 0
+  padding 0
+  border-top 1px solid $border-color-lighten
+  &.list
+    border-top none
+  li
+    display block
+    padding 6px 0
+    margin 0
+    border-bottom 1px solid $border-color-lighten
+.recipe-url
+  margin-bottom 16px

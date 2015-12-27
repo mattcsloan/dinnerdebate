@@ -1,6 +1,6 @@
 var navigation = require('./data/navigation');
 var stormpath = require('express-stormpath');
-var Posts = require('./models/posts');
+var Recipes = require('./models/recipes');
 
 module.exports = function(app) {
 
@@ -10,73 +10,99 @@ module.exports = function(app) {
         res.json(201, navigation.items);
     });
 
-    // get all posts
-    app.get('/api/posts', function(req, res) {
-        // use mongoose to get all posts in the database
-        Posts.find(function(err, posts) {
+    // get all recipes
+    app.get('/api/recipes', function(req, res) {
+        // use mongoose to get all recipes in the database
+        Recipes.find(function(err, recipes) {
             if (err) {
                 res.send(err);
             }
-            res.json(posts); // return all posts in JSON format
+            res.json(recipes); // return all recipes in JSON format
         });
     });
 
-    // create post
-    app.post('/api/posts', stormpath.loginRequired, function(req, res) {
-        var post = new Posts({
+    // create recipe
+    app.post('/api/recipes', stormpath.loginRequired, function(req, res) {
+        var recipe = new Recipes({
             name: req.body.name,
-            content: req.body.content
+            description: req.body.description,
+            key: req.body.key,
+            date: req.body.date,
+            source: req.body.source,
+            prepTime: req.body.prepTime,
+            cookTime: req.body.cookTime,
+            ingredients: req.body.ingredients,
+            directions: req.body.directions,
+            pairings: req.body.pairings,
+            image: req.body.image,
+            servings: req.body.servings,
+            tags: req.body.tags,
+            category: req.body.category,
+            featured: req.body.featured
         });
 
-        // use mongoose to add a new post in the database
-        post.save(function(err, posts) {
+        // use mongoose to add a new recipe in the database
+        recipe.save(function(err, recipes) {
             if(err) {
                 res.send(err);
             }
-            res.json(201, posts);
+            res.json(201, recipes);
         });
     });
 
-    // get individual post
-    app.get('/api/posts/:postId', function(req, res) {
-        var postId = req.params.postId;
-        Posts.findById(postId, function(err, post) {
+    // get individual recipe
+    app.get('/api/recipes/:recipeId', function(req, res) {
+        var recipeId = req.params.recipeId;
+        Recipes.findById(recipeId, function(err, recipe) {
             if (err) {
                 res.send(err);
             }
-            res.json(post);
+            res.json(recipe);
         });
     });
 
-    // update individual post
-    app.put('/api/posts/:postId', stormpath.loginRequired, function(req, res) {
-        var postId = req.params.postId;
-        Posts.findById(postId, function(err, post) {
-            post.name = req.body.name;
-            post.content = req.body.content;
+    // update individual recipe
+    app.put('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {
+        var recipeId = req.params.recipeId;
+        Recipes.findById(recipeId, function(err, recipe) {
+            recipe.name = req.body.name;
+            recipe.description = req.body.description;
+            recipe.key = req.body.key;
+            recipe.date = req.body.date;
+            recipe.source = req.body.source;
+            recipe.prepTime = req.body.prepTime;
+            recipe.cookTime = req.body.cookTime;
+            recipe.ingredients = req.body.ingredients;
+            recipe.directions = req.body.directions;
+            recipe.pairings = req.body.pairings;
+            recipe.image = req.body.image;
+            recipe.servings = req.body.servings;
+            recipe.tags = req.body.tags;
+            recipe.category = req.body.category;
+            recipe.featured = req.body.featured;
             if (err) {
                 res.send(err);
             }
-            if (post) {
-                post.save(function(err) {
+            if (recipe) {
+                recipe.save(function(err) {
                     if(err) {
                         res.send(err);
                     }
-                    res.json(201, post);
+                    res.json(201, recipe);
                 });
             }
         });
     });
 
-    // delete individual post
-    app.delete('/api/posts/:postId', stormpath.loginRequired, function(req, res) {
-        var postId = req.params.postId;
-        Posts.findById(postId, function (err, post) {
+    // delete individual recipe
+    app.delete('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {
+        var recipeId = req.params.recipeId;
+        Recipes.findById(recipeId, function (err, recipe) {
             if(err) {
                 res.send(err);
             }
-            if (post) {
-                post.remove(function(err) {
+            if (recipe) {
+                recipe.remove(function(err) {
                     if(err) {
                         res.send(err);
                     }

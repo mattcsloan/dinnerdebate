@@ -6,8 +6,9 @@ module.exports = {
       url: 'home'
     },
     {
-      key: 'posts',
-      label: 'Posts',
-      url: 'posts'
-    }  ]
+      key: 'recipes',
+      label: 'Recipes',
+      url: 'recipes'
+    }  
+  ]
 };
