@@ -8,6 +8,26 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.deleteRecipe = deleteRecipe;
   vm.addIngredient = addIngredient;
   vm.removeIngredient = removeIngredient;
+  vm.addTag = addTag;
+  vm.removeTag = removeTag;
+
+  vm.categoryOptions = [
+    "Appetizers",
+    "Breads & Muffins",
+    "Breakfast",
+    "Cakes",
+    "Cookies",
+    "Desserts",
+    "Drinks",
+    "Entrees",
+    "Kids",
+    "Pies",
+    "Pets",
+    "Salads",
+    "Sauces & Marinades",
+    "Sides",
+    "Soups"
+  ]
 
   Recipe.getOne(recipeId)
     .success(function(data, status) {
@@ -72,5 +92,17 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   function removeIngredient(item) {
     vm.ingredients.splice(item, 1);
   }
+
+  function addTag() {
+    if(vm.newTag) {
+      vm.tags.push(vm.newTag);
+      vm.newTag = '';
+    }
+  }
+
+  function removeTag(item) {
+    vm.tags.splice(item, 1);
+  }
+
 
 });

@@ -6,8 +6,8 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
-  vm.addTag = addTag;
   vm.removeIngredient = removeIngredient;
+  vm.addTag = addTag;
   vm.removeTag = removeTag;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;

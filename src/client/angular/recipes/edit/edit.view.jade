@@ -9,6 +9,9 @@ h1 Edit
 
 label Title:
 input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name")
+label Category:
+select(data-ng-model="editrecipe.category")
+  option(data-ng-repeat="option in editrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
 label Description:
 textarea(value="editrecipe.recipeDetail.description", data-ng-model="editrecipe.description")
 label Key:
@@ -38,9 +41,13 @@ input(type="text", value="editrecipe.recipeDetail.image", data-ng-model="editrec
 label Number of Servings:
 input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
 label Tags:
-input(type="text", value="editrecipe.recipeDetail.tags", data-ng-model="editrecipe.tags")
-label Category:
-input(type="text", value="editrecipe.recipeDetail.category", data-ng-model="editrecipe.category")
+.pills
+  .pill(data-ng-repeat="tag in editrecipe.tags")
+    span(data-ng-bind="tag")
+    a(data-ng-click="editrecipe.removeTag($index)").helper-text.remove Remove
+form(data-ng-submit="editrecipe.addTag()")
+  input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
+  input.btn.inline.mgn-left-16(type="submit", value="+ Add")
 label Feature this item?:
 input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
 
