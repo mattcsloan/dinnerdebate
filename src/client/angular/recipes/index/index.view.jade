@@ -1,28 +1,33 @@
+input.inline.pull-right.mgn-top-0(type="text", data-ng-model="searchQuery", placeholder="Search")
+a.btn.pull-right.mgn-right-16(data-ui-sref="recipes.create") Create New Recipe
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="recipes.title")
-table.full-table(cellpadding="0", cellspacing="0")
-  thead
-    tr
-      th Name
-      th Prep Time
-      th Cook Time
-      th Servings
-    tr(data-ng-repeat="recipe in recipes.recipes")
-      td.title
-        a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-bind="recipe.name")
-      td
-        a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-if="recipe.prepTime")
-          strong(data-ng-bind="recipe.prepTime")
-          span Minutes
-      td
-        a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-if="recipe.cookTime")
-          strong(data-ng-bind="recipe.cookTime")
-          span Minutes
-      td
-        a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-if="recipe.servings")
-          strong(data-ng-bind="recipe.servings")
-          span Servings
-p
-  a.btn(data-ui-sref="recipes.create") Create New Recipe
+.secondary
+  h2 Filters
+  p Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.
+.main
+  h2 All Recipes
+  table.full-table(cellpadding="0", cellspacing="0")
+    thead
+      tr
+        th Name
+        th Prep Time
+        th Cook Time
+        th Servings
+      tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery")
+        td.title
+          a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-bind="recipe.name")
+        td
+          a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-if="recipe.prepTime")
+            strong(data-ng-bind="recipe.prepTime")
+            span Minutes
+        td
+          a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-if="recipe.cookTime")
+            strong(data-ng-bind="recipe.cookTime")
+            span Minutes
+        td
+          a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-if="recipe.servings")
+            strong(data-ng-bind="recipe.servings")
+            span Servings

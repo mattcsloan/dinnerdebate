@@ -1,8 +1,8 @@
 angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe) {
   var vm = this;
 
-  Page.setTitle('All Recipes');   
-  vm.title = 'All Recipes';
+  Page.setTitle('Recipes');   
+  vm.title = 'Recipes';
 
   Recipe.getAll()
     .success(function(data, status) {
