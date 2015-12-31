@@ -5,8 +5,15 @@ h6.breadcrumb
   span  &raquo; 
 h1(data-ng-bind="recipes.title")
 .secondary
+  a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
+    span(data-ng-if="recipes.selectedCategories.length") Deselect All
+    span(data-ng-if="!recipes.selectedCategories.length") Select All
   h2 Filters
-  p Lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet.
+  ul.list.filters
+    li(data-ng-repeat="category in recipes.categoryOptions")
+      label
+        input(type="checkbox", ng-checked="recipes.selectedCategories.indexOf(category) > -1", ng-click="recipes.toggleCategory(category)")
+        span(data-ng-bind="category")
 .main
   h2 All Recipes
   table.full-table(cellpadding="0", cellspacing="0")
@@ -16,7 +23,7 @@ h1(data-ng-bind="recipes.title")
         th Prep Time
         th Cook Time
         th Servings
-      tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery")
+      tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category: ['Cookies', 'Pies']}")
         td.title
           a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-bind="recipe.name")
         td
