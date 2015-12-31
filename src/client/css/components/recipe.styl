@@ -57,12 +57,14 @@ ul.list
     border-top none
 .filters
   label
+  a
     color $copy-lighten
     &:hover
+    &.active
       cursor pointer
       color $secondary-color
-    input[checked]
-      + span
-        color $secondary-color
+    // input[checked]
+    //   + span
+    //     color $secondary-color
 .recipe-url
   margin-bottom 16px
