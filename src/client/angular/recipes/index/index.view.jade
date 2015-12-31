@@ -5,17 +5,22 @@ h6.breadcrumb
   span  &raquo; 
 h1(data-ng-bind="recipes.title")
 .secondary
-  a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
-    span(data-ng-if="recipes.selectedCategories.length") Deselect All
-    span(data-ng-if="!recipes.selectedCategories.length") Select All
-  h2 Categories
+  //- a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
+  //-   span(data-ng-if="recipes.selectedCategories.length") Deselect All
+  //-   span(data-ng-if="!recipes.selectedCategories.length") Select All
+  h2.mgn-top-0 Categories
   ul.list.filters
     li
       a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Categories
     li(data-ng-repeat="category in recipes.categoryOptions")
       a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
 .main
-  h2 All Recipes
+  .sort.pull-right.text-small.text-muted
+    span View by: 
+    a(data-ng-click="recipes.changeCriteria('date')", data-ng-class="{active: recipes.orderCriteria == 'date'}") Newest
+    span  | 
+    a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
+  h2.mgn-top-0 All Recipes
   table.full-table(cellpadding="0", cellspacing="0")
     thead
       tr
@@ -23,7 +28,7 @@ h1(data-ng-bind="recipes.title")
         th Prep Time
         th Cook Time
         th Servings
-      tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: recipes.category")
+      tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: recipes.category | orderBy: recipes.orderCriteria")
         td.title
           a(data-ui-sref="recipes.view({recipeId: recipe._id})", data-ng-bind="recipe.name")
         td

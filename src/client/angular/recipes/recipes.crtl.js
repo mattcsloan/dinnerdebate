@@ -23,14 +23,22 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
 
   vm.selectedCategory = selectedCategory;
   vm.category = '';
-  
+
   function selectedCategory(category) {
     if(category) {
       vm.category = category;
     } else {
       vm.category = '';
     }
-  } 
+  }
+
+  vm.orderCriteria = 'name';
+
+  vm.changeCriteria = changeCriteria;
+
+  function changeCriteria(criteria) {
+    vm.orderCriteria = criteria;
+  }
 
   // vm.selectedCategories = [];
   // vm.toggleCategory = toggleCategory;
