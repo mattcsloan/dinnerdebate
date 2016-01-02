@@ -11,16 +11,21 @@ h1(data-ng-bind="recipes.title")
   h2.mgn-top-0 Categories
   ul.list.filters
     li
-      a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Categories
+      a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Recipes
     li(data-ng-repeat="category in recipes.categoryOptions")
       a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
 .main
-  .sort.pull-right.text-small.text-muted
-    span View by: 
-    a(data-ng-click="recipes.changeCriteria('date')", data-ng-class="{active: recipes.orderCriteria == 'date'}") Newest
-    span  | 
-    a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
-  h2.mgn-top-0 All Recipes
+  .error(data-ng-if="recipes.noCategoryMessage")
+    a.close.pull-right.text-small(data-ng-click="recipes.dismiss()") Close
+    span(data-ng-bind="recipes.noCategoryMessage")
+  .headline-container
+    .sort.pull-right.text-small.text-muted
+      span View by: 
+      a(data-ng-click="recipes.changeCriteria('date')", data-ng-class="{active: recipes.orderCriteria == 'date'}") Newest
+      span  | 
+      a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
+    h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
+    h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
   table.full-table(cellpadding="0", cellspacing="0")
     thead
       tr

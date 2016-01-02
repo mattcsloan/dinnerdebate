@@ -14,7 +14,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.categoryOptions = [
     "Appetizers",
-    "Breads & Muffins",
+    "Breads and Muffins",
     "Breakfast",
     "Cakes",
     "Cookies",
@@ -25,7 +25,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     "Pies",
     "Pets",
     "Salads",
-    "Sauces & Marinades",
+    "Sauces and Marinades",
     "Sides",
     "Soups"
   ]

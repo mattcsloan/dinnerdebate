@@ -63,7 +63,32 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
                     recipes: {
                         templateUrl: '/templates/recipes/index/index.view.html',
                         controller: 'RecipesController',
-                        controllerAs: 'recipes'
+                        controllerAs: 'recipes',
+                        resolve: {
+                            categoryName: function() {
+                                return '';
+                            }
+                        }
+                    }
+                }
+            })
+
+            .state('recipes.categories', {
+                url: '/category/:categoryName',
+                views: {
+                    recipes: {
+                        templateUrl: '/templates/recipes/index/index.view.html',
+                        controller: 'RecipesController',
+                        controllerAs: 'recipes',
+                        resolve: {
+                            categoryName: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.categoryName) {
+                                    $state.go('recipes');
+                                }  else {
+                                    return $stateParams.categoryName;
+                                }                               
+                            }]
+                        }
                     }
                 }
             })

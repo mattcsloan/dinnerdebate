@@ -13,7 +13,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   vm.categoryOptions = [
     "Appetizers",
-    "Breads & Muffins",
+    "Breads and Muffins",
     "Breakfast",
     "Cakes",
     "Cookies",
@@ -24,7 +24,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     "Pies",
     "Pets",
     "Salads",
-    "Sauces & Marinades",
+    "Sauces and Marinades",
     "Sides",
     "Soups"
   ]

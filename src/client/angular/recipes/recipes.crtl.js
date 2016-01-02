@@ -1,11 +1,11 @@
-angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe) {
+angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, categoryName, $location) {
   var vm = this;
 
   Page.setTitle('Recipes');   
   vm.title = 'Recipes';
   vm.categoryOptions = [
     "Appetizers",
-    "Breads & Muffins",
+    "Breads and Muffins",
     "Breakfast",
     "Cakes",
     "Cookies",
@@ -16,19 +16,37 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     "Pies",
     "Pets",
     "Salads",
-    "Sauces & Marinades",
+    "Sauces and Marinades",
     "Sides",
     "Soups"
   ];
 
   vm.selectedCategory = selectedCategory;
-  vm.category = '';
+
+  //translate url (categoryName) to title case
+  if(categoryName) {
+    vm.categoryKeyTranslation = categoryName.replace(/-/g, ' ');
+    vm.categoryKeyTranslation = vm.categoryKeyTranslation.replace(/\w\S*/g, function(txt){
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+    vm.categoryKeyTranslation = vm.categoryKeyTranslation.replace(' And ', ' and ');
+  }
+
+  if(categoryName && vm.categoryOptions.indexOf(vm.categoryKeyTranslation) > -1) {
+    vm.category = vm.categoryKeyTranslation;
+  } else {
+    vm.category = '';
+    if(categoryName) {
+      vm.noCategoryMessage = 'There are no matching categories. Please choose one from the list.'
+    }
+    // $location.url('/recipes');
+  }
 
   function selectedCategory(category) {
     if(category) {
       vm.category = category;
     } else {
-      vm.category = '';
+      vm.category = 'All Recipes';
     }
   }
 
@@ -39,6 +57,13 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   function changeCriteria(criteria) {
     vm.orderCriteria = criteria;
   }
+
+  vm.dismiss = dismiss;
+
+  function dismiss() {
+    vm.noCategoryMessage = '';
+  }
+
 
   // vm.selectedCategories = [];
   // vm.toggleCategory = toggleCategory;

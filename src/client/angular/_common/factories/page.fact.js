@@ -8,10 +8,10 @@
 
   /* @ngInject */
   function page() {
-    var title = 'Boilerplate';
+    var title = 'Dinner Debate';
     return {
-      title: function() { return title + ' | Boilerplate'; },
-      setTitle: function(newTitle) { title = newTitle + ' | Boilerplate' }
+      title: function() { return title + ' | Dinner Debate'; },
+      setTitle: function(newTitle) { title = newTitle + ' | Dinner Debate' }
     };
   }
 })();
