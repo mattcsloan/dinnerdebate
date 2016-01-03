@@ -50,6 +50,6 @@ h1(data-ng-bind="createrecipe.title")
   form(data-ng-submit="createrecipe.addTag()")
     input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")
-  label Feature this item?:
-  input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
+  //- label Feature this item?:
+  //- input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
 a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

@@ -1,4 +1,4 @@
-angular.module('RecipesViewCtrl', []).controller('RecipesViewController', function(Page, Recipe, $http, categoryKey, recipeName) {
+angular.module('RecipesViewCtrl', []).controller('RecipesViewController', function(Page, Recipe, categoryKey, recipeName) {
   var vm = this;
 
   Page.setTitle('View Recipe');   
