@@ -39,14 +39,13 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     if(categoryName) {
       vm.noCategoryMessage = 'There are no matching categories. Please choose one from the list.'
     }
-    // $location.url('/recipes');
   }
 
   function selectedCategory(category) {
     if(category) {
       vm.category = category;
     } else {
-      vm.category = 'All Recipes';
+      vm.category = '';
     }
   }
 

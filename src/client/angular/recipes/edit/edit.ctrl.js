@@ -52,6 +52,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.category = vm.recipeDetail.category;
         vm.featured = vm.recipeDetail.featured;
 
+        vm.categoryKey = vm.recipeDetail.category.replace(/\W+/g, '-').toLowerCase();
       }
     })
     .error(function(data, status) {

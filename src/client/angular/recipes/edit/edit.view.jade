@@ -3,7 +3,7 @@ h6.breadcrumb
   span  &raquo; 
   a(data-ui-sref="recipes") recipes
   span  &raquo; 
-  a(data-ui-sref="recipes({category: editrecipe.category})", data-ng-bind="editrecipe.category | lowercase")
+  a(data-ui-sref="recipes.categories({categoryName: editrecipe.categoryKey})", data-ng-bind="editrecipe.category | lowercase")
   span  &raquo; 
   a(data-ui-sref="recipes.view({recipeId: editrecipe.recipeId})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
   span  &raquo; 

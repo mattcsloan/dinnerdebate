@@ -6,8 +6,10 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
   vm.recipeId = recipeId;
 
 
+
   $http.get('/api/recipes/' + recipeId)
     .success(function (res) {
       vm.recipeDetail = res;
+      vm.categoryKey = vm.recipeDetail.category.replace(/\W+/g, '-').toLowerCase();
     });
 });
