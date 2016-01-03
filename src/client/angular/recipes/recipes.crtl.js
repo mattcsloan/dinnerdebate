@@ -21,6 +21,8 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     "Soups"
   ];
 
+
+
   vm.selectedCategory = selectedCategory;
 
   //translate url (categoryName) to title case

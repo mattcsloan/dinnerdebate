@@ -1,15 +1,13 @@
-angular.module('RecipesViewCtrl', []).controller('RecipesViewController', function(Page, Recipe, $http, recipeId) {
+angular.module('RecipesViewCtrl', []).controller('RecipesViewController', function(Page, Recipe, $http, categoryKey, recipeName) {
   var vm = this;
 
   Page.setTitle('View Recipe');   
   vm.title = 'View Recipe';
-  vm.recipeId = recipeId;
+  vm.categoryKey = categoryKey;
+  vm.recipeName = recipeName;
 
-
-
-  $http.get('/api/recipes/' + recipeId)
+  $http.get('/api/recipes/' + categoryKey + '/' + recipeName)
     .success(function (res) {
       vm.recipeDetail = res;
-      vm.categoryKey = vm.recipeDetail.category.replace(/\W+/g, '-').toLowerCase();
     });
 });

@@ -108,18 +108,25 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             })
 
             .state('recipes.view', {
-                url: '/view/:recipeId',
+                url: '/view/:categoryKey/:recipeName/',
                 views: {
                     recipes: {
                         templateUrl: '/templates/recipes/view/view.view.html',
                         controller: 'RecipesViewController',
                         controllerAs: 'viewrecipe',
                         resolve: {
-                            recipeId: ['$stateParams', '$state', function($stateParams, $state){
-                                if(!$stateParams.recipeId) {
+                            categoryKey: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.categoryKey) {
                                     $state.go('recipes');
                                 }  else {
-                                    return $stateParams.recipeId;
+                                    return $stateParams.categoryKey;
+                                }                               
+                            }],
+                            recipeName: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.recipeName) {
+                                    $state.go('recipes');
+                                }  else {
+                                    return $stateParams.recipeName;
                                 }                               
                             }]
                         }

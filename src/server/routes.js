@@ -50,16 +50,45 @@ module.exports = function(app) {
         });
     });
 
-    // get individual recipe
-    app.get('/api/recipes/:recipeId', function(req, res) {
-        var recipeId = req.params.recipeId;
-        Recipes.findById(recipeId, function(err, recipe) {
+    // get individual recipe by id
+    // app.get('/api/recipes/:recipeId', function(req, res) {
+    //     var recipeId = req.params.recipeId;
+    //     Recipes.findById(recipeId, function(err, recipe) {
+    //         if (err) {
+    //             res.send(err);
+    //         }
+    //         res.json(recipe);
+    //     });
+    // });
+
+    // get individual recipe by name/category
+    app.get('/api/recipes/:categoryKey/:recipeName', function(req, res) {
+        var categoryKey = req.params.categoryKey;
+        var recipeNameKey = req.params.recipeName;
+
+        var categoryName = categoryKey.replace(/-/g, ' ');
+        categoryName = categoryName.replace(/\w\S*/g, function(txt){
+          return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        });
+        categoryName = categoryName.replace(' And ', ' and ');
+
+        // var recipeName = recipeNameKey.replace(/-/g, ' ');
+        // recipeName = recipeName.replace(/\w\S*/g, function(txt){
+        //   return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+        // });
+        // recipeName = recipeName.replace(' And ', ' and ');
+
+        Recipes.findOne({
+            category: categoryName, 
+            key: recipeNameKey
+        }, function(err, recipe) { 
             if (err) {
                 res.send(err);
             }
             res.json(recipe);
         });
-    });
+    }); 
+    // .findOne({nick: 'noname'}, function(err,obj) { console.log(obj); });
 
     // update individual recipe
     app.put('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {
