@@ -6,8 +6,15 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
   vm.categoryKey = categoryKey;
   vm.recipeName = recipeName;
 
-  $http.get('/api/recipes/' + categoryKey + '/' + recipeName)
-    .success(function (res) {
-      vm.recipeDetail = res;
+  Recipe.getOne(categoryKey, recipeName)
+    .success(function(data, status) {
+      if(data.name === "CastError") {
+        vm.recipeTitle = "error";
+      } else {
+        vm.recipeDetail = data;
+      }
+    })
+    .error(function(data, status) {
+      alert("Error retreiving recipe");
     });
 });
