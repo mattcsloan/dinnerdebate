@@ -50,4 +50,4 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
   .media(data-ng-if="viewrecipe.recipeDetail.image")
     img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
-a.btn(data-ui-sref="recipes.edit({recipeId: viewrecipe.recipeId})") Edit Recipe
+a.btn(data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit Recipe

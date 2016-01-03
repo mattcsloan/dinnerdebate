@@ -1,9 +1,11 @@
-angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, $http, $location, recipeId) {
+angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, $location, categoryKey, recipeName) {
   var vm = this;
 
   Page.setTitle('Edit Recipe');   
   vm.title = 'Edit Recipe';
-  vm.recipeId = recipeId;
+  vm.categoryKey = categoryKey;
+  vm.recipeName = recipeName;
+
   vm.updateRecipe = updateRecipe;
   vm.deleteRecipe = deleteRecipe;
   vm.addIngredient = addIngredient;
@@ -29,7 +31,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     "Soups"
   ]
 
-  Recipe.getOne(recipeId)
+  Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {
       if(data.name === "CastError") {
         vm.recipeTitle = "error";
@@ -60,7 +62,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     });
 
   function updateRecipe() {
-    Recipe.update(recipeId, {
+    Recipe.update(vm.recipeDetail._id, {
       name: vm.name,
       description: vm.description,
       key: vm.key,
@@ -77,11 +79,11 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       category: vm.category,
       featured: vm.featured
     });
-    $location.url('/recipes/view/' + recipeId);
+    $location.url('/recipes/view/' + categoryKey + '/' + recipeName);
   }
 
   function deleteRecipe() {
-    Recipe.delete(recipeId);
+    Recipe.delete(vm.recipeDetail._id);
     $location.url('/recipes');
   }
 

@@ -108,7 +108,7 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             })
 
             .state('recipes.view', {
-                url: '/view/:categoryKey/:recipeName/',
+                url: '/view/:categoryKey/:recipeName',
                 views: {
                     recipes: {
                         templateUrl: '/templates/recipes/view/view.view.html',
@@ -135,18 +135,25 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             })
 
             .state('recipes.edit', {
-                url: '/edit/:recipeId',
+                url: '/edit/:categoryKey/:recipeName',
                 views: {
                     recipes: {
                         templateUrl: '/templates/recipes/edit/edit.view.html',
                         controller: 'RecipesEditController',
                         controllerAs: 'editrecipe',
                         resolve: {
-                            recipeId: ['$stateParams', '$state', function($stateParams, $state){
-                                if(!$stateParams.recipeId) {
+                            categoryKey: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.categoryKey) {
                                     $state.go('recipes');
                                 }  else {
-                                    return $stateParams.recipeId;
+                                    return $stateParams.categoryKey;
+                                }                               
+                            }],
+                            recipeName: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.recipeName) {
+                                    $state.go('recipes');
+                                }  else {
+                                    return $stateParams.recipeName;
                                 }                               
                             }]
                         }

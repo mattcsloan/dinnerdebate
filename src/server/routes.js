@@ -72,12 +72,6 @@ module.exports = function(app) {
         });
         categoryName = categoryName.replace(' And ', ' and ');
 
-        // var recipeName = recipeNameKey.replace(/-/g, ' ');
-        // recipeName = recipeName.replace(/\w\S*/g, function(txt){
-        //   return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-        // });
-        // recipeName = recipeName.replace(' And ', ' and ');
-
         Recipes.findOne({
             category: categoryName, 
             key: recipeNameKey
@@ -88,7 +82,6 @@ module.exports = function(app) {
             res.json(recipe);
         });
     }); 
-    // .findOne({nick: 'noname'}, function(err,obj) { console.log(obj); });
 
     // update individual recipe
     app.put('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {

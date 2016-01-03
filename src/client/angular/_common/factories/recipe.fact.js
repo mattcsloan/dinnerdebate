@@ -17,8 +17,8 @@
     o.getAll = function() {
       return $http.get(uri);
     },
-    o.getOne = function(id) {
-      return $http.get(uri + '/' + id);
+    o.getOne = function(category, name) {
+      return $http.get(uri + '/' + category + '/' + name);
     },
     o.createNew = function(postData) {
       return $http.post(uri, postData);
