@@ -11,6 +11,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.removeTag = removeTag;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
+  vm.keyAvailability = keyAvailability;
   vm.requiredFields = [
     vm.recipeTitle,
     vm.recipeKey,
@@ -73,16 +74,43 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       var recipeTitle = vm.recipeTitle;
       recipeTitle = recipeTitle.replace(/\W+/g, '-').toLowerCase();
       vm.recipeKey = recipeTitle;
+      keyAvailability();
+    } else {
+      vm.recipeKey = '';
     }
   }
+
   function createCategoryKey() {
     var categoryKey = vm.recipeCategory;
     categoryKey = categoryKey.replace(/\W+/g, '-').toLowerCase();
     vm.categoryKey = categoryKey;
+    keyAvailability();
+  }
+
+  function keyAvailability() {
+    if(vm.categoryKey != '' && vm.categoryKey != 'uncategorized' && vm.recipeKey != '') {
+      Recipe.getOne(vm.categoryKey, vm.recipeKey)
+        .success(function(data, status) {
+          if(data) {
+            vm.keyIsAvailable = false;
+          } else {
+            vm.keyIsAvailable = true;
+          }
+          vm.showURLStatus = true;
+        })
+        .error(function(data, status) {
+          console.log(status = ': ' + data);
+        });
+      vm.completedKeys = true;
+    } else {
+      vm.keyIsAvailable = false;
+      vm.completedKeys = false;
+      vm.showURLStatus = false;
+    }
   }
 
   function addRecipe() {
-    if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey) {
+    if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey && vm.keyIsAvailable) {
       vm.recipeDate = Date.now();
       Recipe.createNew( 
       { 

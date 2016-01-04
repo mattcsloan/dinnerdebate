@@ -17,11 +17,13 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     select(name="categories", data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()", required)
       option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
   label.recipe-url Recipe URL: 
-    span.text-muted(data-ng-bind="createrecipe.urlBase")
-    span.text-muted /recipes/view/
-    span.text-muted(data-ng-bind="createrecipe.categoryKey")
-    span.text-muted /
-    span.text-muted(data-ng-bind="createrecipe.recipeKey")
+    span(data-ng-show="createrecipe.keyIsAvailable && createrecipe.showURLStatus")
+      span.text-muted(data-ng-bind="createrecipe.urlBase")
+      span.text-muted /recipes/view/
+      span.text-muted(data-ng-bind="createrecipe.categoryKey")
+      span.text-muted /
+      span.text-muted(data-ng-bind="createrecipe.recipeKey")
+    span.error(data-ng-show="!createrecipe.keyIsAvailable && createrecipe.completedKeys && createrecipe.showURLStatus") This url is not available because another recipe has the same category and title. Please update the title of your recipe or change its category.
   label Description:
   textarea(placeholder="Recipe Description", name="description", data-ng-model="createrecipe.recipeDescription")
   label Source:
