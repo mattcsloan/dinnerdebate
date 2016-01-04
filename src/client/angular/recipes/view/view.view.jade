@@ -13,6 +13,8 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
         span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
       p.source Recipe by 
         em(data-ng-bind="viewrecipe.recipeDetail.source")
+      p.source Added by 
+        em(data-ng-bind="viewrecipe.recipeDetail.addedBy")
     table.full-table(cellpadding="0", cellspacing="0")
       thead
         tr

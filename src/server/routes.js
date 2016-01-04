@@ -25,10 +25,13 @@ module.exports = function(app) {
     app.post('/api/recipes', stormpath.loginRequired, function(req, res) {
         var recipe = new Recipes({
             name: req.body.name,
-            description: req.body.description,
             key: req.body.key,
+            description: req.body.description,
+            category: req.body.category,
+            categoryKey: req.body.categoryKey,
             date: req.body.date,
             source: req.body.source,
+            addedBy: req.body.addedBy,
             prepTime: req.body.prepTime,
             cookTime: req.body.cookTime,
             ingredients: req.body.ingredients,
@@ -37,7 +40,6 @@ module.exports = function(app) {
             image: req.body.image,
             servings: req.body.servings,
             tags: req.body.tags,
-            category: req.body.category,
             featured: req.body.featured
         });
 
@@ -88,10 +90,13 @@ module.exports = function(app) {
         var recipeId = req.params.recipeId;
         Recipes.findById(recipeId, function(err, recipe) {
             recipe.name = req.body.name;
-            recipe.description = req.body.description;
             recipe.key = req.body.key;
+            recipe.description = req.body.description;
+            recipe.category = req.body.category;
+            recipe.categoryKey = req.body.categoryKey;
             recipe.date = req.body.date;
             recipe.source = req.body.source;
+            recipe.addedBy = req.body.addedBy;
             recipe.prepTime = req.body.prepTime;
             recipe.cookTime = req.body.cookTime;
             recipe.ingredients = req.body.ingredients;
@@ -100,7 +105,6 @@ module.exports = function(app) {
             recipe.image = req.body.image;
             recipe.servings = req.body.servings;
             recipe.tags = req.body.tags;
-            recipe.category = req.body.category;
             recipe.featured = req.body.featured;
             if (err) {
                 res.send(err);

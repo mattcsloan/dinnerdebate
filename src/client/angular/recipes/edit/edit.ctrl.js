@@ -3,8 +3,6 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   Page.setTitle('Edit Recipe');   
   vm.title = 'Edit Recipe';
-  vm.categoryKey = categoryKey;
-  vm.recipeName = recipeName;
 
   vm.updateRecipe = updateRecipe;
   vm.deleteRecipe = deleteRecipe;
@@ -39,10 +37,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.recipeDetail = data;
 
         vm.name = vm.recipeDetail.name;
-        vm.description = vm.recipeDetail.description;
         vm.key = vm.recipeDetail.key;
+        vm.description = vm.recipeDetail.description;
+        vm.category = vm.recipeDetail.category;
+        vm.categoryKey = vm.recipeDetail.categoryKey;
         vm.date = vm.recipeDetail.date;
         vm.source = vm.recipeDetail.source;
+        vm.addedBy = vm.recipeDetail.addedBy;
         vm.prepTime = vm.recipeDetail.prepTime;
         vm.cookTime = vm.recipeDetail.cookTime;
         vm.ingredients = vm.recipeDetail.ingredients;
@@ -51,10 +52,9 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.image = vm.recipeDetail.image;
         vm.servings = vm.recipeDetail.servings;
         vm.tags = vm.recipeDetail.tags;
-        vm.category = vm.recipeDetail.category;
         vm.featured = vm.recipeDetail.featured;
 
-        vm.categoryKey = vm.recipeDetail.category.replace(/\W+/g, '-').toLowerCase();
+        // vm.categoryKey = vm.recipeDetail.category.replace(/\W+/g, '-').toLowerCase();
       }
     })
     .error(function(data, status) {
@@ -64,10 +64,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   function updateRecipe() {
     Recipe.update(vm.recipeDetail._id, {
       name: vm.name,
-      description: vm.description,
       key: vm.key,
+      description: vm.description,
+      category: vm.category,
+      categoryKey: vm.categoryKey,
       date: vm.date,
       source: vm.source,
+      addedBy: vm.addedBy,
       prepTime: vm.prepTime,
       cookTime: vm.cookTime,
       ingredients: vm.ingredients,
@@ -76,7 +79,6 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       image: vm.image,
       servings: vm.servings,
       tags: vm.tags,
-      category: vm.category,
       featured: vm.featured
     });
     $location.url('/recipes/view/' + categoryKey + '/' + recipeName);

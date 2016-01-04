@@ -3,11 +3,13 @@ var mongoose = require('mongoose');
 // define our model
 module.exports = mongoose.model('Recipes', {
     name : {type : String, default: ''},
+    key : {type : String, default: ''},
     description : {type : String, default: ''},
     category : {type : String, default: ''},
-    key : {type : String, default: ''},
+    categoryKey : {type : String, default: ''},
     date : {type : Date},
     source : {type : String, default: ''},
+    addedBy : {type : String, default: ''},
     prepTime : {type : Number, default: ''},
     cookTime : {type : Number, default: ''},
     ingredients : {type : Array, default: []},

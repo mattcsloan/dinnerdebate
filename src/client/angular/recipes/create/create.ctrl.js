@@ -78,11 +78,13 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     Recipe.createNew( 
     { 
       name: vm.recipeTitle,
+      key: vm.recipeKey, // auto generated
       description: vm.recipeDescription,
       category: vm.recipeCategory,
-      key: vm.recipeKey,
+      categoryKey: vm.categoryKey, // auto generated
       date: vm.recipeDate,
       source: vm.recipeSource,
+      addedBy: vm.recipeAddedBy,
       prepTime: vm.recipePrepTime,
       cookTime: vm.recipeCookTime,
       ingredients: vm.ingredients,
