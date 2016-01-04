@@ -11,6 +11,12 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.removeTag = removeTag;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
+  vm.requiredFields = [
+    vm.recipeTitle,
+    vm.recipeKey,
+    vm.recipeCategory,
+    vm.categoryKey
+  ];
 
   vm.categoryOptions = [
     "Appetizers",
@@ -28,7 +34,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     "Sauces and Marinades",
     "Sides",
     "Soups"
-  ]
+  ];
 
   if(!vm.categoryKey) {
     vm.categoryKey = 'uncategorized';
@@ -74,30 +80,34 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function addRecipe() {
-    vm.recipeDate = Date.now();
-    Recipe.createNew( 
-    { 
-      name: vm.recipeTitle,
-      key: vm.recipeKey, // auto generated
-      description: vm.recipeDescription,
-      category: vm.recipeCategory,
-      categoryKey: vm.categoryKey, // auto generated
-      date: vm.recipeDate,
-      source: vm.recipeSource,
-      addedBy: vm.recipeAddedBy,
-      prepTime: vm.recipePrepTime,
-      cookTime: vm.recipeCookTime,
-      ingredients: vm.ingredients,
-      directions: vm.recipeDirections,
-      pairings: vm.recipePairings,
-      image: vm.recipeImage,
-      servings: vm.recipeServings,
-      tags: vm.tags,
-      featured: vm.recipeFeatured
-    })
-    .success(function (res) {
-      $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
-    });
+    if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey) {
+      vm.recipeDate = Date.now();
+      Recipe.createNew( 
+      { 
+        name: vm.recipeTitle,
+        key: vm.recipeKey, // auto generated
+        description: vm.recipeDescription,
+        category: vm.recipeCategory,
+        categoryKey: vm.categoryKey, // auto generated
+        date: vm.recipeDate,
+        source: vm.recipeSource,
+        addedBy: vm.recipeAddedBy,
+        prepTime: vm.recipePrepTime,
+        cookTime: vm.recipeCookTime,
+        ingredients: vm.ingredients,
+        directions: vm.recipeDirections,
+        pairings: vm.recipePairings,
+        image: vm.recipeImage,
+        servings: vm.recipeServings,
+        tags: vm.tags,
+        featured: vm.recipeFeatured
+      })
+      .success(function (res) {
+        $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
+      });
+    } else {
+      console.log('required fields not met');
+    }
   }
 
 });

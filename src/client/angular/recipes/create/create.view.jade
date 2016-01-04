@@ -5,11 +5,14 @@ h6.breadcrumb
   span  &raquo; 
 h1(data-ng-bind="createrecipe.title")
 .form
-  label Title:
-  input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()")
-  label Category:
-  select(data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()")
-    option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+  form(name="createNewRecipe", novalidate)
+    label Title:
+      em.helper-text.text-muted  Required
+    input(type="text", name="title" placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()", required)
+    label Category:
+      em.helper-text.text-muted  Required
+    select(name="categories", data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()", required)
+      option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
   label.recipe-url Recipe URL: 
     span.text-muted(data-ng-bind="createrecipe.urlBase")
     span.text-muted /recipes/view/
@@ -17,16 +20,16 @@ h1(data-ng-bind="createrecipe.title")
     span.text-muted /
     span.text-muted(data-ng-bind="createrecipe.recipeKey")
   label Description:
-  textarea(placeholder="Recipe Description", data-ng-model="createrecipe.recipeDescription")
+  textarea(placeholder="Recipe Description", name="description", data-ng-model="createrecipe.recipeDescription")
   label Source:
-  input(type="text", placeholder="Source", data-ng-model="createrecipe.recipeSource")
+  input(type="text", name="source", placeholder="Source", data-ng-model="createrecipe.recipeSource")
   label Added By:
-  input(type="text", placeholder="Added By", data-ng-model="createrecipe.recipeAddedBy")
+  input(type="text", name="addedBy", placeholder="Added By", data-ng-model="createrecipe.recipeAddedBy")
   label Prep Time:
-  input.inline.push-left(type="text", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+  input.inline.push-left(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
   span.mgn-left-16 Minutes
   label Cook Time:
-  input.inline.push-left(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+  input.inline.push-left(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   span.mgn-left-16 Minutes
   label Ingredients:
   ul.ingredients
@@ -54,4 +57,6 @@ h1(data-ng-bind="createrecipe.title")
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")
   //- label Feature this item?:
   //- input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
-a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe
+input(type="submit", value="Create Recipe", data-ng-disabled="createNewRecipe.$invalid", data-ng-click="createrecipe.addRecipe()").btn.inline
+
+//- a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

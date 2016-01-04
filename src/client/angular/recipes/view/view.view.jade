@@ -11,9 +11,9 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
     .info
       p.timestamp Added on 
         span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
-      p.source Recipe by 
+      p.source(data-ng-if="viewrecipe.recipeDetail.source") Recipe by 
         em(data-ng-bind="viewrecipe.recipeDetail.source")
-      p.source Added by 
+      p.source(data-ng-if="viewrecipe.recipeDetail.addedBy") Added by 
         em(data-ng-bind="viewrecipe.recipeDetail.addedBy")
     table.full-table(cellpadding="0", cellspacing="0")
       thead
@@ -36,7 +36,7 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
               span Servings
     p.multiline(data-ng-if="viewrecipe.recipeDetail.description")
       em(data-ng-bind="viewrecipe.recipeDetail.description")
-    div(data-ng-if="viewrecipe.recipeDetail.ingredients")
+    div(data-ng-if="viewrecipe.recipeDetail.ingredients.length")
       h2 Ingredients:
       ul.ingredients.list
         li(data-ng-repeat="ingredient in viewrecipe.recipeDetail.ingredients", data-ng-bind="ingredient")
