@@ -69,9 +69,11 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function createKey() {
-    var recipeTitle = vm.recipeTitle;
-    recipeTitle = recipeTitle.replace(/\W+/g, '-').toLowerCase();
-    vm.recipeKey = recipeTitle;
+    if(vm.recipeTitle) {
+      var recipeTitle = vm.recipeTitle;
+      recipeTitle = recipeTitle.replace(/\W+/g, '-').toLowerCase();
+      vm.recipeKey = recipeTitle;
+    }
   }
   function createCategoryKey() {
     var categoryKey = vm.recipeCategory;

@@ -5,7 +5,12 @@ select
     border 1px solid $error-color
   &.btn
     &[disabled]
-      background-color $secondary-lighten
+      background-color $disabled-state
       &:hover
-        background-color $secondary-lighten
+        background-color $disabled-state
         cursor not-allowed
+.error-msg
+  padding 4px 8px
+  margin-left 8px
+  line-height 1.1em
+  display inline

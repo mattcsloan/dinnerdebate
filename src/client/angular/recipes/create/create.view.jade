@@ -4,13 +4,16 @@ h6.breadcrumb
   a(data-ui-sref="recipes") recipes
   span  &raquo; 
 h1(data-ng-bind="createrecipe.title")
+label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error", data-ng-show="createNewRecipe.$touched") Please fill in all required fields.
 .form
   form(name="createNewRecipe", novalidate)
     label Title:
-      em.helper-text.text-muted  Required
+      em.helper-text.text-muted(data-ng-hide="createNewRecipe.title.$touched && createNewRecipe.title.$invalid")  Required 
+      strong.helper-text.error.error-msg(data-ng-message="createNewRecipe.title.$error", data-ng-show="createNewRecipe.title.$touched && createNewRecipe.title.$invalid") Please add a recipe title.
     input(type="text", name="title" placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()", required)
     label Category:
-      em.helper-text.text-muted  Required
+      em.helper-text.text-muted(data-ng-hide="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid")  Required 
+      strong.helper-text.error.error-msg(data-ng-message="createNewRecipe.categories.$error", data-ng-show="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid") Please select a recipe category.
     select(name="categories", data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()", required)
       option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
   label.recipe-url Recipe URL: 
