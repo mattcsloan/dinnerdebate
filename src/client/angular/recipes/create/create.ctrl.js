@@ -96,7 +96,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       featured: vm.recipeFeatured
     })
     .success(function (res) {
-      $location.url('/recipes/view/' + res._id);
+      $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
     });
   }
 

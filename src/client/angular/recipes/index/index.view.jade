@@ -35,16 +35,16 @@ h1(data-ng-bind="recipes.title")
         th Servings
       tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: recipes.category | orderBy: recipes.orderCriteria")
         td.title
-          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key, recipeId: recipe._id})", data-ng-bind="recipe.name")
+          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-bind="recipe.name")
         td
-          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key, recipeId: recipe._id})", data-ng-if="recipe.prepTime")
+          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.prepTime")
             strong(data-ng-bind="recipe.prepTime")
             span Minutes
         td
-          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key, recipeId: recipe._id})", data-ng-if="recipe.cookTime")
+          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.cookTime")
             strong(data-ng-bind="recipe.cookTime")
             span Minutes
         td
-          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key, recipeId: recipe._id})", data-ng-if="recipe.servings")
+          a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
             strong(data-ng-bind="recipe.servings")
             span Servings
