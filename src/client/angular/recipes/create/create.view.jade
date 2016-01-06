@@ -8,11 +8,11 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
 .form
   form(name="createNewRecipe", novalidate)
     label Title:
-      em.helper-text.text-muted(data-ng-hide="createNewRecipe.title.$touched && createNewRecipe.title.$invalid")  Required 
+      em.helper-text.required(data-ng-hide="createNewRecipe.title.$touched && createNewRecipe.title.$invalid")  Required 
       strong.helper-text.error.error-msg(data-ng-message="createNewRecipe.title.$error", data-ng-show="createNewRecipe.title.$touched && createNewRecipe.title.$invalid") Please add a recipe title.
     input(type="text", name="title" placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()", required)
     label Category:
-      em.helper-text.text-muted(data-ng-hide="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid")  Required 
+      em.helper-text.required(data-ng-hide="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid")  Required 
       strong.helper-text.error.error-msg(data-ng-message="createNewRecipe.categories.$error", data-ng-show="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid") Please select a recipe category.
     select(name="categories", data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()", required)
       option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
@@ -62,6 +62,6 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")
   //- label Feature this item?:
   //- input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
-input(type="submit", value="Create Recipe", data-ng-disabled="createNewRecipe.$invalid", data-ng-click="createrecipe.addRecipe()").btn.inline
+input(type="submit", value="Create Recipe", data-ng-disabled="createNewRecipe.$invalid || !createrecipe.keyIsAvailable", data-ng-click="createrecipe.addRecipe()").btn.inline
 
 //- a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

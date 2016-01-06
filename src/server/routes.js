@@ -23,33 +23,49 @@ module.exports = function(app) {
 
     // create recipe
     app.post('/api/recipes', stormpath.loginRequired, function(req, res) {
-        var recipe = new Recipes({
-            name: req.body.name,
-            key: req.body.key,
-            description: req.body.description,
-            category: req.body.category,
-            categoryKey: req.body.categoryKey,
-            date: req.body.date,
-            source: req.body.source,
-            addedBy: req.body.addedBy,
-            prepTime: req.body.prepTime,
-            cookTime: req.body.cookTime,
-            ingredients: req.body.ingredients,
-            directions: req.body.directions,
-            pairings: req.body.pairings,
-            image: req.body.image,
-            servings: req.body.servings,
-            tags: req.body.tags,
-            featured: req.body.featured
-        });
-
         // use mongoose to add a new recipe in the database
-        recipe.save(function(err, recipes) {
-            if(err) {
+        // look for existing recipe with same name and category first
+        Recipes.findOne({
+            category: req.body.category, 
+            key: req.body.name
+        }, function(err, recipe) { 
+            if (err) {
                 res.send(err);
             }
-            res.json(201, recipes);
+            // check to see if response returned an already existing recipe
+            if (recipe == null) {
+                var recipe = new Recipes({
+                    name: req.body.name,
+                    key: req.body.key,
+                    description: req.body.description,
+                    category: req.body.category,
+                    categoryKey: req.body.categoryKey,
+                    date: req.body.date,
+                    source: req.body.source,
+                    addedBy: req.body.addedBy,
+                    prepTime: req.body.prepTime,
+                    cookTime: req.body.cookTime,
+                    ingredients: req.body.ingredients,
+                    directions: req.body.directions,
+                    pairings: req.body.pairings,
+                    image: req.body.image,
+                    servings: req.body.servings,
+                    tags: req.body.tags,
+                    featured: req.body.featured
+                });
+                recipe.save(function(err, recipes) {
+                    if(err) {
+                        res.send(err);
+                    }
+                    res.json(201, recipes);
+                });
+            } else {
+                console.log('Recipe already exists.');
+                res.send('Recipe already exists.');
+            }
         });
+
+
     });
 
     // get individual recipe by id

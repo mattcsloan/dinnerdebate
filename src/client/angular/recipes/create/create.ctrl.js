@@ -77,6 +77,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       keyAvailability();
     } else {
       vm.recipeKey = '';
+      vm.keyIsAvailable = true;
     }
   }
 
@@ -110,31 +111,35 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function addRecipe() {
-    if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey && vm.keyIsAvailable) {
-      vm.recipeDate = Date.now();
-      Recipe.createNew( 
-      { 
-        name: vm.recipeTitle,
-        key: vm.recipeKey, // auto generated
-        description: vm.recipeDescription,
-        category: vm.recipeCategory,
-        categoryKey: vm.categoryKey, // auto generated
-        date: vm.recipeDate,
-        source: vm.recipeSource,
-        addedBy: vm.recipeAddedBy,
-        prepTime: vm.recipePrepTime,
-        cookTime: vm.recipeCookTime,
-        ingredients: vm.ingredients,
-        directions: vm.recipeDirections,
-        pairings: vm.recipePairings,
-        image: vm.recipeImage,
-        servings: vm.recipeServings,
-        tags: vm.tags,
-        featured: vm.recipeFeatured
-      })
-      .success(function (res) {
-        $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
-      });
+    if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey) {
+      if(vm.keyIsAvailable) {
+        vm.recipeDate = Date.now();
+        Recipe.createNew( 
+        { 
+          name: vm.recipeTitle,
+          key: vm.recipeKey, // auto generated
+          description: vm.recipeDescription,
+          category: vm.recipeCategory,
+          categoryKey: vm.categoryKey, // auto generated
+          date: vm.recipeDate,
+          source: vm.recipeSource,
+          addedBy: vm.recipeAddedBy,
+          prepTime: vm.recipePrepTime,
+          cookTime: vm.recipeCookTime,
+          ingredients: vm.ingredients,
+          directions: vm.recipeDirections,
+          pairings: vm.recipePairings,
+          image: vm.recipeImage,
+          servings: vm.recipeServings,
+          tags: vm.tags,
+          featured: vm.recipeFeatured
+        })
+        .success(function (res) {
+          $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
+        });
+      } else {
+        console.log('key is not available');
+      }
     } else {
       console.log('required fields not met');
     }
