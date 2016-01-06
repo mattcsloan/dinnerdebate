@@ -43,6 +43,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.categoryKey = vm.recipeDetail.categoryKey;
         vm.date = vm.recipeDetail.date;
         vm.source = vm.recipeDetail.source;
+        vm.sourceURL = vm.recipeDetail.sourceURL;
         vm.addedBy = vm.recipeDetail.addedBy;
         vm.prepTime = vm.recipeDetail.prepTime;
         vm.cookTime = vm.recipeDetail.cookTime;
@@ -53,8 +54,6 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.servings = vm.recipeDetail.servings;
         vm.tags = vm.recipeDetail.tags;
         vm.featured = vm.recipeDetail.featured;
-
-        // vm.categoryKey = vm.recipeDetail.category.replace(/\W+/g, '-').toLowerCase();
       }
     })
     .error(function(data, status) {
@@ -70,6 +69,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       categoryKey: vm.categoryKey,
       date: vm.date,
       source: vm.source,
+      sourceURL: vm.sourceURL,
       addedBy: vm.addedBy,
       prepTime: vm.prepTime,
       cookTime: vm.cookTime,

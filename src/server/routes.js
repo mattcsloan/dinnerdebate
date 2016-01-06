@@ -42,6 +42,7 @@ module.exports = function(app) {
                     categoryKey: req.body.categoryKey,
                     date: req.body.date,
                     source: req.body.source,
+                    sourceURL: req.body.sourceURL,
                     addedBy: req.body.addedBy,
                     prepTime: req.body.prepTime,
                     cookTime: req.body.cookTime,
@@ -112,6 +113,7 @@ module.exports = function(app) {
             recipe.categoryKey = req.body.categoryKey;
             recipe.date = req.body.date;
             recipe.source = req.body.source;
+            recipe.sourceURL = req.body.sourceURL;
             recipe.addedBy = req.body.addedBy;
             recipe.prepTime = req.body.prepTime;
             recipe.cookTime = req.body.cookTime;

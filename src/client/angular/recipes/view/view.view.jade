@@ -12,7 +12,10 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
       p.timestamp Added on 
         span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
       p.source(data-ng-if="viewrecipe.recipeDetail.source") Recipe by 
-        em(data-ng-bind="viewrecipe.recipeDetail.source")
+        a(data-ng-show="viewrecipe.recipeDetail.sourceURL", href="{{viewrecipe.recipeDetail.sourceURL}}", target="_blank", data-ng-bind="viewrecipe.recipeDetail.source")
+        em(data-ng-hide="viewrecipe.recipeDetail.sourceURL", data-ng-bind="viewrecipe.recipeDetail.source")
+      p.source(data-ng-if="viewrecipe.recipeDetail.sourceURL && !viewrecipe.recipeDetail.source") Recipe by 
+        a(data-ng-show="viewrecipe.recipeDetail.sourceURL", href="{{viewrecipe.recipeDetail.sourceURL}}", target="_blank", data-ng-bind="viewrecipe.recipeDetail.sourceURL")
       p.source(data-ng-if="viewrecipe.recipeDetail.addedBy") Added by 
         em(data-ng-bind="viewrecipe.recipeDetail.addedBy")
     table.full-table(cellpadding="0", cellspacing="0")

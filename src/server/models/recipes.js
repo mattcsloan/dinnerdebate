@@ -9,6 +9,7 @@ module.exports = mongoose.model('Recipes', {
     categoryKey : {type : String, default: ''},
     date : {type : Date},
     source : {type : String, default: ''},
+    sourceURL : {type : String, default: ''},
     addedBy : {type : String, default: ''},
     prepTime : {type : Number, default: ''},
     cookTime : {type : Number, default: ''},
