@@ -22,14 +22,16 @@ label Category Key:
 input(type="text", value="editrecipe.recipeDetail.categoryKey", data-ng-model="editrecipe.categoryKey")
 label Date:
 p(data-ng-bind="editrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
+label.mgn-btm-16 Added By: 
+  strong(data-ng-bind="editrecipe.addedBy.fullName")
+//- label Added By:
+//- input(type="text", value="editrecipe.recipeDetail.addedBy", data-ng-model="editrecipe.addedBy")
 label Source Name: 
   em.helper-text.text-muted (Person or Company/Website Name)
 input(type="text", value="editrecipe.recipeDetail.source", data-ng-model="editrecipe.source")
 label Source URL: 
   em.helper-text.text-muted (if applicable)
 input(type="text", value="editrecipe.recipeDetail.sourceURL", data-ng-model="editrecipe.sourceURL")
-label Added By:
-input(type="text", value="editrecipe.recipeDetail.addedBy", data-ng-model="editrecipe.addedBy")
 label Prep Time:
 input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
 label Cook Time:

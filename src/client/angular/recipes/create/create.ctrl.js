@@ -1,8 +1,16 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $location) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
   vm.title = 'Create New Recipe';
+
+  UserResource.getUser()
+    .success(function(data, status) {
+      vm.user = data;
+    })
+    .error(function(data, status) {
+      alert("Error retreiving user");
+    });
 
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
@@ -111,6 +119,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function addRecipe() {
+    console.log(vm.recipeAddedBy);
     if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey) {
       if(vm.keyIsAvailable) {
         vm.recipeDate = Date.now();
@@ -124,7 +133,10 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           date: vm.recipeDate,
           source: vm.recipeSource,
           sourceURL: vm.recipeSourceURL,
-          addedBy: vm.recipeAddedBy,
+          addedBy: {
+            username: vm.user.username,
+            fullName: vm.user.fullName
+          },
           prepTime: vm.recipePrepTime,
           cookTime: vm.recipeCookTime,
           ingredients: vm.ingredients,

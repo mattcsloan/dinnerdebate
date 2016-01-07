@@ -10,7 +10,10 @@ module.exports = mongoose.model('Recipes', {
     date : {type : Date},
     source : {type : String, default: ''},
     sourceURL : {type : String, default: ''},
-    addedBy : {type : String, default: ''},
+    addedBy : {
+        username : {type : String },
+        fullName : {type : String }
+    },
     prepTime : {type : Number, default: ''},
     cookTime : {type : Number, default: ''},
     ingredients : {type : Array, default: []},

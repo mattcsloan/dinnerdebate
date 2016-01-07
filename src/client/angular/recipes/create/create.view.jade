@@ -26,14 +26,14 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     span.error(data-ng-show="!createrecipe.keyIsAvailable && createrecipe.completedKeys && createrecipe.showURLStatus") This url is not available because another recipe has the same category and title. Please update the title of your recipe or change its category.
   label Description:
   textarea(placeholder="Recipe Description", name="description", data-ng-model="createrecipe.recipeDescription")
+  label.mgn-btm-16(data-ng-if="createrecipe.user.fullName && createrecipe.user.username") Added By: 
+    strong(data-ng-bind="createrecipe.user.fullName")
   label Source Name: 
-    em.helper-text.text-muted (Person or Company/Website Name)
+    em.helper-text.text-muted (Person or Company/Website Name - if other than yourself)
   input(type="text", name="source", placeholder="Source", data-ng-model="createrecipe.recipeSource")
   label Source URL: 
     em.helper-text.text-muted (if applicable)
   input(type="text", name="sourceURL", placeholder="Source URL", data-ng-model="createrecipe.recipeSourceURL")
-  label Added By:
-  input(type="text", name="addedBy", placeholder="Added By", data-ng-model="createrecipe.recipeAddedBy")
   label Prep Time:
   input.inline.push-left(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
   span.mgn-left-16 Minutes
