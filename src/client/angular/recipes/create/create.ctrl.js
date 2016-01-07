@@ -9,7 +9,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       vm.user = data;
     })
     .error(function(data, status) {
-      alert("Error retreiving user");
+      console.log("Error retreiving user");
     });
 
   vm.addRecipe = addRecipe;
