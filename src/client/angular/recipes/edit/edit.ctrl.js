@@ -11,6 +11,74 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.addTag = addTag;
   vm.removeTag = removeTag;
 
+
+  vm.createKey = createKey;
+  vm.createCategoryKey = createCategoryKey;
+  vm.keyAvailability = keyAvailability;
+  vm.urlBase = location.host;
+  vm.showURLStatus = true;
+  vm.keyIsAvailable = true;
+  vm.initialKeyStatus = true;
+
+  function createKey() {
+    if(vm.name) {
+      var recipeTitle = vm.name;
+      recipeTitle = recipeTitle.replace(/\W+/g, '-').toLowerCase();
+      vm.key = recipeTitle;
+      keyAvailability();
+    } else {
+      vm.key = '';
+      vm.keyIsAvailable = true;
+    }
+  }
+
+  function createCategoryKey() {
+    var categoryKey = vm.category;
+    categoryKey = categoryKey.replace(/\W+/g, '-').toLowerCase();
+    vm.categoryKey = categoryKey;
+    keyAvailability();
+  }
+
+  function keyAvailability() {
+    vm.initialKeyStatus = false;
+    //if key values aren't empty and they're not equal to the existing url
+
+    console.log('vm.categoryKey: ' + vm.categoryKey + '; vm.key:' + vm.key);
+    console.log('vm.recipeDetail.categoryKey: ' + vm.recipeDetail.categoryKey + '; vm.recipeDetail.key:' + vm.recipeDetail.key);
+    if(vm.categoryKey != '' && vm.key != '') {
+      if(vm.categoryKey == vm.recipeDetail.categoryKey && vm.key == vm.recipeDetail.key) {
+        //the values are equal to the current URL
+        vm.keyIsAvailable = true;
+        vm.completedKeys = true;
+        vm.showURLStatus = true;
+        console.log('same as url');
+      } else {
+        Recipe.getOne(vm.categoryKey, vm.key)
+          .success(function(data, status) {
+            if(data) {
+              vm.keyIsAvailable = false;
+            } else {
+              vm.keyIsAvailable = true;
+            }
+            vm.showURLStatus = true;
+          })
+          .error(function(data, status) {
+            console.log(status = ': ' + data);
+          });
+      }
+      vm.completedKeys = true;
+    } else {
+      console.log('else statement');
+      vm.keyIsAvailable = false;
+      vm.completedKeys = false;
+      vm.showURLStatus = false;
+    }
+    console.log('keyIsAvailable:' + vm.keyIsAvailable + '; ' + 'completedKeys:' + vm.completedKeys + '; ' + 'showURLStatus:' + vm.showURLStatus);
+  }
+
+
+
+
   vm.categoryOptions = [
     "Appetizers",
     "Breads and Muffins",
@@ -31,8 +99,9 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {
-      if(data.name === "CastError") {
-        vm.recipeTitle = "error";
+      if(data == null) {
+        console.log('Recipe does not exist');
+        $location.url('/recipes?message=Recipe%20does%20not%20exist.');
       } else {
         vm.recipeDetail = data;
 
@@ -57,7 +126,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       }
     })
     .error(function(data, status) {
-      alert("Error retreiving recipe");
+      console.log("Error retreiving recipe");
     });
 
   function updateRecipe() {

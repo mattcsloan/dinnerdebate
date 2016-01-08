@@ -1,4 +1,4 @@
-angular.module('RecipesViewCtrl', []).controller('RecipesViewController', function(Page, Recipe, categoryKey, recipeName) {
+angular.module('RecipesViewCtrl', []).controller('RecipesViewController', function(Page, Recipe, $location, categoryKey, recipeName) {
   var vm = this;
 
   Page.setTitle('View Recipe');   
@@ -8,8 +8,9 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
 
   Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {
-      if(data.name === "CastError") {
-        vm.recipeTitle = "error";
+      if(data == null) {
+        console.log('Recipe does not exist');
+        $location.url('/recipes?message=Recipe%20does%20not%20exist.');
       } else {
         vm.recipeDetail = data;
       }
