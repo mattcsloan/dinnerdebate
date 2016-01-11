@@ -4,12 +4,20 @@ var stormpath      = require('express-stormpath')
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var mongoose	     = require('mongoose');
+var mongoose       = require('mongoose');
+var cloudinary     = require('cloudinary');
 
 // configuration ===========================================
     
-// config files
+// config
 var db = require('./src/server/config/db');
+
+// cloudinary set through .env file instead
+// cloudinary.config({ 
+//   cloud_name: 'sloan', 
+//   api_key: 'XXXXX', 
+//   api_secret: 'XXXXX' 
+// });
 
 // set our port
 var port = process.env.PORT || 5000; 

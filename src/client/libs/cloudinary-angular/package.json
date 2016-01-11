@@ -1,0 +1,61 @@
+{
+  "name": "cloudinary-angular",
+  "version": "1.0.0",
+  "description": "Cloudinary Angular module",
+  "main": "cloudinary-angular",
+  "author": {
+    "name": "Tinus Aamand Norstved"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/tinusn/cloudinary-angular.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tinusn/cloudinary-angular/issues"
+  },
+  "keywords": [
+    "cloudinary"
+  ],
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "scripts": {
+    "start": "gulp"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-ng-annotate": "^1.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-typescript": "^2.9.0",
+    "gulp-uglify": "^1.4.1",
+    "gulp-usemin": "^0.3.14",
+    "merge2": "^0.3.6",
+    "rimraf": "^2.4.3"
+  },
+  "gitHead": "d6a03e54a4460e8849e874450df00bdd58f68916",
+  "homepage": "https://github.com/tinusn/cloudinary-angular#readme",
+  "_id": "cloudinary-angular@1.0.0",
+  "_shasum": "f448e5d9b1ac79700f4e482f540436a0817c15d8",
+  "_from": "cloudinary-angular@*",
+  "_npmVersion": "3.3.4",
+  "_nodeVersion": "4.1.0",
+  "_npmUser": {
+    "name": "tinusn",
+    "email": "tinus@short.dk"
+  },
+  "dist": {
+    "shasum": "f448e5d9b1ac79700f4e482f540436a0817c15d8",
+    "tarball": "http://registry.npmjs.org/cloudinary-angular/-/cloudinary-angular-1.0.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "tinusn",
+      "email": "tinus@short.dk"
+    }
+  ],
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/cloudinary-angular/-/cloudinary-angular-1.0.0.tgz"
+}

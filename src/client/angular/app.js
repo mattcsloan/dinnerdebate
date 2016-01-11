@@ -4,6 +4,7 @@ var app = angular.module('app', [
   'appRoutes', 
   'stormpath',
   'stormpath.templates',
+  'cloudinary',
   'app.factories',
   'app.filters',
   'MainCtrl', 
@@ -23,3 +24,14 @@ app.run(function($stormpath){
     defaultPostLoginState: 'dashboard'
   });
 });
+
+function configure(CloudinaryProvider) {
+  CloudinaryProvider.configure({
+    cloud_name: 'sloan',
+    api_key: '322518488897182'
+  });
+}
+
+angular
+    .module('app')
+    .config(['CloudinaryProvider', configure]);

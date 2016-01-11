@@ -1,4 +1,4 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location, $http, Cloudinary) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
@@ -26,6 +26,9 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     vm.recipeCategory,
     vm.categoryKey
   ];
+
+  vm.uploadImage = uploadImage;
+  vm.photoUrl = Cloudinary.url('sample', { format: 'jpg', 'height': 30, 'width': 30 });
 
   vm.categoryOptions = [
     "Appetizers",
@@ -156,6 +159,33 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     } else {
       console.log('required fields not met');
     }
+  }
+
+  function uploadImage() {
+    console.log('beginning upload');
+    // cloudinary.uploader.upload("http://www.cookingclassy.com/wp-content/uploads/2015/05/skinny-banana-bread6-srgb.1.jpg", function(result) { 
+    //   console.log(result); 
+
+
+
+    var file = vm.uploadedImage;
+    var cloud_name = 'sloan';
+
+    var fd = new FormData();
+
+    fd.append('upload_preset', 'seller');
+    fd.append('file', file);
+
+    $http
+      .post('https://api.cloudinary.com/v1_1/' + cloud_name + '/image/upload', fd)
+      .success(function (cloudinaryResponse) {
+          // do stuff with cloudinary response
+          // cloudinaryResponse = { public_id: ..., etc. }
+        console.log(cloudinaryResponse);
+      })
+      .error(function (reponse) {
+        console.log('error uploading file');
+      });
   }
 
 });

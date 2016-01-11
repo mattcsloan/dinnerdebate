@@ -156,6 +156,18 @@ module.exports = function(app) {
         });
     });
 
+    // get all recipes by user
+    // app.get('/api/recipes/by/', function(req, res) {
+    //     // use mongoose to get all recipes in the database
+    //     Recipes.find(function(err, recipes) {
+    //         if (err) {
+    //             res.send(err);
+    //         }
+    //         res.json(recipes); // return all recipes in JSON format
+    //     });
+    // });
+
+
     // authentication routes
     app.get('/auth/user', stormpath.loginRequired, function (req, res) {
       if (!req.user || req.user.status !== 'ENABLED') {

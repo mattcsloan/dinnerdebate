@@ -58,6 +58,18 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   label Upload Image:
   input(type="text", placeholder="Upload Image", data-ng-model="createrecipe.recipeImage")
+
+
+
+  form(data-ng-submit="createrecipe.uploadImage()")
+    input(type="file", name="uploadedImage" placeholder="Upload Image" data-ng-model="createrecipe.uploadedImage")
+    input.btn(type="submit")
+
+  //- a(data-ng-click="createrecipe.uploadImage()") Upload sample image
+
+  span(data-ng-bind="createrecipe.photoUrl")
+
+
   label Number of Servings:
   input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
   label Tags:
