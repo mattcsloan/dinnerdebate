@@ -57,26 +57,16 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   label Recipe Pairings:
   input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   label Upload Image:
-
-
-
-
-
-
-  //- form
-  //-   input(type="file", ng-file-select="createrecipe.fileSelected($files)", accept="'image/*'")
-  //-   input(type="submit", data-ng-click="createrecipe.uploadFile()")
-
-  button(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") Select File
-
-  div {{ createrecipe.f.name }} {{createrecipe.errFile.name}} {{createrecipe.errFile.$error}} {{createrecipe.errFile.$errorParam}}
+  button.btn(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") Select File
+  .upload-status
+    span(data-ng-if="createrecipe.f.name", data-ng-bind="createrecipe.f.name")
+    span(data-ng-if="createrecipe.errFile.name", data-ng-bind="createrecipe.errFile.name")
+    span(data-ng-if="createrecipe.errFile.$error", data-ng-bind="createrecipe.errFile.$error")
+    span(data-ng-if="createrecipe.errFile.$errorParam", data-ng-bind="createrecipe.errFile.$errorParam")
+    span(data-ng-if="createrecipe.errorMsg", data-ng-bind="createrecipe.errorMsg")
     span.progress(data-ng-show="createrecipe.f.progress >= 0")
       div(style="width:{{createrecipe.f.progress}}%", data-ng-bind="createrecipe.f.progress + '%'")
-  p {{createrecipe.errorMsg}}
-  img(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
-
-
-
+  img.upload-preview(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
 
   label Number of Servings:
   input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")

@@ -162,52 +162,31 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function uploadFile(file, errFiles) {
-    //vm.fileSelected = function(files) {
-     // if (files && files.length) {
-     //    vm.file = files[0];
-     // }
- 
-      // $upload.upload({
-      //   url: "/api/upload",
-      //   file: vm.file
-      // })
-      // .success(function(data) {
-      //   console.log(data, 'uploaded');
-      // });
- 
-    //};
-
     if(vm.recipeKey) {
       vm.newFileName = vm.recipeKey;
     } else {
       vm.newFileName = 'recipe-image';
     }
-
     vm.f = file;
     vm.errFile = errFiles && errFiles[0];
     if (file) {
-        file.upload = Upload.upload({
-            url: '/api/upload',
-            data: {file: file, fileName: vm.newFileName},
-        });
-
-        // file.rename = Upload.rename(file, vm.newFileName + '.jpg');
-        // file.rename();
-
-        file.upload.then(function (response) {
-            $timeout(function () {
-                vm.recipeImage = response.data;
-            });
-        }, function (response) {
-            if (response.status > 0)
-                vm.errorMsg = response.status + ': ' + response.data;
-        }, function (evt) {
-            file.progress = Math.min(100, parseInt(100.0 * 
-                                     evt.loaded / evt.total));
-        });
+      file.upload = Upload.upload({
+          url: '/api/upload',
+          data: {file: file, fileName: vm.newFileName},
+      });
+      // file.rename = Upload.rename(file, vm.newFileName + '.jpg');
+      // file.rename();
+      file.upload.then(function (response) {
+          $timeout(function () {
+              vm.recipeImage = response.data;
+          });
+      }, function (response) {
+          if (response.status > 0)
+              vm.errorMsg = response.status + ': ' + response.data;
+      }, function (evt) {
+          file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+      });
     } 
-
-
   };
 
 });
