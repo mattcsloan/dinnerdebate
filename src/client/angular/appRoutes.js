@@ -63,7 +63,32 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
                     recipes: {
                         templateUrl: '/templates/recipes/index/index.view.html',
                         controller: 'RecipesController',
-                        controllerAs: 'recipes'
+                        controllerAs: 'recipes',
+                        resolve: {
+                            categoryName: function() {
+                                return '';
+                            }
+                        }
+                    }
+                }
+            })
+
+            .state('recipes.categories', {
+                url: '/category/:categoryName',
+                views: {
+                    recipes: {
+                        templateUrl: '/templates/recipes/index/index.view.html',
+                        controller: 'RecipesController',
+                        controllerAs: 'recipes',
+                        resolve: {
+                            categoryName: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.categoryName) {
+                                    $state.go('recipes');
+                                }  else {
+                                    return $stateParams.categoryName;
+                                }                               
+                            }]
+                        }
                     }
                 }
             })
@@ -83,18 +108,25 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             })
 
             .state('recipes.view', {
-                url: '/view/:recipeId',
+                url: '/view/:categoryKey/:recipeName',
                 views: {
                     recipes: {
                         templateUrl: '/templates/recipes/view/view.view.html',
                         controller: 'RecipesViewController',
                         controllerAs: 'viewrecipe',
                         resolve: {
-                            recipeId: ['$stateParams', '$state', function($stateParams, $state){
-                                if(!$stateParams.recipeId) {
+                            categoryKey: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.categoryKey) {
                                     $state.go('recipes');
                                 }  else {
-                                    return $stateParams.recipeId;
+                                    return $stateParams.categoryKey;
+                                }                               
+                            }],
+                            recipeName: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.recipeName) {
+                                    $state.go('recipes');
+                                }  else {
+                                    return $stateParams.recipeName;
                                 }                               
                             }]
                         }
@@ -103,18 +135,25 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             })
 
             .state('recipes.edit', {
-                url: '/edit/:recipeId',
+                url: '/edit/:categoryKey/:recipeName',
                 views: {
                     recipes: {
                         templateUrl: '/templates/recipes/edit/edit.view.html',
                         controller: 'RecipesEditController',
                         controllerAs: 'editrecipe',
                         resolve: {
-                            recipeId: ['$stateParams', '$state', function($stateParams, $state){
-                                if(!$stateParams.recipeId) {
+                            categoryKey: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.categoryKey) {
                                     $state.go('recipes');
                                 }  else {
-                                    return $stateParams.recipeId;
+                                    return $stateParams.categoryKey;
+                                }                               
+                            }],
+                            recipeName: ['$stateParams', '$state', function($stateParams, $state){
+                                if(!$stateParams.recipeName) {
+                                    $state.go('recipes');
+                                }  else {
+                                    return $stateParams.recipeName;
                                 }                               
                             }]
                         }

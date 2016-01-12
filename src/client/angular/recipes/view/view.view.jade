@@ -2,6 +2,8 @@ h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
   a(data-ui-sref="recipes") recipes
+  span  &raquo; 
+  a(data-ui-sref="recipes.categories({categoryName: viewrecipe.categoryKey})", data-ng-bind="viewrecipe.recipeDetail.category | lowercase")
   span  &raquo;
 h1(data-ng-bind="viewrecipe.recipeDetail.name")
 .recipe
@@ -9,8 +11,15 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
     .info
       p.timestamp Added on 
         span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
-      p.source Recipe by 
-        em(data-ng-bind="viewrecipe.recipeDetail.source")
+      p.source(data-ng-if="viewrecipe.recipeDetail.source") Recipe by 
+        a(data-ng-show="viewrecipe.recipeDetail.sourceURL", href="{{viewrecipe.recipeDetail.sourceURL}}", target="_blank", data-ng-bind="viewrecipe.recipeDetail.source")
+        em(data-ng-hide="viewrecipe.recipeDetail.sourceURL", data-ng-bind="viewrecipe.recipeDetail.source")
+      p.source(data-ng-if="viewrecipe.recipeDetail.sourceURL && !viewrecipe.recipeDetail.source") Recipe by 
+        a(data-ng-show="viewrecipe.recipeDetail.sourceURL", href="{{viewrecipe.recipeDetail.sourceURL}}", target="_blank", data-ng-bind="viewrecipe.recipeDetail.sourceURL")
+      p.source(data-ng-if="viewrecipe.recipeDetail.addedBy.fullName")
+        span(data-ng-if="viewrecipe.recipeDetail.source") Added by 
+        span(data-ng-if="!viewrecipe.recipeDetail.source") Recipe by 
+        em(data-ng-bind="viewrecipe.recipeDetail.addedBy.fullName")
     table.full-table(cellpadding="0", cellspacing="0")
       thead
         tr
@@ -32,7 +41,7 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
               span Servings
     p.multiline(data-ng-if="viewrecipe.recipeDetail.description")
       em(data-ng-bind="viewrecipe.recipeDetail.description")
-    div(data-ng-if="viewrecipe.recipeDetail.ingredients")
+    div(data-ng-if="viewrecipe.recipeDetail.ingredients.length")
       h2 Ingredients:
       ul.ingredients.list
         li(data-ng-repeat="ingredient in viewrecipe.recipeDetail.ingredients", data-ng-bind="ingredient")
@@ -46,9 +55,6 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
     .pills(data-ng-if="viewrecipe.recipeDetail.tags.length")
       label.pill-label Tags:
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
-    .pills(data-ng-if="viewrecipe.recipeDetail.category")
-      label.pill-label Category:
-      span.pill(data-ng-bind="viewrecipe.recipeDetail.category")
   .media(data-ng-if="viewrecipe.recipeDetail.image")
     img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
-a.btn(data-ui-sref="recipes.edit({recipeId: viewrecipe.recipeId})") Edit Recipe
+a.btn(data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit Recipe

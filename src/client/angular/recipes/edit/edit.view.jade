@@ -3,23 +3,37 @@ h6.breadcrumb
   span  &raquo; 
   a(data-ui-sref="recipes") recipes
   span  &raquo; 
-  a(data-ui-sref="recipes.view({recipeId: editrecipe.recipeId})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
+  a(data-ui-sref="recipes.categories({categoryName: editrecipe.recipeDetail.categoryKey})", data-ng-bind="editrecipe.recipeDetail.category | lowercase")
+  span  &raquo; 
+  a(data-ui-sref="recipes.view({categoryKey: editrecipe.recipeDetail.categoryKey, recipeName: editrecipe.recipeDetail.key})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
   span  &raquo; 
 h1 Edit
 
 label Title:
-input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name")
+input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name", data-ng-blur="editrecipe.createKey()")
 label Category:
-select(data-ng-model="editrecipe.category")
+select(data-ng-model="editrecipe.category", data-ng-change="editrecipe.createCategoryKey()")
   option(data-ng-repeat="option in editrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+label.recipe-url Recipe URL: 
+  span(data-ng-show="(editrecipe.keyIsAvailable && editrecipe.showURLStatus) || editrecipe.initialKeyStatus")
+    span.text-muted(data-ng-bind="editrecipe.urlBase")
+    span.text-muted /recipes/view/
+    span.text-muted(data-ng-bind="editrecipe.categoryKey")
+    span.text-muted /
+    span.text-muted(data-ng-bind="editrecipe.key")
+  span.error(data-ng-show="!editrecipe.keyIsAvailable && editrecipe.completedKeys && editrecipe.showURLStatus") This url is not available because another recipe has the same category and title. Please update the title of your recipe or change its category.
 label Description:
 textarea(value="editrecipe.recipeDetail.description", data-ng-model="editrecipe.description")
-label Key:
-input(type="text", value="editrecipe.recipeDetail.key", data-ng-model="editrecipe.key")
 label Date:
 p(data-ng-bind="editrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
-label Source:
+label.mgn-btm-16 Added By: 
+  strong(data-ng-bind="editrecipe.addedBy.fullName")
+label Source Name: 
+  em.helper-text.text-muted (Person or Company/Website Name)
 input(type="text", value="editrecipe.recipeDetail.source", data-ng-model="editrecipe.source")
+label Source URL: 
+  em.helper-text.text-muted (if applicable)
+input(type="text", value="editrecipe.recipeDetail.sourceURL", data-ng-model="editrecipe.sourceURL")
 label Prep Time:
 input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
 label Cook Time:
@@ -37,7 +51,19 @@ textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.d
 label Recipe Pairings:
 input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 label Image:
-input(type="text", value="editrecipe.recipeDetail.image", data-ng-model="editrecipe.image")
+img.upload-preview(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
+p.text-muted(data-ng-hide="editrecipe.image") No image provided.
+
+button.btn(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") Upload New Photo
+.upload-status
+  span(data-ng-if="editrecipe.f.name", data-ng-bind="editrecipe.f.name")
+  span(data-ng-if="editrecipe.errFile.name", data-ng-bind="editrecipe.errFile.name")
+  span(data-ng-if="editrecipe.errFile.$error", data-ng-bind="editrecipe.errFile.$error")
+  span(data-ng-if="editrecipe.errFile.$errorParam", data-ng-bind="editrecipe.errFile.$errorParam")
+  span(data-ng-if="editrecipe.errorMsg", data-ng-bind="editrecipe.errorMsg")
+  span.progress(data-ng-show="editrecipe.f.progress >= 0")
+    div(style="width:{{editrecipe.f.progress}}%", data-ng-bind="editrecipe.f.progress + '%'")
+
 label Number of Servings:
 input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
 label Tags:
@@ -48,8 +74,8 @@ label Tags:
 form(data-ng-submit="editrecipe.addTag()")
   input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")
-label Feature this item?:
-input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
+//- label Feature this item?:
+//- input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
 
 .btn-panel
   a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe

@@ -4,27 +4,45 @@ h6.breadcrumb
   a(data-ui-sref="recipes") recipes
   span  &raquo; 
 h1(data-ng-bind="createrecipe.title")
+label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error", data-ng-show="createNewRecipe.$touched") Please fill in all required fields.
 .form
-  label Title:
-  input(type="text", placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()")
-  label Category:
-  select(data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()")
-    option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+  form(name="createNewRecipe", novalidate)
+    label Title:
+      em.helper-text.required(data-ng-hide="createNewRecipe.title.$touched && createNewRecipe.title.$invalid")  Required 
+      strong.helper-text.error.error-msg(data-ng-message="createNewRecipe.title.$error", data-ng-show="createNewRecipe.title.$touched && createNewRecipe.title.$invalid") Please add a recipe title.
+    input(type="text", name="title" placeholder="Title", data-ng-model="createrecipe.recipeTitle", data-ng-blur="createrecipe.createKey()", required)
+    label Category:
+      em.helper-text.required(data-ng-hide="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid")  Required 
+      strong.helper-text.error.error-msg(data-ng-message="createNewRecipe.categories.$error", data-ng-show="createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid") Please select a recipe category.
+    select(name="categories", data-ng-model="createrecipe.recipeCategory", data-ng-change="createrecipe.createCategoryKey()", required)
+      option(data-ng-repeat="option in createrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
   label.recipe-url Recipe URL: 
-    span.text-muted(data-ng-bind="createrecipe.urlBase")
-    span.text-muted /recipes/view/
-    span.text-muted(data-ng-bind="createrecipe.categoryKey")
-    span.text-muted /
-    span.text-muted(data-ng-bind="createrecipe.recipeKey")
+    span(data-ng-show="createrecipe.keyIsAvailable && createrecipe.showURLStatus")
+      span.text-muted(data-ng-bind="createrecipe.urlBase")
+      span.text-muted /recipes/view/
+      span.text-muted(data-ng-bind="createrecipe.categoryKey")
+      span.text-muted /
+      span.text-muted(data-ng-bind="createrecipe.recipeKey")
+    span.error(data-ng-show="!createrecipe.keyIsAvailable && createrecipe.completedKeys && createrecipe.showURLStatus") This url is not available because another recipe has the same category and title. Please update the title of your recipe or change its category.
   label Description:
-  textarea(placeholder="Recipe Description", data-ng-model="createrecipe.recipeDescription")
-  label Source:
-  input(type="text", placeholder="Source", data-ng-model="createrecipe.recipeSource")
-  label Prep Time:
-  input.inline.push-left(type="text", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+  textarea(placeholder="Recipe Description", name="description", data-ng-model="createrecipe.recipeDescription")
+  label.mgn-btm-16(data-ng-if="createrecipe.user.fullName && createrecipe.user.username") Added By: 
+    strong(data-ng-bind="createrecipe.user.fullName")
+  label.mgn-btm-16
+    input(type="checkbox", data-ng-model="recipeOwnership")
+    | This is not my recipe
+  div(data-ng-show="recipeOwnership")
+    label Source Name: 
+      em.helper-text.text-muted (Person or Company/Website Name - if other than yourself)
+    input(type="text", name="source", placeholder="Source", data-ng-model="createrecipe.recipeSource")
+    label Source URL: 
+      em.helper-text.text-muted (if applicable)
+    input(type="text", name="sourceURL", placeholder="Source URL", data-ng-model="createrecipe.recipeSourceURL")
+  label.clear Prep Time:
+  input.inline.push-left(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
   span.mgn-left-16 Minutes
   label Cook Time:
-  input.inline.push-left(type="text", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+  input.inline.push-left(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   span.mgn-left-16 Minutes
   label Ingredients:
   ul.ingredients
@@ -39,7 +57,17 @@ h1(data-ng-bind="createrecipe.title")
   label Recipe Pairings:
   input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   label Upload Image:
-  input(type="text", placeholder="Upload Image", data-ng-model="createrecipe.recipeImage")
+  button.btn(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") Select File
+  .upload-status
+    span(data-ng-if="createrecipe.f.name", data-ng-bind="createrecipe.f.name")
+    span(data-ng-if="createrecipe.errFile.name", data-ng-bind="createrecipe.errFile.name")
+    span(data-ng-if="createrecipe.errFile.$error", data-ng-bind="createrecipe.errFile.$error")
+    span(data-ng-if="createrecipe.errFile.$errorParam", data-ng-bind="createrecipe.errFile.$errorParam")
+    span(data-ng-if="createrecipe.errorMsg", data-ng-bind="createrecipe.errorMsg")
+    span.progress(data-ng-show="createrecipe.f.progress >= 0")
+      div(style="width:{{createrecipe.f.progress}}%", data-ng-bind="createrecipe.f.progress + '%'")
+  img.upload-preview(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
+
   label Number of Servings:
   input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
   label Tags:
@@ -50,6 +78,8 @@ h1(data-ng-bind="createrecipe.title")
   form(data-ng-submit="createrecipe.addTag()")
     input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")
-  label Feature this item?:
-  input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
-a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe
+  //- label Feature this item?:
+  //- input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
+input(type="submit", value="Create Recipe", data-ng-disabled="createNewRecipe.$invalid || !createrecipe.keyIsAvailable", data-ng-click="createrecipe.addRecipe()").btn.inline
+
+//- a.btn(data-ng-click="createrecipe.addRecipe()") Create Recipe

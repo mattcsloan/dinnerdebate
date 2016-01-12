@@ -4,7 +4,8 @@ var stormpath      = require('express-stormpath')
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
-var mongoose	     = require('mongoose');
+var mongoose       = require('mongoose');
+var multer         = require('multer');
 
 // configuration ===========================================
     
@@ -62,6 +63,12 @@ app.use(stormpath.init(app, {
 
   }
 }));
+
+// app.use(multer({
+//   dest: __dirname + '/dist/uploads/'
+// }));
+
+multer({ dest: 'uploads/' })
 
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/dist')); 
