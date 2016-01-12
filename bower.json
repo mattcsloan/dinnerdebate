@@ -6,6 +6,8 @@
     "angular-resource": "~1.4.7",
     "angular-animate": "~1.4.7",
     "angular-ui-router": "~0.2.15",
-    "stormpath-sdk-angularjs": "latest"
+    "stormpath-sdk-angularjs": "latest",
+    "angular-file-upload": "~2.2.0",
+    "ng-file-upload": "~11.0.2"
   }
 }

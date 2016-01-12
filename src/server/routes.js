@@ -1,6 +1,9 @@
 var navigation = require('./data/navigation');
 var stormpath = require('express-stormpath');
 var Recipes = require('./models/recipes');
+var cloudinary = require('cloudinary');
+var multer = require('multer');
+var upload = multer({ dest: './uploads'});
 
 module.exports = function(app) {
 
@@ -155,6 +158,44 @@ module.exports = function(app) {
             }
         });
     });
+
+    app.post('/api/upload', upload.single('file'), function(req,res,next){
+      console.log(req.file);
+      res.status(204).end();
+
+      if(req.file) {
+        cloudinary.uploader.upload(req.file.path, function(result) {
+            if(result.url) {
+                console.log(result.url);
+                next();
+            } else {
+                res.json(error);
+            }
+        });
+      } else {
+        console.log('next');
+        next();
+      }
+
+    });
+    //     console.log('hit server upload api');
+    //     console.log(req.files.file);
+    //     res.json(200);
+    //     // if(req.files.file) {
+    //     //  // cloudinary.uploader.upload(req.files.file.path, function(result) {
+    //     //  //   if (result.url) {
+    //     //  //     req.imageLink = result.url
+    //     //  //     next();
+    //     //  //   } else {
+    //     //  //     res.json(error);
+    //     //  //   }
+    //     //  // });
+    //     //  console.log(req.files.file);
+    //     // } else {
+    //     //     console.log('next');
+    //     //  next();
+    //     // }
+    // });
 
     // authentication routes
     app.get('/auth/user', stormpath.loginRequired, function (req, res) {

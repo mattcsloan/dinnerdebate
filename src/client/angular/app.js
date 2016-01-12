@@ -4,6 +4,7 @@ var app = angular.module('app', [
   'appRoutes', 
   'stormpath',
   'stormpath.templates',
+  'ngFileUpload',
   'app.factories',
   'app.filters',
   'MainCtrl', 

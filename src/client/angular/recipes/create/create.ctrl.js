@@ -1,4 +1,4 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location, $timeout, Upload) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
@@ -12,6 +12,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       console.log("Error retreiving user");
     });
 
+  vm.uploadFile = uploadFile;
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
   vm.removeIngredient = removeIngredient;
@@ -157,5 +158,46 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       console.log('required fields not met');
     }
   }
+
+  function uploadFile(file, errFiles) {
+    //vm.fileSelected = function(files) {
+     // if (files && files.length) {
+     //    vm.file = files[0];
+     // }
+ 
+      // $upload.upload({
+      //   url: "/api/upload",
+      //   file: vm.file
+      // })
+      // .success(function(data) {
+      //   console.log(data, 'uploaded');
+      // });
+ 
+    //};
+
+
+    vm.f = file;
+    vm.errFile = errFiles && errFiles[0];
+    if (file) {
+        file.upload = Upload.upload({
+            url: '/api/upload',
+            data: {file: file}
+        });
+
+        file.upload.then(function (response) {
+            $timeout(function () {
+                file.result = response.data;
+            });
+        }, function (response) {
+            if (response.status > 0)
+                vm.errorMsg = response.status + ': ' + response.data;
+        }, function (evt) {
+            file.progress = Math.min(100, parseInt(100.0 * 
+                                     evt.loaded / evt.total));
+        });
+    } 
+
+
+  };
 
 });
