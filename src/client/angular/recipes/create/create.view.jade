@@ -57,7 +57,6 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   label Recipe Pairings:
   input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   label Upload Image:
-  input(type="text", placeholder="Upload Image", data-ng-model="createrecipe.recipeImage")
 
 
 
@@ -74,6 +73,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     span.progress(data-ng-show="createrecipe.f.progress >= 0")
       div(style="width:{{createrecipe.f.progress}}%", data-ng-bind="createrecipe.f.progress + '%'")
   p {{createrecipe.errorMsg}}
+  img(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
 
 
 

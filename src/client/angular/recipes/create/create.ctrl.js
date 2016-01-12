@@ -120,7 +120,9 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function addRecipe() {
-    console.log(vm.recipeAddedBy);
+    if(!vm.recipeImage) {
+      vm.recipeImage = null;
+    }
     if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey) {
       if(vm.keyIsAvailable) {
         vm.recipeDate = Date.now();
@@ -175,18 +177,26 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
  
     //};
 
+    if(vm.recipeKey) {
+      vm.newFileName = vm.recipeKey;
+    } else {
+      vm.newFileName = 'recipe-image';
+    }
 
     vm.f = file;
     vm.errFile = errFiles && errFiles[0];
     if (file) {
         file.upload = Upload.upload({
             url: '/api/upload',
-            data: {file: file}
+            data: {file: file, fileName: vm.newFileName},
         });
+
+        // file.rename = Upload.rename(file, vm.newFileName + '.jpg');
+        // file.rename();
 
         file.upload.then(function (response) {
             $timeout(function () {
-                file.result = response.data;
+                vm.recipeImage = response.data;
             });
         }, function (response) {
             if (response.status > 0)

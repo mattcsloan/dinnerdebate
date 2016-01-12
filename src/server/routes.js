@@ -159,43 +159,26 @@ module.exports = function(app) {
         });
     });
 
+    //upload image to cloudinary cdn
     app.post('/api/upload', upload.single('file'), function(req,res,next){
-      console.log(req.file);
-      res.status(204).end();
-
       if(req.file) {
+        var fileName = req.file.originalname.split('.');
+        fileName = fileName[0];
         cloudinary.uploader.upload(req.file.path, function(result) {
             if(result.url) {
-                console.log(result.url);
-                next();
+                res.json(200, result.url);
             } else {
                 res.json(error);
             }
+        }, { 
+            public_id: fileName
         });
       } else {
-        console.log('next');
-        next();
+        console.log('no file specified');
+        res.json(200);
       }
 
     });
-    //     console.log('hit server upload api');
-    //     console.log(req.files.file);
-    //     res.json(200);
-    //     // if(req.files.file) {
-    //     //  // cloudinary.uploader.upload(req.files.file.path, function(result) {
-    //     //  //   if (result.url) {
-    //     //  //     req.imageLink = result.url
-    //     //  //     next();
-    //     //  //   } else {
-    //     //  //     res.json(error);
-    //     //  //   }
-    //     //  // });
-    //     //  console.log(req.files.file);
-    //     // } else {
-    //     //     console.log('next');
-    //     //  next();
-    //     // }
-    // });
 
     // authentication routes
     app.get('/auth/user', stormpath.loginRequired, function (req, res) {
