@@ -1,4 +1,4 @@
-angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, $location, categoryKey, recipeName) {
+angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, $location, categoryKey, recipeName, $timeout, Upload) {
   var vm = this;
 
   Page.setTitle('Edit Recipe');   
@@ -10,11 +10,11 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.removeIngredient = removeIngredient;
   vm.addTag = addTag;
   vm.removeTag = removeTag;
-
-
+  vm.uploadFile = uploadFile;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
   vm.keyAvailability = keyAvailability;
+
   vm.urlBase = location.host;
   vm.showURLStatus = true;
   vm.keyIsAvailable = true;
@@ -178,5 +178,32 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     vm.tags.splice(item, 1);
   }
 
+  function uploadFile(file, errFiles) {
+    if(vm.recipeKey) {
+      vm.newFileName = vm.recipeKey;
+    } else {
+      vm.newFileName = 'recipe-image';
+    }
+    vm.f = file;
+    vm.errFile = errFiles && errFiles[0];
+    if (file) {
+      file.upload = Upload.upload({
+          url: '/api/upload',
+          data: {file: file, fileName: vm.newFileName},
+      });
+      // file.rename = Upload.rename(file, vm.newFileName + '.jpg');
+      // file.rename();
+      file.upload.then(function (response) {
+          $timeout(function () {
+              vm.image = response.data;
+          });
+      }, function (response) {
+          if (response.status > 0)
+              vm.errorMsg = response.status + ': ' + response.data;
+      }, function (evt) {
+          file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+      });
+    } 
+  };
 
 });

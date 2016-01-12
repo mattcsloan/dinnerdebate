@@ -1,6 +1,9 @@
 var navigation = require('./data/navigation');
 var stormpath = require('express-stormpath');
 var Recipes = require('./models/recipes');
+var cloudinary = require('cloudinary');
+var multer = require('multer');
+var upload = multer({ dest: './uploads'});
 
 module.exports = function(app) {
 
@@ -154,6 +157,27 @@ module.exports = function(app) {
                 });
             }
         });
+    });
+
+    //upload image to cloudinary cdn
+    app.post('/api/upload', upload.single('file'), function(req,res,next){
+      if(req.file) {
+        var fileName = req.file.originalname.split('.');
+        fileName = fileName[0];
+        cloudinary.uploader.upload(req.file.path, function(result) {
+            if(result.url) {
+                res.json(200, result.url);
+            } else {
+                res.json(error);
+            }
+        }, { 
+            public_id: fileName
+        });
+      } else {
+        console.log('no file specified');
+        res.json(200);
+      }
+
     });
 
     // authentication routes

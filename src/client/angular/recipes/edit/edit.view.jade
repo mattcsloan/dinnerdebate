@@ -51,7 +51,19 @@ textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.d
 label Recipe Pairings:
 input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 label Image:
-input(type="text", value="editrecipe.recipeDetail.image", data-ng-model="editrecipe.image")
+img.upload-preview(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
+p.text-muted(data-ng-hide="editrecipe.image") No image provided.
+
+button.btn(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") Upload New Photo
+.upload-status
+  span(data-ng-if="editrecipe.f.name", data-ng-bind="editrecipe.f.name")
+  span(data-ng-if="editrecipe.errFile.name", data-ng-bind="editrecipe.errFile.name")
+  span(data-ng-if="editrecipe.errFile.$error", data-ng-bind="editrecipe.errFile.$error")
+  span(data-ng-if="editrecipe.errFile.$errorParam", data-ng-bind="editrecipe.errFile.$errorParam")
+  span(data-ng-if="editrecipe.errorMsg", data-ng-bind="editrecipe.errorMsg")
+  span.progress(data-ng-show="editrecipe.f.progress >= 0")
+    div(style="width:{{editrecipe.f.progress}}%", data-ng-bind="editrecipe.f.progress + '%'")
+
 label Number of Servings:
 input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
 label Tags:
