@@ -64,7 +64,6 @@ module.exports = function(app) {
                     res.json(201, recipes);
                 });
             } else {
-                console.log('Recipe already exists.');
                 res.send('Recipe already exists.');
             }
         });

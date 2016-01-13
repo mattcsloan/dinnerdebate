@@ -151,7 +151,14 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           featured: vm.recipeFeatured
         })
         .success(function (res) {
-          $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
+          console.log(res);
+          if(res == 'Recipe already exists.') {
+            vm.keyIsAvailable = false;
+            vm.completedKeys = true;
+            vm.showURLStatus = true;
+          } else {
+            $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
+          }
         });
       } else {
         console.log('key is not available');
