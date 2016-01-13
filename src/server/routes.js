@@ -64,7 +64,6 @@ module.exports = function(app) {
                     res.json(201, recipes);
                 });
             } else {
-                console.log('Recipe already exists.');
                 res.send('Recipe already exists.');
             }
         });
@@ -163,15 +162,18 @@ module.exports = function(app) {
     app.post('/api/upload', upload.single('file'), function(req,res,next){
       if(req.file) {
         var fileName = req.file.originalname.split('.');
+        var randomNumber = Math.floor((Math.random() * 100000) + 1);
         fileName = fileName[0];
-        cloudinary.uploader.upload(req.file.path, function(result) {
+        cloudinary.uploader.upload(req.file.path, function(result, error) {
             if(result.url) {
                 res.json(200, result.url);
             } else {
                 res.json(error);
             }
         }, { 
-            public_id: fileName
+            public_id: randomNumber + '/' + fileName,
+            overwrite: false,
+            allowed_formats: ['jpg', 'jpeg', 'png', 'gif']
         });
       } else {
         console.log('no file specified');

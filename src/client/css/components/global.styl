@@ -183,6 +183,7 @@ button
 .helper-text
   font-size 12px
 .error
+.message
   background $error-bg
   color $error-color
   padding 16px
@@ -190,10 +191,17 @@ button
   margin 0 0 16px 0
   display block
   border-radius(4px)
+  &.inline
+    display inline-block
   .close
     color $error-color
     &:hover
       cursor pointer
+.message
+  background $info-bg
+  color $info-color
+  .close
+    color $info-color
 ul.list
   list-style none
   margin 16px 0
@@ -204,3 +212,34 @@ ul.list
     padding 6px 0
     margin 0
     border-bottom 1px solid $border-color-lighten
+.progress
+  background $border-color
+  border-radius(4px)
+  height 8px
+  display block
+  position relative
+  margin 24px 0 16px 0
+  > span
+    height 8px
+    border-radius(4px)
+    background $secondary-color
+    display block
+    transition(width 0.2s ease)
+  p
+    position absolute
+    bottom 12px
+    left 0
+    margin 0
+    font-size 12px
+    width 100%
+    strong
+      float right
+      color $secondary-color
+.upload-preview
+  background #fff
+  border 1px solid $border-color
+  border-radius(4px)
+  box-shadow 0 2px 2px rgba(0, 0, 0, 0.05)
+  margin-top 4px
+  padding 6px
+  box-sizing(border-box)
