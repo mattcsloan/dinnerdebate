@@ -183,7 +183,7 @@ button
 .helper-text
   font-size 12px
 .error
-.info
+.message
   background $error-bg
   color $error-color
   padding 16px
@@ -197,7 +197,7 @@ button
     color $error-color
     &:hover
       cursor pointer
-.info
+.message
   background $info-bg
   color $info-color
   .close
@@ -218,7 +218,7 @@ ul.list
   height 8px
   display block
   position relative
-  margin 32px 0 16px 0
+  margin 24px 0 16px 0
   > span
     height 8px
     border-radius(4px)
@@ -235,3 +235,11 @@ ul.list
     strong
       float right
       color $secondary-color
+.upload-preview
+  background #fff
+  border 1px solid $border-color
+  border-radius(4px)
+  box-shadow 0 2px 2px rgba(0, 0, 0, 0.05)
+  margin-top 4px
+  padding 6px
+  box-sizing(border-box)

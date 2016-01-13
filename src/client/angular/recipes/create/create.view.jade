@@ -56,24 +56,25 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   label Recipe Pairings:
   input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
-  label Upload Image:
-  button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Select File To Upload
-  .upload-status
-    span.error(data-ng-if="createrecipe.errFile.name") Error uploading 
-      strong
-        em(data-ng-bind="createrecipe.errFile.name")
-      | . Please make sure you are uploading an image file.
-    //- span.error(data-ng-if="createrecipe.errFile.$error", data-ng-bind="createrecipe.errFile.$error")
-    //- span.error(data-ng-if="createrecipe.errFile.$errorParam", data-ng-bind="createrecipe.errFile.$errorParam")
-    span.error(data-ng-if="createrecipe.errorMsg", data-ng-bind="createrecipe.errorMsg")
-  .progress(data-ng-show="createrecipe.f.progress >= 0")
-    span(style="width:{{createrecipe.f.progress}}%")
-    p.text-muted
-      em(data-ng-if="createrecipe.f.name", data-ng-bind="'Uploading ' + createrecipe.f.name")
-      strong(data-ng-bind="createrecipe.f.progress + '%'")
-  img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
-
-  label Number of Servings:
+  .secondary.pull-right
+    img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
+  .main.pull-left
+    label Upload Image:
+    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Select File To Upload
+    .upload-status(data-ng-if="createrecipe.errFile.name || createrecipe.errorMsg")
+      span.error(data-ng-if="createrecipe.errFile.name") Error uploading 
+        strong
+          em(data-ng-bind="createrecipe.errFile.name")
+        | . Please make sure you are uploading an image file.
+      //- span.error(data-ng-if="createrecipe.errFile.$error", data-ng-bind="createrecipe.errFile.$error")
+      //- span.error(data-ng-if="createrecipe.errFile.$errorParam", data-ng-bind="createrecipe.errFile.$errorParam")
+      span.error(data-ng-if="createrecipe.errorMsg", data-ng-bind="createrecipe.errorMsg")
+    .progress(data-ng-show="createrecipe.f.progress >= 0")
+      span(style="width:{{createrecipe.f.progress}}%")
+      p.text-muted
+        em(data-ng-if="createrecipe.f.name", data-ng-bind="'Uploading ' + createrecipe.f.name")
+        strong(data-ng-bind="createrecipe.f.progress + '%'")
+  label.clear Number of Servings:
   input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
   label Tags:
   .pills

@@ -50,21 +50,24 @@ label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
 label Recipe Pairings:
 input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
-label Image:
-img.upload-preview(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
-p.text-muted(data-ng-hide="editrecipe.image") No image provided.
-
-button.btn(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") Upload New Photo
-.upload-status
-  span(data-ng-if="editrecipe.f.name", data-ng-bind="editrecipe.f.name")
-  span(data-ng-if="editrecipe.errFile.name", data-ng-bind="editrecipe.errFile.name")
-  span(data-ng-if="editrecipe.errFile.$error", data-ng-bind="editrecipe.errFile.$error")
-  span(data-ng-if="editrecipe.errFile.$errorParam", data-ng-bind="editrecipe.errFile.$errorParam")
-  span(data-ng-if="editrecipe.errorMsg", data-ng-bind="editrecipe.errorMsg")
-  span.progress(data-ng-show="editrecipe.f.progress >= 0")
-    div(style="width:{{editrecipe.f.progress}}%", data-ng-bind="editrecipe.f.progress + '%'")
-
-label Number of Servings:
+.secondary.pull-right
+  img.upload-preview.mgn-btm-16(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
+  p.text-muted(data-ng-hide="editrecipe.image") No image provided.
+.main.pull-left
+  label Image:
+  button.btn.mgn-top-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Upload New Photo
+  .upload-status(data-ng-if="editrecipe.errFile.name || editrecipe.errorMsg")
+    span.error(data-ng-if="editrecipe.errFile.name") Error uploading 
+      strong
+        em(data-ng-bind="editrecipe.errFile.name")
+      | . Please make sure you are uploading an image file.
+    span.error(data-ng-if="editrecipe.errorMsg", data-ng-bind="editrecipe.errorMsg")
+  .progress(data-ng-show="editrecipe.f.progress >= 0")
+    span(style="width:{{editrecipe.f.progress}}%")
+    p.text-muted
+      em(data-ng-if="editrecipe.f.name", data-ng-bind="'Uploading ' + editrecipe.f.name")
+      strong(data-ng-bind="editrecipe.f.progress + '%'")
+label.clear Number of Servings:
 input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
 label Tags:
 .pills
