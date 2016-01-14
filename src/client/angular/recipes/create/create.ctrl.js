@@ -151,7 +151,6 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           featured: vm.recipeFeatured
         })
         .success(function (res) {
-          console.log(res);
           if(res == 'Recipe already exists.') {
             vm.keyIsAvailable = false;
             vm.completedKeys = true;

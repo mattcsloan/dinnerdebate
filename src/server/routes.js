@@ -105,37 +105,52 @@ module.exports = function(app) {
     }); 
 
     // update individual recipe
-    app.put('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {
-        var recipeId = req.params.recipeId;
-        Recipes.findById(recipeId, function(err, recipe) {
-            recipe.name = req.body.name;
-            recipe.key = req.body.key;
-            recipe.description = req.body.description;
-            recipe.category = req.body.category;
-            recipe.categoryKey = req.body.categoryKey;
-            recipe.date = req.body.date;
-            recipe.source = req.body.source;
-            recipe.sourceURL = req.body.sourceURL;
-            recipe.addedBy = req.body.addedBy;
-            recipe.prepTime = req.body.prepTime;
-            recipe.cookTime = req.body.cookTime;
-            recipe.ingredients = req.body.ingredients;
-            recipe.directions = req.body.directions;
-            recipe.pairings = req.body.pairings;
-            recipe.image = req.body.image;
-            recipe.servings = req.body.servings;
-            recipe.tags = req.body.tags;
-            recipe.featured = req.body.featured;
+    app.put('/api/recipes/:categoryKey/:key/:recipeId', stormpath.loginRequired, function(req, res) {
+        Recipes.findOne({
+            category: req.body.category, 
+            key: req.body.name
+        }, function(err, recipeReturned) { 
             if (err) {
                 res.send(err);
             }
-            if (recipe) {
-                recipe.save(function(err) {
-                    if(err) {
+            // check to see if response returned an already existing recipe
+            var categoryKey = req.params.categoryKey;
+            var key = req.params.key;
+            if (recipeReturned == null || (recipeReturned.key == key && recipeReturned.categoryKey == categoryKey)) {
+                var recipeId = req.params.recipeId;
+                Recipes.findById(recipeId, function(err, recipe) {
+                    recipe.name = req.body.name;
+                    recipe.key = req.body.key;
+                    recipe.description = req.body.description;
+                    recipe.category = req.body.category;
+                    recipe.categoryKey = req.body.categoryKey;
+                    recipe.date = req.body.date;
+                    recipe.source = req.body.source;
+                    recipe.sourceURL = req.body.sourceURL;
+                    recipe.addedBy = req.body.addedBy;
+                    recipe.prepTime = req.body.prepTime;
+                    recipe.cookTime = req.body.cookTime;
+                    recipe.ingredients = req.body.ingredients;
+                    recipe.directions = req.body.directions;
+                    recipe.pairings = req.body.pairings;
+                    recipe.image = req.body.image;
+                    recipe.servings = req.body.servings;
+                    recipe.tags = req.body.tags;
+                    recipe.featured = req.body.featured;
+                    if (err) {
                         res.send(err);
                     }
-                    res.json(201, recipe);
+                    if (recipe) {
+                        recipe.save(function(err) {
+                            if(err) {
+                                res.send(err);
+                            }
+                            res.json(201, recipe);
+                        });
+                    }
                 });
+            } else {
+                res.send('Recipe already exists.');
             }
         });
     });

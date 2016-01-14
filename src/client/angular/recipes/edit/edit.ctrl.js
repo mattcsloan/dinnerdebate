@@ -14,6 +14,12 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
   vm.keyAvailability = keyAvailability;
+  vm.requiredFields = [
+    vm.name,
+    vm.key,
+    vm.category,
+    vm.categoryKey
+  ];
 
   vm.urlBase = location.host;
   vm.showURLStatus = true;
@@ -43,15 +49,12 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     vm.initialKeyStatus = false;
     //if key values aren't empty and they're not equal to the existing url
 
-    console.log('vm.categoryKey: ' + vm.categoryKey + '; vm.key:' + vm.key);
-    console.log('vm.recipeDetail.categoryKey: ' + vm.recipeDetail.categoryKey + '; vm.recipeDetail.key:' + vm.recipeDetail.key);
     if(vm.categoryKey != '' && vm.key != '') {
       if(vm.categoryKey == vm.recipeDetail.categoryKey && vm.key == vm.recipeDetail.key) {
         //the values are equal to the current URL
         vm.keyIsAvailable = true;
         vm.completedKeys = true;
         vm.showURLStatus = true;
-        console.log('same as url');
       } else {
         Recipe.getOne(vm.categoryKey, vm.key)
           .success(function(data, status) {
@@ -68,12 +71,10 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       }
       vm.completedKeys = true;
     } else {
-      console.log('else statement');
       vm.keyIsAvailable = false;
       vm.completedKeys = false;
       vm.showURLStatus = false;
     }
-    console.log('keyIsAvailable:' + vm.keyIsAvailable + '; ' + 'completedKeys:' + vm.completedKeys + '; ' + 'showURLStatus:' + vm.showURLStatus);
   }
 
 
@@ -123,6 +124,12 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.servings = vm.recipeDetail.servings;
         vm.tags = vm.recipeDetail.tags;
         vm.featured = vm.recipeDetail.featured;
+
+        if(vm.recipeDetail.source || vm.recipeDetail.sourceURL) {
+          vm.recipeOwnership = true;
+        } else {
+          vm.recipeOwnership = false;
+        }
       }
     })
     .error(function(data, status) {
@@ -130,32 +137,52 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     });
 
   function updateRecipe() {
-    Recipe.update(vm.recipeDetail._id, {
-      name: vm.name,
-      key: vm.key,
-      description: vm.description,
-      category: vm.category,
-      categoryKey: vm.categoryKey,
-      date: vm.date,
-      source: vm.source,
-      sourceURL: vm.sourceURL,
-      addedBy: vm.addedBy,
-      prepTime: vm.prepTime,
-      cookTime: vm.cookTime,
-      ingredients: vm.ingredients,
-      directions: vm.directions,
-      pairings: vm.pairings,
-      image: vm.image,
-      servings: vm.servings,
-      tags: vm.tags,
-      featured: vm.featured
-    });
-    $location.url('/recipes/view/' + categoryKey + '/' + recipeName);
+    if(vm.name && vm.key && vm.category && vm.categoryKey) {
+      if(vm.keyIsAvailable || (vm.key == recipeName && vm.categoryKey == categoryKey)) {
+        Recipe.update(vm.categoryKey, vm.key, vm.recipeDetail._id, {
+          name: vm.name,
+          key: vm.key,
+          description: vm.description,
+          category: vm.category,
+          categoryKey: vm.categoryKey,
+          date: vm.date,
+          source: vm.source,
+          sourceURL: vm.sourceURL,
+          addedBy: vm.addedBy,
+          prepTime: vm.prepTime,
+          cookTime: vm.cookTime,
+          ingredients: vm.ingredients,
+          directions: vm.directions,
+          pairings: vm.pairings,
+          image: vm.image,
+          servings: vm.servings,
+          tags: vm.tags,
+          featured: vm.featured
+        })
+        .success(function (res) {
+          if(res == 'Recipe already exists.') {
+            vm.keyIsAvailable = false;
+            vm.completedKeys = true;
+            vm.showURLStatus = true;
+          } else {
+            $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.key);
+          }
+        });
+      } else {
+        vm.keyIsAvailable = false;
+        vm.completedKeys = true;
+        vm.showURLStatus = true;
+      }
+    } else {
+      console.log('required fields not met');
+    }
   }
 
   function deleteRecipe() {
-    Recipe.delete(vm.recipeDetail._id);
-    $location.url('/recipes');
+    Recipe.delete(vm.recipeDetail._id)
+      .success(function () {
+        $location.url('/recipes');
+      });
   }
 
   function addIngredient() {
