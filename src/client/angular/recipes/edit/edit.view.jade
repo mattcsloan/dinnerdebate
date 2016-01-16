@@ -8,16 +8,17 @@ h6.breadcrumb
   a(data-ui-sref="recipes.view({categoryKey: editrecipe.recipeDetail.categoryKey, recipeName: editrecipe.recipeDetail.key})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
   span  &raquo; 
 h1 Edit
-label.helper-text.error.error-msg.inline(data-ng-message="editrecipe.$error", data-ng-show="editrecipe.$touched") Please fill in all required fields.
-label Title:
-  em.helper-text.required(data-ng-hide="editrecipe.name.$touched && editrecipe.name.$invalid")  Required 
-  strong.helper-text.error.error-msg(data-ng-message="editrecipe.name.$error", data-ng-show="editrecipe.name.$touched && editrecipe.name.$invalid") Please add a recipe title.
-input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name", data-ng-blur="editrecipe.createKey()")
-label Category:
-  em.helper-text.required(data-ng-hide="editrecipe.category.$touched && editrecipe.category.$invalid")  Required 
-  strong.helper-text.error.error-msg(data-ng-message="editrecipe.category.$error", data-ng-show="editrecipe.category.$touched && editrecipe.category.$invalid") Please select a recipe category.
-select(data-ng-model="editrecipe.category", data-ng-change="editrecipe.createCategoryKey()")
-  option(data-ng-repeat="option in editrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+label.helper-text.error.error-msg.inline(data-ng-message="updateRecipeForm.$error", data-ng-show="updateRecipeForm.$touched") Please fill in all required fields.
+form(name="updateRecipeForm", novalidate)
+  label Title:
+    em.helper-text.required(data-ng-hide="updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid")  Required 
+    strong.helper-text.error.error-msg(data-ng-message="updateRecipeForm.title.$error", data-ng-show="updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid") Please add a recipe title.
+  input(type="text", name="title", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name", data-ng-blur="editrecipe.createKey()", required)
+  label Category:
+    em.helper-text.required(data-ng-hide="updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid")  Required 
+    strong.helper-text.error.error-msg(data-ng-message="updateRecipeForm.categories.$error", data-ng-show="updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid") Please select a recipe category.
+  select(name="categories", data-ng-model="editrecipe.category", data-ng-change="editrecipe.createCategoryKey()", required)
+    option(data-ng-repeat="option in editrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
 label.recipe-url Recipe URL: 
   span(data-ng-show="(editrecipe.keyIsAvailable && editrecipe.showURLStatus) || editrecipe.initialKeyStatus")
     span.text-muted(data-ng-bind="editrecipe.urlBase")
@@ -49,7 +50,11 @@ input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="edit
 label Ingredients:
 ul.ingredients
   li(data-ng-repeat="ingredient in editrecipe.ingredients")
-    span(data-ng-bind="ingredient")
+    span(data-ng-bind="ingredient", data-ng-hide="updating")
+    form(data-ng-submit="editrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
+      input.inline.pull-left(type="text", data-ng-model="ingredient")
+      input.btn.inline.mgn-left-16(type="submit", value="Update")
+    a(data-ng-click="updating = true").helper-text.remove Edit
     a(data-ng-click="editrecipe.removeIngredient($index)").helper-text.remove Remove
     a(data-ng-click="editrecipe.reorderIngredient('up', $index)").helper-text.remove Move Up
     a(data-ng-click="editrecipe.reorderIngredient('down', $index)").helper-text.remove Move Down
@@ -89,8 +94,8 @@ form(data-ng-submit="editrecipe.addTag()")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")
 //- label Feature this item?:
 //- input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
-span.error(data-ng-show="(!createrecipe.keyIsAvailable && createrecipe.completedKeys && createrecipe.showURLStatus) || (createNewRecipe.title.$touched && createNewRecipe.title.$invalid) || (createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid)") Please correct any errors above and submit again.
+span.error(data-ng-show="(!editrecipe.keyIsAvailable && editrecipe.completedKeys && editrecipe.showURLStatus) || (updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid) || (updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid)") Please correct any errors above and submit again.
 .btn-panel
   //- a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
-  input(type="submit", value="Update Recipe", data-ng-disabled="editrecipe.$invalid || !editrecipe.keyIsAvailable", data-ng-click="editrecipe.updateRecipe()").btn.inline
+  input(type="submit", value="Update Recipe", data-ng-disabled="updateRecipeForm.$invalid || !editrecipe.keyIsAvailable", data-ng-click="editrecipe.updateRecipe()").btn.inline
   a.btn.btn-subtle(data-ng-click="editrecipe.deleteRecipe()") Delete Recipe

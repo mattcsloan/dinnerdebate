@@ -7,6 +7,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.updateRecipe = updateRecipe;
   vm.deleteRecipe = deleteRecipe;
   vm.addIngredient = addIngredient;
+  vm.editIngredient = editIngredient;
   vm.removeIngredient = removeIngredient;
   vm.reorderIngredient = reorderIngredient;
   vm.addTag = addTag;
@@ -189,6 +190,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   function addIngredient() {
     vm.ingredients.push(vm.newIngredient);
     vm.newIngredient = '';
+  }
+
+  function editIngredient(item, value) {
+    // check first to see if value already exists in array
+    if(vm.ingredients.indexOf(value) == -1) {
+      vm.ingredients.splice(item, 1, value);
+    }
   }
 
   function removeIngredient(item) {
