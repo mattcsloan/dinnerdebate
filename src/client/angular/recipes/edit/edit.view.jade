@@ -51,6 +51,8 @@ ul.ingredients
   li(data-ng-repeat="ingredient in editrecipe.ingredients")
     span(data-ng-bind="ingredient")
     a(data-ng-click="editrecipe.removeIngredient($index)").helper-text.remove Remove
+    a(data-ng-click="editrecipe.reorderIngredient('up', $index)").helper-text.remove Move Up
+    a(data-ng-click="editrecipe.reorderIngredient('down', $index)").helper-text.remove Move Down
 form(data-ng-submit="editrecipe.addIngredient()")
   input(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient")
   input.btn.inline(type="submit", value="+ Add")
@@ -83,7 +85,7 @@ label Tags:
     span(data-ng-bind="tag")
     a(data-ng-click="editrecipe.removeTag($index)").helper-text.remove Remove
 form(data-ng-submit="editrecipe.addTag()")
-  input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
+  input.inline.pull-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")
 //- label Feature this item?:
 //- input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")

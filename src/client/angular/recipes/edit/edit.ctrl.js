@@ -8,6 +8,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.deleteRecipe = deleteRecipe;
   vm.addIngredient = addIngredient;
   vm.removeIngredient = removeIngredient;
+  vm.reorderIngredient = reorderIngredient;
   vm.addTag = addTag;
   vm.removeTag = removeTag;
   vm.uploadFile = uploadFile;
@@ -192,6 +193,22 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   function removeIngredient(item) {
     vm.ingredients.splice(item, 1);
+  }
+
+  function reorderIngredient(direction, item) {
+    var ingredient = vm.ingredients.splice(item, 1);
+    if(direction == 'up') {
+      if(item == 0) {
+        var newIndex = item;
+      } else {
+        var newIndex = item - 1;
+      }
+    } else if(direction == 'down') {
+      var newIndex = item + 1;
+    } else {
+      var newIndex = vm.ingredients.length + 1;
+    }
+    vm.ingredients.splice(newIndex, 0, ingredient[0]);
   }
 
   function addTag() {

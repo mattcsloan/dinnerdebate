@@ -15,6 +15,8 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.uploadFile = uploadFile;
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
+  vm.editIngredient = editIngredient;
+  vm.reorderIngredient = reorderIngredient;
   vm.removeIngredient = removeIngredient;
   vm.addTag = addTag;
   vm.removeTag = removeTag;
@@ -56,9 +58,35 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   function addIngredient() {
     if(vm.newIngredient) {
-      vm.ingredients.push(vm.newIngredient);
-      vm.newIngredient = '';
+      // check first to see if value already exists in array
+      if(vm.ingredients.indexOf(vm.newIngredient) == -1) {
+        vm.ingredients.push(vm.newIngredient);
+        vm.newIngredient = '';
+      }
     }
+  }
+
+  function editIngredient(item, value) {
+    // check first to see if value already exists in array
+    if(vm.ingredients.indexOf(value) == -1) {
+      vm.ingredients.splice(item, 1, value);
+    }
+  }
+
+  function reorderIngredient(direction, item) {
+    var ingredient = vm.ingredients.splice(item, 1);
+    if(direction == 'up') {
+      if(item == 0) {
+        var newIndex = item;
+      } else {
+        var newIndex = item - 1;
+      }
+    } else if(direction == 'down') {
+      var newIndex = item + 1;
+    } else {
+      var newIndex = vm.ingredients.length + 1;
+    }
+    vm.ingredients.splice(newIndex, 0, ingredient[0]);
   }
 
   function removeIngredient(item) {
