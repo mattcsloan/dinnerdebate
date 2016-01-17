@@ -1,4 +1,4 @@
-angular.module('MainCtrl', []).controller('MainController', function($state, $rootScope, $http, $window, Page) {
+angular.module('MainCtrl', []).controller('MainController', function($state, $rootScope, $http, $window, $user, Page) {
   var vm = this;
 
   vm.Page = Page;
@@ -8,12 +8,20 @@ angular.module('MainCtrl', []).controller('MainController', function($state, $ro
       vm.navigation = res
     });
 
-  $http.get('/auth/user')
-    .success(function (res) {
-      vm.user = res;
+  // $http.get('/auth/user')
+  //   .success(function (res) {
+  //     vm.user = res;
+  //   })
+  //   .error(function (res) {
+  //     console.log('not logged in');
+  //   });
+
+  $user.get()
+    .then(function (user) {
+      vm.user = user;
     })
-    .error(function (res) {
-      console.log('not logged in');
+    .catch(function (error) {
+      console.log('Error getting user', error);
     });
 
   vm.state = $state;

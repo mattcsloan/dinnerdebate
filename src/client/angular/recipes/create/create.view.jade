@@ -39,10 +39,10 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       em.helper-text.text-muted (if applicable)
     input(type="text", name="sourceURL", placeholder="Source URL", data-ng-model="createrecipe.recipeSourceURL")
   label.clear Prep Time:
-  input.inline.pull-left(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+  input.inline(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
   span.mgn-left-16 Minutes
   label Cook Time:
-  input.inline.pull-left(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+  input.inline(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   span.mgn-left-16 Minutes
   label Ingredients:
   ul.ingredients

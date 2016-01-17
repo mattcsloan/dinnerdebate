@@ -37,7 +37,8 @@ app.use(stormpath.init(app, {
   // Optional configuration options.
   website: true,
   expand: {
-    customData: true
+    customData: true,
+    groups: true
   },
   web: {
     login: {
