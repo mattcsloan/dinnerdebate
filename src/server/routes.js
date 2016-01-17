@@ -24,6 +24,18 @@ module.exports = function(app) {
         });
     });
 
+    // get all recipes by user
+    app.get('/api/recipes/by/user', function(req, res) {
+        // use mongoose to get all recipes in the database
+        Recipes.find( { "addedBy.username": req.user.username }, function(err, recipes) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(recipes); // return all recipes in JSON format
+        });
+    });
+
+
     // create recipe
     app.post('/api/recipes', stormpath.loginRequired, function(req, res) {
         // use mongoose to add a new recipe in the database
