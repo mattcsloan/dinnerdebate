@@ -1,16 +1,17 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location, $timeout, Upload) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $rootScope, $location, $timeout, Upload) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
   vm.title = 'Create New Recipe';
 
-  UserResource.getUser()
-    .success(function(data, status) {
-      vm.user = data;
-    })
-    .error(function(data, status) {
-      console.log("Error retreiving user");
-    });
+  // UserResource.getUser()
+  //   .success(function(data, status) {
+  //     vm.user = data;
+  //   })
+  //   .error(function(data, status) {
+  //     console.log("Error retreiving user");
+  //   });
+  vm.user = $rootScope.user;
 
   vm.uploadFile = uploadFile;
   vm.addRecipe = addRecipe;

@@ -1,4 +1,4 @@
-angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, UserResource, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
+angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
   var vm = this;
 
   Page.setTitle('Edit Recipe');   
@@ -99,16 +99,6 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     "Sides",
     "Soups"
   ]
-
-  // UserResource.getUser()
-  //   .success(function(data, status) {
-  //     vm.user = data;
-  //     vm.username = vm.user.username;
-  //     vm.userGroup = vm.user.groups.items[0].name;
-  //   })
-  //   .error(function(data, status) {
-  //     console.log("Error retreiving user");
-  //   });
 
   Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {

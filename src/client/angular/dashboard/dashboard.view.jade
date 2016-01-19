@@ -2,11 +2,10 @@ h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="dashboard.title")
-div(data-ng-if="main.user") 
+div(data-ng-if="dashboard.user.fullName") 
   p Welcome, 
-    span(data-ng-bind="main.user.fullName")
-    |  | 
-    a(data-ui-sref="logout") Logout
+    span(data-ng-bind="dashboard.user.fullName")
+    | !
 .col.half
   h2.mgn-top-0 My Own Recipes
   table.full-table(cellpadding="0", cellspacing="0")

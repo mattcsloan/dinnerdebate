@@ -1,4 +1,4 @@
-angular.module('DashboardCtrl', []).controller('DashboardController', function(Page, $http) {
+angular.module('DashboardCtrl', []).controller('DashboardController', function(Page, $http, $rootScope) {
   var vm = this;
 
   Page.setTitle('Dashboard');   
@@ -13,13 +13,13 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
       console.log('error');
     });
 
+  vm.user = $rootScope.user
 
   function checkRecipeOwnership() {
     vm.usersOwnRecipes = [];
     vm.userAddedRecipes = [];
     angular.forEach(vm.userRecipes, function(item) {
       //only add recipes that don't have an alternate source
-      console.log(item.sourceURL);
       if(item.sourceURL == '' && item.source == '') {
         vm.usersOwnRecipes.push(item);
       } else{
