@@ -88,11 +88,11 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       span(data-ng-bind="tag")
       a(data-ng-click="createrecipe.removeTag($index)").helper-text.remove Remove
   form(data-ng-submit="createrecipe.addTag()")
-    input.inline.pull-left(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
+    input.inline(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")
   //- label Feature this item?:
   //- input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
-input(type="submit", value="Create Recipe", data-ng-disabled="createNewRecipe.$invalid || !createrecipe.keyIsAvailable", data-ng-click="createrecipe.addRecipe()").btn.inline.mgn-right-16
+input(type="submit", value="Create Recipe", data-ng-disabled="createNewRecipe.$invalid || !createrecipe.keyIsAvailable", data-ng-click="createrecipe.addRecipe()").btn.inline.mgn-right-16.clear
 span.error.inline(data-ng-show="(!createrecipe.keyIsAvailable && createrecipe.completedKeys && createrecipe.showURLStatus) || (createNewRecipe.title.$touched && createNewRecipe.title.$invalid) || (createNewRecipe.categories.$touched && createNewRecipe.categories.$invalid)") Please correct any errors above and submit again.
 
 

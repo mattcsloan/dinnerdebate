@@ -8,7 +8,7 @@ div(data-ng-if="main.user")
     |  | 
     a(data-ui-sref="logout") Logout
 .col.half
-  h2.mgn-top-0 My Added Recipes
+  h2.mgn-top-0 My Own Recipes
   table.full-table(cellpadding="0", cellspacing="0")
     thead
       tr
@@ -16,7 +16,7 @@ div(data-ng-if="main.user")
         th Prep Time
         th Cook Time
         th Servings
-      tr(data-ng-repeat="recipe in dashboard.userRecipes")
+      tr(data-ng-repeat="recipe in dashboard.usersOwnRecipes")
         td.title
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-bind="recipe.name")
         td
@@ -32,7 +32,8 @@ div(data-ng-if="main.user")
             strong(data-ng-bind="recipe.servings")
             span Servings
 .col.half
-  h2.mgn-top-0 My Own Recipes
+  h2.mgn-top-0 My Added Recipes
+    em.text-muted.text-small.mgn-left-16 (from other sources)
   table.full-table(cellpadding="0", cellspacing="0")
     thead
       tr
@@ -40,7 +41,7 @@ div(data-ng-if="main.user")
         th Prep Time
         th Cook Time
         th Servings
-      tr(data-ng-repeat="recipe in dashboard.usersOwnRecipes")
+      tr(data-ng-repeat="recipe in dashboard.userAddedRecipes")
         td.title
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-bind="recipe.name")
         td

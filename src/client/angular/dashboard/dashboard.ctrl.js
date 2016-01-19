@@ -7,20 +7,23 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
   $http.get('/api/recipes/by/user')
     .success(function(data) {
       vm.userRecipes = data;
-      usersOwnRecipes();
+      checkRecipeOwnership();
     })
     .error(function() {
       console.log('error');
     });
 
 
-  function usersOwnRecipes() {
+  function checkRecipeOwnership() {
     vm.usersOwnRecipes = [];
+    vm.userAddedRecipes = [];
     angular.forEach(vm.userRecipes, function(item) {
       //only add recipes that don't have an alternate source
       console.log(item.sourceURL);
       if(item.sourceURL == '' && item.source == '') {
-        vm.usersOwnRecipes.push(item);  
+        vm.usersOwnRecipes.push(item);
+      } else{
+        vm.userAddedRecipes.push(item);
       }
     });
   }
