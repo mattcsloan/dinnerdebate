@@ -17,7 +17,6 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         $location.url('/recipes?message=Recipe%20does%20not%20exist.');
       } else {
         vm.recipeDetail = data;
-        console.log(data.addedBy.username);
       }
     })
     .error(function(data, status) {

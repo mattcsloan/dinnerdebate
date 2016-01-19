@@ -1,4 +1,4 @@
-angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
+angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, CategoryResource, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
   var vm = this;
 
   Page.setTitle('Edit Recipe');   
@@ -27,6 +27,8 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.showURLStatus = true;
   vm.keyIsAvailable = true;
   vm.initialKeyStatus = true;
+
+  vm.categoryOptions = CategoryResource.allCategories();
 
   function createKey() {
     if(vm.name) {
@@ -78,27 +80,6 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       vm.showURLStatus = false;
     }
   }
-
-
-
-
-  vm.categoryOptions = [
-    "Appetizers",
-    "Breads and Muffins",
-    "Breakfast",
-    "Cakes",
-    "Cookies",
-    "Desserts",
-    "Drinks",
-    "Entrees",
-    "Kids",
-    "Pies",
-    "Pets",
-    "Salads",
-    "Sauces and Marinades",
-    "Sides",
-    "Soups"
-  ]
 
   Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {

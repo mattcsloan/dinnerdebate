@@ -1,27 +1,10 @@
-angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, categoryName, $location) {
+angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $location) {
   var vm = this;
 
   Page.setTitle('Recipes');   
   vm.title = 'Recipes';
-  vm.categoryOptions = [
-    "Appetizers",
-    "Breads and Muffins",
-    "Breakfast",
-    "Cakes",
-    "Cookies",
-    "Desserts",
-    "Drinks",
-    "Entrees",
-    "Kids",
-    "Pies",
-    "Pets",
-    "Salads",
-    "Sauces and Marinades",
-    "Sides",
-    "Soups"
-  ];
 
-
+  vm.categoryOptions = CategoryResource.allCategories();
 
   vm.selectedCategory = selectedCategory;
 

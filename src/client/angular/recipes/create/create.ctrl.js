@@ -1,16 +1,9 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $rootScope, $location, $timeout, Upload) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $rootScope, $location, $timeout, Upload, CategoryResource) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
   vm.title = 'Create New Recipe';
 
-  // UserResource.getUser()
-  //   .success(function(data, status) {
-  //     vm.user = data;
-  //   })
-  //   .error(function(data, status) {
-  //     console.log("Error retreiving user");
-  //   });
   vm.user = $rootScope.user;
 
   vm.uploadFile = uploadFile;
@@ -31,23 +24,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     vm.categoryKey
   ];
 
-  vm.categoryOptions = [
-    "Appetizers",
-    "Breads and Muffins",
-    "Breakfast",
-    "Cakes",
-    "Cookies",
-    "Desserts",
-    "Drinks",
-    "Entrees",
-    "Kids",
-    "Pies",
-    "Pets",
-    "Salads",
-    "Sauces and Marinades",
-    "Sides",
-    "Soups"
-  ];
+  vm.categoryOptions = CategoryResource.allCategories();
 
   if(!vm.categoryKey) {
     vm.categoryKey = 'uncategorized';
