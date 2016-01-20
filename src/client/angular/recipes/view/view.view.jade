@@ -41,10 +41,12 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
               span Servings
     p.multiline(data-ng-if="viewrecipe.recipeDetail.description")
       em(data-ng-bind="viewrecipe.recipeDetail.description")
-    div(data-ng-if="viewrecipe.recipeDetail.ingredients.length")
-      h2 Ingredients:
-      ul.ingredients.list
-        li(data-ng-repeat="ingredient in viewrecipe.recipeDetail.ingredients", data-ng-bind="ingredient")
+    div(data-ng-repeat="ingredientList in viewrecipe.recipeDetail.ingredients")
+      div(data-ng-if="ingredientList.list.length")
+        h2(data-ng-hide="ingredientList.title") Ingredients:
+        h2(data-ng-show="ingredientList.title", data-ng-bind="ingredientList.title + ':'")
+        ul.ingredients.list
+          li(data-ng-repeat="ingredient in ingredientList.list", data-ng-bind="ingredient")
     div(data-ng-if="viewrecipe.recipeDetail.directions")
       h2 Directions:
       p.multiline(data-ng-bind="viewrecipe.recipeDetail.directions")

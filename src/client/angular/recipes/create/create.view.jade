@@ -44,9 +44,13 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   label Cook Time:
   input.inline(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   span.mgn-left-16 Minutes
+  label Ingredients Title:
+    span.text-muted.helper-text  (if more than 1 set of ingredients. ex. "Marinade" and "Sauce"):
+  input(type="text", placeholder="Ingredient List Title", data-ng-model="createrecipe.ingredients.title")
   label Ingredients:
+  h2.mgn-top-16(data-ng-if="createrecipe.ingredients.title", data-ng-bind="createrecipe.ingredients.title")
   ul.ingredients
-    li(data-ng-repeat="ingredient in createrecipe.ingredients")
+    li(data-ng-repeat="ingredient in createrecipe.ingredients.list")
       span(data-ng-bind="ingredient", data-ng-hide="updating")
       form(data-ng-submit="createrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
         input.inline.pull-left(type="text", data-ng-model="ingredient")

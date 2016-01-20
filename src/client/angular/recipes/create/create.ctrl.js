@@ -32,13 +32,18 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.urlBase = location.host;
 
-  vm.ingredients = [];
+  vm.ingredients = {
+    title: '',
+    list: []
+  };
+  // vm.ingredients.title = '';
+  // vm.ingredients.list = [];
 
   function addIngredient() {
     if(vm.newIngredient) {
       // check first to see if value already exists in array
-      if(vm.ingredients.indexOf(vm.newIngredient) == -1) {
-        vm.ingredients.push(vm.newIngredient);
+      if(vm.ingredients.list.indexOf(vm.newIngredient) == -1) {
+        vm.ingredients.list.push(vm.newIngredient);
         vm.newIngredient = '';
       }
     }
@@ -46,13 +51,13 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   function editIngredient(item, value) {
     // check first to see if value already exists in array
-    if(vm.ingredients.indexOf(value) == -1) {
-      vm.ingredients.splice(item, 1, value);
+    if(vm.ingredients.list.indexOf(value) == -1) {
+      vm.ingredients.list.splice(item, 1, value);
     }
   }
 
   function reorderIngredient(direction, item) {
-    var ingredient = vm.ingredients.splice(item, 1);
+    var ingredient = vm.ingredients.list.splice(item, 1);
     if(direction == 'up') {
       if(item == 0) {
         var newIndex = item;
@@ -62,13 +67,13 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     } else if(direction == 'down') {
       var newIndex = item + 1;
     } else {
-      var newIndex = vm.ingredients.length + 1;
+      var newIndex = vm.ingredients.list.length + 1;
     }
-    vm.ingredients.splice(newIndex, 0, ingredient[0]);
+    vm.ingredients.list.splice(newIndex, 0, ingredient[0]);
   }
 
   function removeIngredient(item) {
-    vm.ingredients.splice(item, 1);
+    vm.ingredients.list.splice(item, 1);
   }
 
   vm.tags = [];
@@ -148,7 +153,10 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           },
           prepTime: vm.recipePrepTime,
           cookTime: vm.recipeCookTime,
-          ingredients: vm.ingredients,
+          ingredients: {
+            title: vm.ingredients.title,
+            list: vm.ingredients.list
+          },
           directions: vm.recipeDirections,
           pairings: vm.recipePairings,
           image: vm.recipeImage,
