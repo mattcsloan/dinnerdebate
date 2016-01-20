@@ -134,7 +134,10 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
           addedBy: vm.addedBy,
           prepTime: vm.prepTime,
           cookTime: vm.cookTime,
-          ingredients: vm.ingredients,
+          ingredients: {
+            title: vm.ingredients.title,
+            list: vm.ingredients.list
+          },
           directions: vm.directions,
           pairings: vm.pairings,
           image: vm.image,
@@ -169,23 +172,23 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   }
 
   function addIngredient() {
-    vm.ingredients.push(vm.newIngredient);
+    vm.ingredients.list.push(vm.newIngredient);
     vm.newIngredient = '';
   }
 
   function editIngredient(item, value) {
     // check first to see if value already exists in array
-    if(vm.ingredients.indexOf(value) == -1) {
-      vm.ingredients.splice(item, 1, value);
+    if(vm.ingredients.list.indexOf(value) == -1) {
+      vm.ingredients.list.splice(item, 1, value);
     }
   }
 
   function removeIngredient(item) {
-    vm.ingredients.splice(item, 1);
+    vm.ingredients.list.splice(item, 1);
   }
 
   function reorderIngredient(direction, item) {
-    var ingredient = vm.ingredients.splice(item, 1);
+    var ingredient = vm.ingredients.list.splice(item, 1);
     if(direction == 'up') {
       if(item == 0) {
         var newIndex = item;
@@ -195,9 +198,9 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     } else if(direction == 'down') {
       var newIndex = item + 1;
     } else {
-      var newIndex = vm.ingredients.length + 1;
+      var newIndex = vm.ingredients.list.length + 1;
     }
-    vm.ingredients.splice(newIndex, 0, ingredient[0]);
+    vm.ingredients.list.splice(newIndex, 0, ingredient[0]);
   }
 
   function addTag() {

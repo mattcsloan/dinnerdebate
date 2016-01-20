@@ -146,7 +146,10 @@ module.exports = function(app) {
                         recipe.addedBy = req.body.addedBy;
                         recipe.prepTime = req.body.prepTime;
                         recipe.cookTime = req.body.cookTime;
-                        recipe.ingredients = req.body.ingredients;
+                        recipe.ingredients = [{
+                            title: req.body.ingredients.title,
+                            list: req.body.ingredients.list
+                        }];
                         recipe.directions = req.body.directions;
                         recipe.pairings = req.body.pairings;
                         recipe.image = req.body.image;

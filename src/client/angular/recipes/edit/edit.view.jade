@@ -48,8 +48,8 @@ input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="edit
 label Cook Time:
 input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
 label Ingredients:
-ul.ingredients
-  li(data-ng-repeat="ingredient in editrecipe.ingredients")
+ul.ingredients(data-ng-repeat="ingredientList in editrecipe.ingredients")
+  li(data-ng-repeat="ingredient in ingredientList.list")
     span(data-ng-bind="ingredient", data-ng-hide="updating")
     form(data-ng-submit="editrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
       input.inline.pull-left(type="text", data-ng-model="ingredient")
