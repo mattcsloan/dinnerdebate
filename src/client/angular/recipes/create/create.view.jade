@@ -44,24 +44,30 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   label Cook Time:
   input.inline(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   span.mgn-left-16 Minutes
-  label Ingredients Title:
-    span.text-muted.helper-text  (if more than 1 set of ingredients. ex. "Marinade" and "Sauce"):
-  input(type="text", placeholder="Ingredient List Title", data-ng-model="createrecipe.ingredients.title")
   label Ingredients:
   h2.mgn-top-16(data-ng-if="createrecipe.ingredients.title", data-ng-bind="createrecipe.ingredients.title")
-  ul.ingredients
-    li(data-ng-repeat="ingredient in createrecipe.ingredients.list")
-      span(data-ng-bind="ingredient", data-ng-hide="updating")
-      form(data-ng-submit="createrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
-        input.inline.pull-left(type="text", data-ng-model="ingredient")
-        input.btn.inline.mgn-left-16(type="submit", value="Update")
-      a(data-ng-click="updating = true").helper-text.remove Edit
-      a(data-ng-click="createrecipe.removeIngredient($index)").helper-text.remove Remove
-      a(data-ng-click="createrecipe.reorderIngredient('up', $index)").helper-text.remove Move Up
-      a(data-ng-click="createrecipe.reorderIngredient('down', $index)").helper-text.remove Move Down
-  form(data-ng-submit="createrecipe.addIngredient()")
-    input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
-    input.btn.inline.mgn-left-16(type="submit", value="+ Add")
+  div(data-ng-repeat="ingredientSet in createrecipe.ingredientSets")
+    ul.ingredients
+      li(data-ng-repeat="ingredient in ingredientSet.list")
+        span(data-ng-bind="ingredient", data-ng-hide="updating")
+        form(data-ng-submit="createrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
+          input.inline.pull-left(type="text", data-ng-model="ingredient")
+          input.btn.inline.mgn-left-16(type="submit", value="Update")
+        a(data-ng-click="updating = true").helper-text.remove Edit
+        a(data-ng-click="createrecipe.removeIngredient($index)").helper-text.remove Remove
+        a(data-ng-click="createrecipe.reorderIngredient('up', $index)").helper-text.remove Move Up
+        a(data-ng-click="createrecipe.reorderIngredient('down', $index)").helper-text.remove Move Down
+    form(data-ng-submit="createrecipe.addIngredient($index)")
+      input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
+      input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
+    a.btn.btn-subtle(data-ng-click="createrecipe.addIngredientSetTitle($index)") Add another set of ingredients 
+      span.text-muted.helper-text (ex. for a marinade or sauce)
+    form(data-ng-submit="createrecipe.addIngredientSet()", data-ng-show="createrecipe.showIngredientSetTitle == $index")
+      p.message.inline.helper-text Please add a title for the first set of ingredients.
+      label Ingredients List Title:
+        span.text-muted.helper-text  (ex. "Marinade" or "Sauce")
+      input.inline.pull-left(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
+      input.btn.inline.mgn-left-16(type="submit", value="+ Add Title")
   label Directions:
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   label Recipe Pairings:

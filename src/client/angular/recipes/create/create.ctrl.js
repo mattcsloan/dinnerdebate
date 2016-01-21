@@ -32,18 +32,35 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.urlBase = location.host;
 
-  vm.ingredients = {
+  vm.addIngredientSet = addIngredientSet;
+  vm.addIngredientSetTitle = addIngredientSetTitle;
+  vm.multipleIngredientLists = false;
+
+  vm.ingredientSets = [{
     title: '',
     list: []
-  };
+  }];
   // vm.ingredients.title = '';
   // vm.ingredients.list = [];
 
-  function addIngredient() {
+  function addIngredientSetTitle(setNum) {
+    vm.showIngredientSetTitle = setNum;
+  }
+
+  function addIngredientSet() {
+    vm.multipleIngredientLists = true;
+    vm.ingredientSets.push({
+      title: '',
+      list: []
+    });
+    console.log(vm.ingredientSets);
+  }
+
+  function addIngredient(setNum) {
     if(vm.newIngredient) {
       // check first to see if value already exists in array
-      if(vm.ingredients.list.indexOf(vm.newIngredient) == -1) {
-        vm.ingredients.list.push(vm.newIngredient);
+      if(vm.ingredientSets[setNum].list.indexOf(vm.newIngredient) == -1) {
+        vm.ingredientSets[setNum].list.push(vm.newIngredient);
         vm.newIngredient = '';
       }
     }
@@ -153,10 +170,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           },
           prepTime: vm.recipePrepTime,
           cookTime: vm.recipeCookTime,
-          ingredients: {
-            title: vm.ingredients.title,
-            list: vm.ingredients.list
-          },
+          ingredients: vm.ingredientSets,
           directions: vm.recipeDirections,
           pairings: vm.recipePairings,
           image: vm.recipeImage,

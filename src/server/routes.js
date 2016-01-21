@@ -61,10 +61,7 @@ module.exports = function(app) {
                     addedBy: req.body.addedBy,
                     prepTime: req.body.prepTime,
                     cookTime: req.body.cookTime,
-                    ingredients: [{
-                        title: req.body.ingredients.title,
-                        list: req.body.ingredients.list
-                    }],
+                    ingredients: req.body.ingredients,
                     directions: req.body.directions,
                     pairings: req.body.pairings,
                     image: req.body.image,
