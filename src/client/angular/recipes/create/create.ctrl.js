@@ -33,8 +33,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.urlBase = location.host;
 
   vm.addIngredientSet = addIngredientSet;
-  vm.addIngredientSetTitle = addIngredientSetTitle;
-  vm.multipleIngredientLists = false;
+  vm.multipleLists = false;
 
   vm.ingredientSets = [{
     title: '',
@@ -43,12 +42,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   // vm.ingredients.title = '';
   // vm.ingredients.list = [];
 
-  function addIngredientSetTitle(setNum) {
-    vm.showIngredientSetTitle = setNum;
-  }
-
   function addIngredientSet() {
-    vm.multipleIngredientLists = true;
     vm.ingredientSets.push({
       title: '',
       list: []

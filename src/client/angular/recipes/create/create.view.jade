@@ -45,8 +45,15 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   input.inline(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
   span.mgn-left-16 Minutes
   label Ingredients:
-  h2.mgn-top-16(data-ng-if="createrecipe.ingredients.title", data-ng-bind="createrecipe.ingredients.title")
+  label.mgn-btm-16.mgn-top-16
+    input(type="checkbox", data-ng-model="createrecipe.multipleLists")
+    | This recipe has multiple sets of ingredients
   div(data-ng-repeat="ingredientSet in createrecipe.ingredientSets")
+    div(data-ng-show="createrecipe.multipleLists")
+      label Ingredients List Title:
+        span.text-muted.helper-text  (ex. "Marinade" or "Sauce")
+      input(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
+      h2.mgn-top-16(data-ng-if="ingredientSet.title", data-ng-bind="ingredientSet.title")
     ul.ingredients
       li(data-ng-repeat="ingredient in ingredientSet.list")
         span(data-ng-bind="ingredient", data-ng-hide="updating")
@@ -60,14 +67,8 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     form(data-ng-submit="createrecipe.addIngredient($index)")
       input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
       input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
-    a.btn.btn-subtle(data-ng-click="createrecipe.addIngredientSetTitle($index)") Add another set of ingredients 
+    a.btn.btn-subtle(data-ng-click="createrecipe.addIngredientSet()") Add another set of ingredients 
       span.text-muted.helper-text (ex. for a marinade or sauce)
-    form(data-ng-submit="createrecipe.addIngredientSet()", data-ng-show="createrecipe.showIngredientSetTitle == $index")
-      p.message.inline.helper-text Please add a title for the first set of ingredients.
-      label Ingredients List Title:
-        span.text-muted.helper-text  (ex. "Marinade" or "Sauce")
-      input.inline.pull-left(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
-      input.btn.inline.mgn-left-16(type="submit", value="+ Add Title")
   label Directions:
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   label Recipe Pairings:
