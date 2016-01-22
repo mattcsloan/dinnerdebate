@@ -32,27 +32,48 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.urlBase = location.host;
 
-  vm.ingredients = [];
+  vm.addIngredientSet = addIngredientSet;
+  vm.removeIngredientSet = removeIngredientSet;
+  vm.multipleLists = false;
 
-  function addIngredient() {
-    if(vm.newIngredient) {
+  vm.ingredientSets = [{
+    title: '',
+    list: []
+  }];
+
+  vm.newIngredient = [];
+
+  function addIngredientSet() {
+    vm.multipleLists = true;
+    vm.ingredientSets.push({
+      title: '',
+      list: []
+    });
+  }
+
+  function removeIngredientSet(setNum) {
+    vm.ingredientSets.splice(setNum, 1);
+  }
+
+  function addIngredient(setNum) {
+    if(vm.newIngredient[setNum]) {
       // check first to see if value already exists in array
-      if(vm.ingredients.indexOf(vm.newIngredient) == -1) {
-        vm.ingredients.push(vm.newIngredient);
-        vm.newIngredient = '';
+      if(vm.ingredientSets[setNum].list.indexOf(vm.newIngredient[setNum]) == -1) {
+        vm.ingredientSets[setNum].list.push(vm.newIngredient[setNum]);
+        vm.newIngredient[setNum] = '';
       }
     }
   }
 
-  function editIngredient(item, value) {
+  function editIngredient(item, value, setNum) {
     // check first to see if value already exists in array
-    if(vm.ingredients.indexOf(value) == -1) {
-      vm.ingredients.splice(item, 1, value);
+    if(vm.ingredientSets[setNum].list.indexOf(value) == -1) {
+      vm.ingredientSets[setNum].list.splice(item, 1, value);
     }
   }
 
-  function reorderIngredient(direction, item) {
-    var ingredient = vm.ingredients.splice(item, 1);
+  function reorderIngredient(direction, item, setNum) {
+    var ingredient = vm.ingredientSets[setNum].list.splice(item, 1);
     if(direction == 'up') {
       if(item == 0) {
         var newIndex = item;
@@ -62,13 +83,13 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     } else if(direction == 'down') {
       var newIndex = item + 1;
     } else {
-      var newIndex = vm.ingredients.length + 1;
+      var newIndex = vm.ingredientSets[setNum].list.length + 1;
     }
-    vm.ingredients.splice(newIndex, 0, ingredient[0]);
+    vm.ingredientSets[setNum].list.splice(newIndex, 0, ingredient[0]);
   }
 
-  function removeIngredient(item) {
-    vm.ingredients.splice(item, 1);
+  function removeIngredient(item, setNum) {
+    vm.ingredientSets[setNum].list.splice(item, 1);
   }
 
   vm.tags = [];
@@ -148,7 +169,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           },
           prepTime: vm.recipePrepTime,
           cookTime: vm.recipeCookTime,
-          ingredients: vm.ingredients,
+          ingredients: vm.ingredientSets,
           directions: vm.recipeDirections,
           pairings: vm.recipePairings,
           image: vm.recipeImage,
