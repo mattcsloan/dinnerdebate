@@ -23,8 +23,8 @@
     o.createNew = function(postData) {
       return $http.post(uri, postData);
     },
-    o.update = function(id, postData) {
-      return $http.put(uri + '/' + id, postData);
+    o.update = function(categoryKey, key, id, postData) {
+      return $http.put(uri + '/' + categoryKey + '/' + key + '/' + id, postData);
     },
     o.delete = function(id) {
       return $http.delete(uri + '/' + id);

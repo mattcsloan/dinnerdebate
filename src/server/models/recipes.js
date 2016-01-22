@@ -16,7 +16,11 @@ module.exports = mongoose.model('Recipes', {
     },
     prepTime : {type : Number, default: ''},
     cookTime : {type : Number, default: ''},
-    ingredients : {type : Array, default: []},
+    // ingredients : {type : Array, default: []},
+    ingredients : [{
+        title: {type : String, default: ''},
+        list: {type : Array, default: []}
+    }],
     directions : {type : String, default: ''},
     pairings : {type : Array, default: []},
     image : {type : String, default: ''},

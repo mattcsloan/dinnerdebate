@@ -8,12 +8,17 @@ h6.breadcrumb
   a(data-ui-sref="recipes.view({categoryKey: editrecipe.recipeDetail.categoryKey, recipeName: editrecipe.recipeDetail.key})", data-ng-bind="editrecipe.recipeDetail.name | lowercase")
   span  &raquo; 
 h1 Edit
-
-label Title:
-input(type="text", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name", data-ng-blur="editrecipe.createKey()")
-label Category:
-select(data-ng-model="editrecipe.category", data-ng-change="editrecipe.createCategoryKey()")
-  option(data-ng-repeat="option in editrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
+label.helper-text.error.error-msg.inline(data-ng-message="updateRecipeForm.$error", data-ng-show="updateRecipeForm.$touched") Please fill in all required fields.
+form(name="updateRecipeForm", novalidate)
+  label Title:
+    em.helper-text.required(data-ng-hide="updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid")  Required 
+    strong.helper-text.error.error-msg(data-ng-message="updateRecipeForm.title.$error", data-ng-show="updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid") Please add a recipe title.
+  input(type="text", name="title", value="editrecipe.recipeDetail.name", data-ng-model="editrecipe.name", data-ng-blur="editrecipe.createKey()", required)
+  label Category:
+    em.helper-text.required(data-ng-hide="updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid")  Required 
+    strong.helper-text.error.error-msg(data-ng-message="updateRecipeForm.categories.$error", data-ng-show="updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid") Please select a recipe category.
+  select(name="categories", data-ng-model="editrecipe.category", data-ng-change="editrecipe.createCategoryKey()", required)
+    option(data-ng-repeat="option in editrecipe.categoryOptions", value="{{option}}", data-ng-bind="option")
 label.recipe-url Recipe URL: 
   span(data-ng-show="(editrecipe.keyIsAvailable && editrecipe.showURLStatus) || editrecipe.initialKeyStatus")
     span.text-muted(data-ng-bind="editrecipe.urlBase")
@@ -28,28 +33,62 @@ label Date:
 p(data-ng-bind="editrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
 label.mgn-btm-16 Added By: 
   strong(data-ng-bind="editrecipe.addedBy.fullName")
-label Source Name: 
-  em.helper-text.text-muted (Person or Company/Website Name)
-input(type="text", value="editrecipe.recipeDetail.source", data-ng-model="editrecipe.source")
-label Source URL: 
-  em.helper-text.text-muted (if applicable)
-input(type="text", value="editrecipe.recipeDetail.sourceURL", data-ng-model="editrecipe.sourceURL")
-label Prep Time:
-input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
-label Cook Time:
-input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
-label Ingredients:
-ul.ingredients
-  li(data-ng-repeat="ingredient in editrecipe.ingredients")
-    span(data-ng-bind="ingredient")
-    a(data-ng-click="editrecipe.removeIngredient($index)").helper-text.remove Remove
-form(data-ng-submit="editrecipe.addIngredient()")
-  input(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient")
-  input.btn.inline(type="submit", value="+ Add")
+label.mgn-btm-16
+  input(type="checkbox", data-ng-model="editrecipe.recipeOwnership")
+  | This is not my recipe
+div(data-ng-show="editrecipe.recipeOwnership")
+  label Source Name: 
+    em.helper-text.text-muted (Person or Company/Website Name)
+  input(type="text", value="editrecipe.recipeDetail.source", data-ng-model="editrecipe.source")
+  label Source URL: 
+    em.helper-text.text-muted (if applicable)
+  input(type="text", value="editrecipe.recipeDetail.sourceURL", data-ng-model="editrecipe.sourceURL")
+hr
+.columns
+  .col.thirds
+    label Prep Time:
+      span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+    input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
+  .col.thirds
+    label Cook Time:
+      span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+    input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
+  .col.thirds
+    label.clear Number of Servings:
+    input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
+hr
+label.mgn-top-16
+  input(type="checkbox", data-ng-model="editrecipe.multipleLists")
+  | This recipe has multiple sets of ingredients
+.columns.clear
+  .col.half.mgn-top-16(data-ng-repeat="ingredientSet in editrecipe.ingredientSets")
+    div(data-ng-show="editrecipe.multipleLists")
+      label Ingredients List Title: 
+        span.text-muted.helper-text.mgn-left-8 (ex. "Marinade" or "Sauce")
+      input.mgn-btm-0.inline(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
+      h2.mgn-top-16(data-ng-show="ingredientSet.title", data-ng-bind="ingredientSet.title + ':'")
+      h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
+    ul.ingredients
+      li(data-ng-repeat="ingredient in ingredientSet.list")
+        span(data-ng-bind="ingredient", data-ng-hide="updating")
+        form(data-ng-submit="editrecipe.editIngredient($index, ingredient, $parent.$index)", data-ng-show="updating")
+          input.inline.pull-left(type="text", data-ng-model="ingredient")
+          input.btn.inline.mgn-left-16(type="submit", value="Update")
+        a(data-ng-click="updating = true").helper-text.remove Edit
+        a(data-ng-click="editrecipe.removeIngredient($index, $parent.$index)").helper-text.remove Remove
+        a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.remove Move Up
+        a(data-ng-click="editrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.remove Move Down
+    form(data-ng-submit="editrecipe.addIngredient($index)")
+      input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient[$index]")
+      input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
+    hr.mgn-top-0
+    a.btn.btn-subtle(data-ng-show="$index == editrecipe.ingredientSets.length - 1", data-ng-click="editrecipe.addIngredientSet()") Add another set of ingredients 
+      span.text-muted.helper-text (ex. for a marinade or sauce)
+    a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
-label Recipe Pairings:
-input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
+//- label Recipe Pairings:
+//- input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 .secondary.pull-right
   img.upload-preview.mgn-btm-16(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
   p.text-muted(data-ng-hide="editrecipe.image") No image provided.
@@ -67,19 +106,18 @@ input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="edit
     p.text-muted
       em(data-ng-if="editrecipe.f.name", data-ng-bind="'Uploading ' + editrecipe.f.name")
       strong(data-ng-bind="editrecipe.f.progress + '%'")
-label.clear Number of Servings:
-input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
-label Tags:
+label.clear Tags:
 .pills
   .pill(data-ng-repeat="tag in editrecipe.tags")
     span(data-ng-bind="tag")
     a(data-ng-click="editrecipe.removeTag($index)").helper-text.remove Remove
 form(data-ng-submit="editrecipe.addTag()")
-  input.inline.push-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
+  input.inline.pull-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")
 //- label Feature this item?:
 //- input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
-
-.btn-panel
-  a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
+span.error(data-ng-show="(!editrecipe.keyIsAvailable && editrecipe.completedKeys && editrecipe.showURLStatus) || (updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid) || (updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid)") Please correct any errors above and submit again.
+.btn-panel.clear
+  //- a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
+  input(type="submit", value="Update Recipe", data-ng-disabled="updateRecipeForm.$invalid || !editrecipe.keyIsAvailable", data-ng-click="editrecipe.updateRecipe()").btn.inline
   a.btn.btn-subtle(data-ng-click="editrecipe.deleteRecipe()") Delete Recipe

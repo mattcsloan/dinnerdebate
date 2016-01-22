@@ -1,20 +1,16 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, UserResource, $location, $timeout, Upload) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $rootScope, $location, $timeout, Upload, CategoryResource) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
   vm.title = 'Create New Recipe';
 
-  UserResource.getUser()
-    .success(function(data, status) {
-      vm.user = data;
-    })
-    .error(function(data, status) {
-      console.log("Error retreiving user");
-    });
+  vm.user = $rootScope.user;
 
   vm.uploadFile = uploadFile;
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
+  vm.editIngredient = editIngredient;
+  vm.reorderIngredient = reorderIngredient;
   vm.removeIngredient = removeIngredient;
   vm.addTag = addTag;
   vm.removeTag = removeTag;
@@ -28,23 +24,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     vm.categoryKey
   ];
 
-  vm.categoryOptions = [
-    "Appetizers",
-    "Breads and Muffins",
-    "Breakfast",
-    "Cakes",
-    "Cookies",
-    "Desserts",
-    "Drinks",
-    "Entrees",
-    "Kids",
-    "Pies",
-    "Pets",
-    "Salads",
-    "Sauces and Marinades",
-    "Sides",
-    "Soups"
-  ];
+  vm.categoryOptions = CategoryResource.allCategories();
 
   if(!vm.categoryKey) {
     vm.categoryKey = 'uncategorized';
@@ -52,17 +32,64 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   vm.urlBase = location.host;
 
-  vm.ingredients = [];
+  vm.addIngredientSet = addIngredientSet;
+  vm.removeIngredientSet = removeIngredientSet;
+  vm.multipleLists = false;
 
-  function addIngredient() {
-    if(vm.newIngredient) {
-      vm.ingredients.push(vm.newIngredient);
-      vm.newIngredient = '';
+  vm.ingredientSets = [{
+    title: '',
+    list: []
+  }];
+
+  vm.newIngredient = [];
+
+  function addIngredientSet() {
+    vm.multipleLists = true;
+    vm.ingredientSets.push({
+      title: '',
+      list: []
+    });
+  }
+
+  function removeIngredientSet(setNum) {
+    vm.ingredientSets.splice(setNum, 1);
+  }
+
+  function addIngredient(setNum) {
+    if(vm.newIngredient[setNum]) {
+      // check first to see if value already exists in array
+      if(vm.ingredientSets[setNum].list.indexOf(vm.newIngredient[setNum]) == -1) {
+        vm.ingredientSets[setNum].list.push(vm.newIngredient[setNum]);
+        vm.newIngredient[setNum] = '';
+      }
     }
   }
 
-  function removeIngredient(item) {
-    vm.ingredients.splice(item, 1);
+  function editIngredient(item, value, setNum) {
+    // check first to see if value already exists in array
+    if(vm.ingredientSets[setNum].list.indexOf(value) == -1) {
+      vm.ingredientSets[setNum].list.splice(item, 1, value);
+    }
+  }
+
+  function reorderIngredient(direction, item, setNum) {
+    var ingredient = vm.ingredientSets[setNum].list.splice(item, 1);
+    if(direction == 'up') {
+      if(item == 0) {
+        var newIndex = item;
+      } else {
+        var newIndex = item - 1;
+      }
+    } else if(direction == 'down') {
+      var newIndex = item + 1;
+    } else {
+      var newIndex = vm.ingredientSets[setNum].list.length + 1;
+    }
+    vm.ingredientSets[setNum].list.splice(newIndex, 0, ingredient[0]);
+  }
+
+  function removeIngredient(item, setNum) {
+    vm.ingredientSets[setNum].list.splice(item, 1);
   }
 
   vm.tags = [];
@@ -142,7 +169,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           },
           prepTime: vm.recipePrepTime,
           cookTime: vm.recipeCookTime,
-          ingredients: vm.ingredients,
+          ingredients: vm.ingredientSets,
           directions: vm.recipeDirections,
           pairings: vm.recipePairings,
           image: vm.recipeImage,
@@ -151,7 +178,6 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           featured: vm.recipeFeatured
         })
         .success(function (res) {
-          console.log(res);
           if(res == 'Recipe already exists.') {
             vm.keyIsAvailable = false;
             vm.completedKeys = true;

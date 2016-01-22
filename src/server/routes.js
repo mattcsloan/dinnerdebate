@@ -24,6 +24,18 @@ module.exports = function(app) {
         });
     });
 
+    // get all recipes by user
+    app.get('/api/recipes/by/user', function(req, res) {
+        // use mongoose to get all recipes in the database
+        Recipes.find( { "addedBy.username": req.user.username }, function(err, recipes) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(recipes); // return all recipes in JSON format
+        });
+    });
+
+
     // create recipe
     app.post('/api/recipes', stormpath.loginRequired, function(req, res) {
         // use mongoose to add a new recipe in the database
@@ -105,55 +117,80 @@ module.exports = function(app) {
     }); 
 
     // update individual recipe
-    app.put('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {
-        var recipeId = req.params.recipeId;
-        Recipes.findById(recipeId, function(err, recipe) {
-            recipe.name = req.body.name;
-            recipe.key = req.body.key;
-            recipe.description = req.body.description;
-            recipe.category = req.body.category;
-            recipe.categoryKey = req.body.categoryKey;
-            recipe.date = req.body.date;
-            recipe.source = req.body.source;
-            recipe.sourceURL = req.body.sourceURL;
-            recipe.addedBy = req.body.addedBy;
-            recipe.prepTime = req.body.prepTime;
-            recipe.cookTime = req.body.cookTime;
-            recipe.ingredients = req.body.ingredients;
-            recipe.directions = req.body.directions;
-            recipe.pairings = req.body.pairings;
-            recipe.image = req.body.image;
-            recipe.servings = req.body.servings;
-            recipe.tags = req.body.tags;
-            recipe.featured = req.body.featured;
-            if (err) {
-                res.send(err);
-            }
-            if (recipe) {
-                recipe.save(function(err) {
-                    if(err) {
-                        res.send(err);
-                    }
-                    res.json(201, recipe);
-                });
-            }
-        });
+    app.put('/api/recipes/:categoryKey/:key/:recipeId', stormpath.loginRequired, function(req, res) {
+        if(req.user.username == req.body.addedBy.username || req.user.groups.items[0].name == 'Admin') {
+            Recipes.findOne({
+                category: req.body.category, 
+                key: req.body.name
+            }, function(err, recipeReturned) { 
+                if (err) {
+                    res.send(err);
+                }
+                // check to see if response returned an already existing recipe
+                var categoryKey = req.params.categoryKey;
+                var key = req.params.key;
+                if (recipeReturned == null || (recipeReturned.key == key && recipeReturned.categoryKey == categoryKey)) {
+                    var recipeId = req.params.recipeId;
+                    Recipes.findById(recipeId, function(err, recipe) {
+                        recipe.name = req.body.name;
+                        recipe.key = req.body.key;
+                        recipe.description = req.body.description;
+                        recipe.category = req.body.category;
+                        recipe.categoryKey = req.body.categoryKey;
+                        recipe.date = req.body.date;
+                        recipe.source = req.body.source;
+                        recipe.sourceURL = req.body.sourceURL;
+                        recipe.addedBy = req.body.addedBy;
+                        recipe.prepTime = req.body.prepTime;
+                        recipe.cookTime = req.body.cookTime;
+                        recipe.ingredients = req.body.ingredients;
+                        recipe.directions = req.body.directions;
+                        recipe.pairings = req.body.pairings;
+                        recipe.image = req.body.image;
+                        recipe.servings = req.body.servings;
+                        recipe.tags = req.body.tags;
+                        recipe.featured = req.body.featured;
+                        if (err) {
+                            res.send(err);
+                        }
+                        if (recipe) {
+                            recipe.save(function(err) {
+                                if(err) {
+                                    res.send(err);
+                                }
+                                res.json(201, recipe);
+                            });
+                        }
+                    });
+                } else {
+                    res.send('Recipe already exists.');
+                }
+            });
+        }
+        else {
+            res.send('You do not have access to update this recipe.');
+        }
     });
 
     // delete individual recipe
     app.delete('/api/recipes/:recipeId', stormpath.loginRequired, function(req, res) {
+
         var recipeId = req.params.recipeId;
         Recipes.findById(recipeId, function (err, recipe) {
             if(err) {
                 res.send(err);
             }
             if (recipe) {
-                recipe.remove(function(err) {
-                    if(err) {
-                        res.send(err);
-                    }
-                    res.json();
-                });
+                if(req.user.username == recipe.addedBy.username || req.user.groups.items[0].name == 'Admin') {
+                    recipe.remove(function(err) {
+                        if(err) {
+                            res.send(err);
+                        }
+                        res.json();
+                    });
+                } else {
+                    res.send('You do not have access to delete this recipe.');
+                }
             }
         });
     });
@@ -183,7 +220,7 @@ module.exports = function(app) {
     });
 
     // authentication routes
-    app.get('/auth/user', stormpath.loginRequired, function (req, res) {
+    app.get('/auth/user', function (req, res) {
       if (!req.user || req.user.status !== 'ENABLED') {
         return res.redirect('/login');
       }

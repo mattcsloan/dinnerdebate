@@ -41,10 +41,13 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
               span Servings
     p.multiline(data-ng-if="viewrecipe.recipeDetail.description")
       em(data-ng-bind="viewrecipe.recipeDetail.description")
-    div(data-ng-if="viewrecipe.recipeDetail.ingredients.length")
-      h2 Ingredients:
-      ul.ingredients.list
-        li(data-ng-repeat="ingredient in viewrecipe.recipeDetail.ingredients", data-ng-bind="ingredient")
+    .columns
+      div(data-ng-repeat="ingredientList in viewrecipe.recipeDetail.ingredients", data-ng-class="{ 'col half': !viewrecipe.recipeDetail.image && viewrecipe.recipeDetail.ingredients.length > 1 }")
+        div(data-ng-if="ingredientList.list.length")
+          h2(data-ng-hide="ingredientList.title") Ingredients:
+          h2(data-ng-show="ingredientList.title", data-ng-bind="ingredientList.title + ':'")
+          ul.ingredients.list
+            li(data-ng-repeat="ingredient in ingredientList.list", data-ng-bind="ingredient")
     div(data-ng-if="viewrecipe.recipeDetail.directions")
       h2 Directions:
       p.multiline(data-ng-bind="viewrecipe.recipeDetail.directions")
@@ -57,4 +60,5 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
   .media(data-ng-if="viewrecipe.recipeDetail.image")
     img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
-a.btn(data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit Recipe
+a.btn(if-user-in-group="'Admin'", data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit Recipe
+a.btn(if-user-not-in-group="'Admin'", data-ng-if="viewrecipe.username == viewrecipe.recipeDetail.addedBy.username" data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit My Recipe

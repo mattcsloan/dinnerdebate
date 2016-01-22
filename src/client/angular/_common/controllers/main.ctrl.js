@@ -8,14 +8,6 @@ angular.module('MainCtrl', []).controller('MainController', function($state, $ro
       vm.navigation = res
     });
 
-  $http.get('/auth/user')
-    .success(function (res) {
-      vm.user = res;
-    })
-    .error(function (res) {
-      console.log('not logged in');
-    });
-
   vm.state = $state;
 
   vm.date = new Date();
