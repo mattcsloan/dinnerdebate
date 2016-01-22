@@ -43,28 +43,52 @@ div(data-ng-show="editrecipe.recipeOwnership")
   label Source URL: 
     em.helper-text.text-muted (if applicable)
   input(type="text", value="editrecipe.recipeDetail.sourceURL", data-ng-model="editrecipe.sourceURL")
-label Prep Time:
-input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
-label Cook Time:
-input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
-label Ingredients:
-ul.ingredients(data-ng-repeat="ingredientList in editrecipe.ingredients")
-  li(data-ng-repeat="ingredient in ingredientList.list")
-    span(data-ng-bind="ingredient", data-ng-hide="updating")
-    form(data-ng-submit="editrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
-      input.inline.pull-left(type="text", data-ng-model="ingredient")
-      input.btn.inline.mgn-left-16(type="submit", value="Update")
-    a(data-ng-click="updating = true").helper-text.remove Edit
-    a(data-ng-click="editrecipe.removeIngredient($index)").helper-text.remove Remove
-    a(data-ng-click="editrecipe.reorderIngredient('up', $index)").helper-text.remove Move Up
-    a(data-ng-click="editrecipe.reorderIngredient('down', $index)").helper-text.remove Move Down
-form(data-ng-submit="editrecipe.addIngredient()")
-  input(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient")
-  input.btn.inline(type="submit", value="+ Add")
+hr
+.columns
+  .col.thirds
+    label Prep Time:
+      span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+    input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
+  .col.thirds
+    label Cook Time:
+      span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+    input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
+  .col.thirds
+    label.clear Number of Servings:
+    input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
+hr
+label.mgn-top-16
+  input(type="checkbox", data-ng-model="editrecipe.multipleLists")
+  | This recipe has multiple sets of ingredients
+.columns.clear
+  .col.half.mgn-top-16(data-ng-repeat="ingredientSet in editrecipe.ingredientSets")
+    div(data-ng-show="editrecipe.multipleLists")
+      label Ingredients List Title: 
+        span.text-muted.helper-text.mgn-left-8 (ex. "Marinade" or "Sauce")
+      input.mgn-btm-0.inline(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
+      h2.mgn-top-16(data-ng-show="ingredientSet.title", data-ng-bind="ingredientSet.title + ':'")
+      h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
+    ul.ingredients
+      li(data-ng-repeat="ingredient in ingredientSet.list")
+        span(data-ng-bind="ingredient", data-ng-hide="updating")
+        form(data-ng-submit="editrecipe.editIngredient($index, ingredient, $parent.$index)", data-ng-show="updating")
+          input.inline.pull-left(type="text", data-ng-model="ingredient")
+          input.btn.inline.mgn-left-16(type="submit", value="Update")
+        a(data-ng-click="updating = true").helper-text.remove Edit
+        a(data-ng-click="editrecipe.removeIngredient($index, $parent.$index)").helper-text.remove Remove
+        a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.remove Move Up
+        a(data-ng-click="editrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.remove Move Down
+    form(data-ng-submit="editrecipe.addIngredient($index)")
+      input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient[$index]")
+      input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
+    hr.mgn-top-0
+    a.btn.btn-subtle(data-ng-show="$index == editrecipe.ingredientSets.length - 1", data-ng-click="editrecipe.addIngredientSet()") Add another set of ingredients 
+      span.text-muted.helper-text (ex. for a marinade or sauce)
+    a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
-label Recipe Pairings:
-input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
+//- label Recipe Pairings:
+//- input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 .secondary.pull-right
   img.upload-preview.mgn-btm-16(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
   p.text-muted(data-ng-hide="editrecipe.image") No image provided.
@@ -82,9 +106,7 @@ input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="edit
     p.text-muted
       em(data-ng-if="editrecipe.f.name", data-ng-bind="'Uploading ' + editrecipe.f.name")
       strong(data-ng-bind="editrecipe.f.progress + '%'")
-label.clear Number of Servings:
-input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
-label Tags:
+label.clear Tags:
 .pills
   .pill(data-ng-repeat="tag in editrecipe.tags")
     span(data-ng-bind="tag")

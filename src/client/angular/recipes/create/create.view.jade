@@ -38,41 +38,52 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     label Source URL: 
       em.helper-text.text-muted (if applicable)
     input(type="text", name="sourceURL", placeholder="Source URL", data-ng-model="createrecipe.recipeSourceURL")
-  label.clear Prep Time:
-  input.inline(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
-  span.mgn-left-16 Minutes
-  label Cook Time:
-  input.inline(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
-  span.mgn-left-16 Minutes
-  label Ingredients:
-  label.mgn-btm-16.mgn-top-16
+  hr
+  .columns
+    .col.thirds
+      label.clear Prep Time:
+        span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+      input(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+    .col.thirds
+      label Cook Time:
+        span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+      input(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+    .col.thirds
+      label Number of Servings:
+      input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
+  hr
+  label.mgn-top-16
     input(type="checkbox", data-ng-model="createrecipe.multipleLists")
     | This recipe has multiple sets of ingredients
-  div(data-ng-repeat="ingredientSet in createrecipe.ingredientSets")
-    div(data-ng-show="createrecipe.multipleLists")
-      label Ingredients List Title:
-        span.text-muted.helper-text  (ex. "Marinade" or "Sauce")
-      input(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
-      h2.mgn-top-16(data-ng-if="ingredientSet.title", data-ng-bind="ingredientSet.title")
-    ul.ingredients
-      li(data-ng-repeat="ingredient in ingredientSet.list")
-        span(data-ng-bind="ingredient", data-ng-hide="updating")
-        form(data-ng-submit="createrecipe.editIngredient($index, ingredient)", data-ng-show="updating")
-          input.inline.pull-left(type="text", data-ng-model="ingredient")
-          input.btn.inline.mgn-left-16(type="submit", value="Update")
-        a(data-ng-click="updating = true").helper-text.remove Edit
-        a(data-ng-click="createrecipe.removeIngredient($index)").helper-text.remove Remove
-        a(data-ng-click="createrecipe.reorderIngredient('up', $index)").helper-text.remove Move Up
-        a(data-ng-click="createrecipe.reorderIngredient('down', $index)").helper-text.remove Move Down
-    form(data-ng-submit="createrecipe.addIngredient($index)")
-      input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient")
-      input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
-    a.btn.btn-subtle(data-ng-click="createrecipe.addIngredientSet()") Add another set of ingredients 
-      span.text-muted.helper-text (ex. for a marinade or sauce)
+  .columns.clear
+    .col.half.mgn-top-16(data-ng-repeat="ingredientSet in createrecipe.ingredientSets")
+      div(data-ng-show="createrecipe.multipleLists")
+        label Ingredients List Title: 
+          span.text-muted.helper-text.mgn-left-8 (ex. "Marinade" or "Sauce")
+        input.mgn-btm-0.inline(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
+        h2.mgn-top-16(data-ng-show="ingredientSet.title", data-ng-bind="ingredientSet.title + ':'")
+        h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
+      ul.ingredients
+        li(data-ng-repeat="ingredient in ingredientSet.list")
+          span(data-ng-bind="ingredient", data-ng-hide="updating")
+          form(data-ng-submit="createrecipe.editIngredient($index, ingredient, $parent.$index)", data-ng-show="updating")
+            input.inline.pull-left(type="text", data-ng-model="ingredient")
+            input.btn.inline.mgn-left-16(type="submit", value="Update")
+          a(data-ng-click="updating = true").helper-text.remove Edit
+          a(data-ng-click="createrecipe.removeIngredient($index, $parent.$index)").helper-text.remove Remove
+          a(data-ng-click="createrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.remove Move Up
+          a(data-ng-click="createrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.remove Move Down
+      form(data-ng-submit="createrecipe.addIngredient($index)")
+        input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient[$index]")
+        input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
+      hr.mgn-top-0
+      a.btn.btn-subtle(data-ng-show="$index == createrecipe.ingredientSets.length - 1", data-ng-click="createrecipe.addIngredientSet()") Add another set of ingredients 
+        span.text-muted.helper-text (ex. for a marinade or sauce)
+      a.btn.btn-subtle(data-ng-show="createrecipe.ingredientSets.length > 1", data-ng-click="createrecipe.removeIngredientSet($index)") Remove this set 
   label Directions:
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
-  label Recipe Pairings:
-  input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
+  //- label Recipe Pairings:
+  //- input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   .secondary.pull-right
     img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
   .main.pull-left
@@ -91,9 +102,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       p.text-muted
         em(data-ng-if="createrecipe.f.name", data-ng-bind="'Uploading ' + createrecipe.f.name")
         strong(data-ng-bind="createrecipe.f.progress + '%'")
-  label.clear Number of Servings:
-  input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
-  label Tags:
+  label.clear Tags:
   .pills
     .pill(data-ng-repeat="tag in createrecipe.tags")
       span(data-ng-bind="tag")

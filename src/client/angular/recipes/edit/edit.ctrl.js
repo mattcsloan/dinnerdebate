@@ -30,6 +30,17 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   vm.categoryOptions = CategoryResource.allCategories();
 
+  vm.addIngredientSet = addIngredientSet;
+  vm.removeIngredientSet = removeIngredientSet;
+  vm.multipleLists = false;
+
+  vm.ingredientSets = [{
+    title: '',
+    list: []
+  }];
+
+  vm.newIngredient = [];
+
   function createKey() {
     if(vm.name) {
       var recipeTitle = vm.name;
@@ -100,7 +111,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.addedBy = vm.recipeDetail.addedBy;
         vm.prepTime = vm.recipeDetail.prepTime;
         vm.cookTime = vm.recipeDetail.cookTime;
-        vm.ingredients = vm.recipeDetail.ingredients;
+        vm.ingredientSets = vm.recipeDetail.ingredients;
         vm.directions = vm.recipeDetail.directions;
         vm.pairings = vm.recipeDetail.pairings;
         vm.image = vm.recipeDetail.image;
@@ -112,6 +123,10 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
           vm.recipeOwnership = true;
         } else {
           vm.recipeOwnership = false;
+        }
+
+        if(vm.recipeDetail.ingredients.length > 1) {
+          vm.multipleLists = true;
         }
       }
     })
@@ -134,10 +149,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
           addedBy: vm.addedBy,
           prepTime: vm.prepTime,
           cookTime: vm.cookTime,
-          ingredients: {
-            title: vm.ingredients.title,
-            list: vm.ingredients.list
-          },
+          ingredients: vm.ingredientSets,
           directions: vm.directions,
           pairings: vm.pairings,
           image: vm.image,
@@ -171,24 +183,37 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       });
   }
 
-  function addIngredient() {
-    vm.ingredients.list.push(vm.newIngredient);
-    vm.newIngredient = '';
+  function addIngredientSet() {
+    vm.multipleLists = true;
+    vm.ingredientSets.push({
+      title: '',
+      list: []
+    });
   }
 
-  function editIngredient(item, value) {
-    // check first to see if value already exists in array
-    if(vm.ingredients.list.indexOf(value) == -1) {
-      vm.ingredients.list.splice(item, 1, value);
+  function removeIngredientSet(setNum) {
+    vm.ingredientSets.splice(setNum, 1);
+  }
+
+  function addIngredient(setNum) {
+    if(vm.newIngredient[setNum]) {
+      // check first to see if value already exists in array
+      if(vm.ingredientSets[setNum].list.indexOf(vm.newIngredient[setNum]) == -1) {
+        vm.ingredientSets[setNum].list.push(vm.newIngredient[setNum]);
+        vm.newIngredient[setNum] = '';
+      }
     }
   }
 
-  function removeIngredient(item) {
-    vm.ingredients.list.splice(item, 1);
+  function editIngredient(item, value, setNum) {
+    // check first to see if value already exists in array
+    if(vm.ingredientSets[setNum].list.indexOf(value) == -1) {
+      vm.ingredientSets[setNum].list.splice(item, 1, value);
+    }
   }
 
-  function reorderIngredient(direction, item) {
-    var ingredient = vm.ingredients.list.splice(item, 1);
+  function reorderIngredient(direction, item, setNum) {
+    var ingredient = vm.ingredientSets[setNum].list.splice(item, 1);
     if(direction == 'up') {
       if(item == 0) {
         var newIndex = item;
@@ -198,9 +223,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     } else if(direction == 'down') {
       var newIndex = item + 1;
     } else {
-      var newIndex = vm.ingredients.list.length + 1;
+      var newIndex = vm.ingredientSets[setNum].list.length + 1;
     }
-    vm.ingredients.list.splice(newIndex, 0, ingredient[0]);
+    vm.ingredientSets[setNum].list.splice(newIndex, 0, ingredient[0]);
+  }
+
+  function removeIngredient(item, setNum) {
+    vm.ingredientSets[setNum].list.splice(item, 1);
   }
 
   function addTag() {
