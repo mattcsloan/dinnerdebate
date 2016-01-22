@@ -129,6 +129,8 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         if(vm.recipeDetail.ingredients.length > 1) {
           vm.multipleLists = true;
         }
+
+        Page.setTitle('Edit Recipe | ' + vm.recipeDetail.name);   
       }
     })
     .error(function(data, status) {

@@ -8,7 +8,7 @@
 
   /* @ngInject */
   function page() {
-    var title = 'Dinner Debate';
+    var title = '';
     return {
       title: function() { return title + ' | Dinner Debate'; },
       setTitle: function(newTitle) { title = newTitle + ' | Dinner Debate' }
