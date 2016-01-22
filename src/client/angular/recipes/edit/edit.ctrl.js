@@ -13,6 +13,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.addTag = addTag;
   vm.removeTag = removeTag;
   vm.uploadFile = uploadFile;
+  vm.removeImage = removeImage;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
   vm.keyAvailability = keyAvailability;
@@ -241,6 +242,10 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   function removeTag(item) {
     vm.tags.splice(item, 1);
+  }
+
+  function removeImage() {
+    vm.image = null;
   }
 
   function uploadFile(file, errFiles) {

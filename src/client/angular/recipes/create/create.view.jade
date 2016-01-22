@@ -102,6 +102,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       p.text-muted
         em(data-ng-if="createrecipe.f.name", data-ng-bind="'Uploading ' + createrecipe.f.name")
         strong(data-ng-bind="createrecipe.f.progress + '%'")
+    a.btn.btn-subtle(data-ng-show="createrecipe.recipeImage", data-ng-click="createrecipe.removeImage()") Remove Image
   label.clear Tags:
   .pills
     .pill(data-ng-repeat="tag in createrecipe.tags")
