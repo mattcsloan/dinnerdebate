@@ -99,7 +99,9 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
   .main.pull-left
     label Upload Image:
-    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Select File To Upload
+    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") 
+      i.icon.icon-image.helper-text.mgn-right-8
+      span Select File To Upload
     .upload-status(data-ng-if="createrecipe.errFile.name || createrecipe.errorMsg")
       span.error(data-ng-if="createrecipe.errFile.name") Error uploading 
         strong
@@ -118,7 +120,8 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   .pills
     .pill(data-ng-repeat="tag in createrecipe.tags")
       span(data-ng-bind="tag")
-      a(data-ng-click="createrecipe.removeTag($index)").helper-text.remove Remove
+      a(data-ng-click="createrecipe.removeTag($index)")
+        i.icon.icon-cross.subtle.helper-text.mgn-left-8
   form(data-ng-submit="createrecipe.addTag()")
     input.inline(type="text", placeholder="New Tag", data-ng-model="createrecipe.newTag")
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")

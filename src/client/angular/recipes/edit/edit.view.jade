@@ -105,7 +105,9 @@ textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.d
   p.text-muted(data-ng-hide="editrecipe.image") No image provided.
 .main.pull-left
   label Image:
-  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Upload New Photo
+  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
+    i.icon.icon-image.helper-text.mgn-right-8
+    span Upload New Photo
   .upload-status(data-ng-if="editrecipe.errFile.name || editrecipe.errorMsg")
     span.error(data-ng-if="editrecipe.errFile.name") Error uploading 
       strong
@@ -122,7 +124,8 @@ label.clear Tags:
 .pills
   .pill(data-ng-repeat="tag in editrecipe.tags")
     span(data-ng-bind="tag")
-    a(data-ng-click="editrecipe.removeTag($index)").helper-text.remove Remove
+    a(data-ng-click="editrecipe.removeTag($index)")
+      i.icon.icon-cross.subtle.helper-text.mgn-left-8
 form(data-ng-submit="editrecipe.addTag()")
   input.inline.pull-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")

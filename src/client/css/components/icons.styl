@@ -1,4 +1,6 @@
 .icon
+  &.subtle
+    color $subtle
   &.icon-reverse
     padding 4px
     border-radius(4px)
@@ -8,9 +10,16 @@
       color #fff
 a
   .icon
+    &.subtle
+      color $subtle
     &.icon-reverse
       &.subtle
         background $subtle
-      &:hover
+  &:hover
+    .icon
+      text-decoration none
+      &.subtle
+        color $primary-color
+      &.icon-reverse
         background $primary-color
-        text-decoration none
+

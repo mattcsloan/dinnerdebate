@@ -1,5 +1,9 @@
-input.inline.pull-right.mgn-top-0(type="text", data-ng-model="searchQuery", placeholder="Search")
-a.btn.pull-right.mgn-right-16(data-ui-sref="recipes.create") Create New Recipe
+.searchbox.inline.pull-right
+  i.icon.icon-search
+  input.mgn-top-0(type="text", data-ng-model="searchQuery", placeholder="Search")
+a.btn.pull-right.mgn-right-16(data-ui-sref="recipes.create") 
+  i.icon.icon-plus.helper-text.mgn-right-8
+  span Create New Recipe
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
@@ -16,10 +20,12 @@ h1(data-ng-bind="recipes.title")
       a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
 .main
   .error(data-ng-if="recipes.noCategoryMessage")
-    a.close.pull-right.text-small(data-ng-click="recipes.dismiss(0)") Close
+    a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(0)")
+      i.icon.icon-cross
     span(data-ng-bind="recipes.noCategoryMessage")
   .error(data-ng-if="recipes.querystring.message")
-    a.close.pull-right.text-small(data-ng-click="recipes.dismiss(1)") Close
+    a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(1)")
+      i.icon.icon-cross
     span(data-ng-bind="recipes.querystring.message")
   .headline-container
     .sort.pull-right.text-small.text-muted

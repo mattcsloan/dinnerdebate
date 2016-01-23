@@ -1,15 +1,25 @@
 .wrapper
   ul.navigation
     li(data-ng-repeat="item in main.navigation")
-      a(data-ui-sref="{{item.url}}", data-ng-bind="item.label", data-ui-sref-active="active")
+      a(data-ui-sref="{{item.url}}", data-ui-sref-active="active")
+        i.icon.mgn-right-8(data-ng-if="item.icon", data-ng-class="item.icon")
+        span(data-ng-bind="item.label")
   a.logo(data-ui-sref="home")
     img(src="/img/logo.png", alt="The Dinner Debate")
   ul.navigation
     li(data-if-user)
-      a(data-ui-sref="dashboard", data-ui-sref-active="active") Dashboard
+      a(data-ui-sref="dashboard", data-ui-sref-active="active")
+        i.icon.icon-meter.mgn-right-8
+        span Dashboard
     li(data-if-not-user)
-      a(data-ui-sref="register", data-ui-sref-active="active") Register
+      a(data-ui-sref="register", data-ui-sref-active="active")
+        i.icon.icon-key.mgn-right-8
+        span Register
     li(data-if-not-user)
-      a(data-ui-sref="login", data-ui-sref-active="active") Login
+      a(data-ui-sref="login", data-ui-sref-active="active")
+        i.icon.icon-dd-unlock.mgn-right-8
+        span Login
     li(data-if-user)
-      a(data-ui-sref="logout", data-ui-sref-active="active") Logout
+      a(data-ui-sref="logout", data-ui-sref-active="active")
+        i.icon.icon-dd-lock.mgn-right-8
+        span Logout
