@@ -62,17 +62,28 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
           span.text-muted.helper-text.mgn-left-8 (ex. "Marinade" or "Sauce")
         input.mgn-btm-0.inline(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
         h2.mgn-top-16(data-ng-show="ingredientSet.title", data-ng-bind="ingredientSet.title + ':'")
-        h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
-      ul.ingredients
+      h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
+      ul.ingredients.list
         li(data-ng-repeat="ingredient in ingredientSet.list")
-          span(data-ng-bind="ingredient", data-ng-hide="updating")
+          span.mgn-right-16(data-ng-bind="ingredient", data-ng-hide="updating")
           form(data-ng-submit="createrecipe.editIngredient($index, ingredient, $parent.$index)", data-ng-show="updating")
             input.inline.pull-left(type="text", data-ng-model="ingredient")
             input.btn.inline.mgn-left-16(type="submit", value="Update")
-          a(data-ng-click="updating = true").helper-text.remove Edit
-          a(data-ng-click="createrecipe.removeIngredient($index, $parent.$index)").helper-text.remove Remove
-          a(data-ng-click="createrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.remove Move Up
-          a(data-ng-click="createrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.remove Move Down
+            a.btn.btn-subtle.inline.mgn-left-16(data-ng-click="updating = false")
+              i.icon.icon-cross.mgn-right-8.helper-text
+              | Cancel
+          a(data-ng-click="updating = true", data-ng-hide="updating").helper-text.mgn-right-8.tooltip
+            i.icon.icon-reverse.subtle.icon-pencil2
+            span Edit
+          a(data-ng-click="createrecipe.removeIngredient($index, $parent.$index)").helper-text.mgn-right-8.tooltip
+            i.icon.icon-reverse.subtle.icon-cross
+            span Remove
+          a(data-ng-click="createrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.mgn-right-8.tooltip
+            i.icon.icon-reverse.subtle.icon-arrow-up
+            span Move&nbsp;Up
+          a(data-ng-click="createrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.tooltip
+            i.icon.icon-reverse.subtle.icon-arrow-down
+            span Move&nbsp;Down
       form(data-ng-submit="createrecipe.addIngredient($index)")
         input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient[$index]")
         input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")

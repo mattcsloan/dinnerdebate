@@ -4,7 +4,7 @@ var jade = require('gulp-jade');
 var stylus = require('gulp-stylus');
 var rename = require('gulp-rename');
 
-gulp.task('default', ['templates', 'img', 'js', 'css'], function() {
+gulp.task('default', ['templates', 'img', 'fonts', 'js', 'css'], function() {
   // place code for your default task here
   console.log('gulp process completed');
 });
@@ -24,6 +24,12 @@ gulp.task('img', function() {
   // copy img files/directories over to dist directory
   gulp.src('src/client/img/**/*.*')
     .pipe(gulp.dest('dist/img'));
+});
+
+gulp.task('fonts', function() {
+  // copy font files/directories over to dist directory
+  gulp.src('src/client/fonts/**/*.*')
+    .pipe(gulp.dest('dist/fonts'));
 });
 
 gulp.task('js', function() {
