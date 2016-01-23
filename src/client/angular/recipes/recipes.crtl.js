@@ -52,6 +52,7 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     } else if(item == 1) {
       vm.querystring.message = '';
     }
+    $location.search('message', null);
   }
 
 
