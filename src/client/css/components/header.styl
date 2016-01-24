@@ -27,13 +27,13 @@
 .navigation
   margin 0
   padding 0
-  float right
+  float left
   &:after
     content ''
     display block
     clear both
-  &:first-child
-    float left
+  + .navigation
+    float right
   li
     list-style none
     margin 0

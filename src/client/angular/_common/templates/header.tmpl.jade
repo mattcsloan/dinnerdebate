@@ -1,11 +1,11 @@
 .wrapper
+  a.logo(data-ui-sref="home")
+    img(src="/img/logo.png", alt="The Dinner Debate")
   ul.navigation
     li(data-ng-repeat="item in main.navigation")
       a(data-ui-sref="{{item.url}}", data-ui-sref-active="active")
         i.icon.mgn-right-8(data-ng-if="item.icon", data-ng-class="item.icon")
         span(data-ng-bind="item.label")
-  a.logo(data-ui-sref="home")
-    img(src="/img/logo.png", alt="The Dinner Debate")
   ul.navigation
     li(data-if-user)
       a(data-ui-sref="dashboard", data-ui-sref-active="active")
