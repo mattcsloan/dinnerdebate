@@ -94,8 +94,8 @@ label.mgn-top-16
       input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
     hr.mgn-top-0
     a.btn.btn-subtle(data-ng-show="$index == editrecipe.ingredientSets.length - 1", data-ng-click="editrecipe.addIngredientSet()") Add another set of ingredients 
-      span.text-muted.helper-text (ex. for a marinade or sauce)
-    a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
+      //- span.text-muted.helper-text (ex. for a marinade or sauce)
+    a.btn.btn-subtle.mgn-left-16(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
 //- label Recipe Pairings:

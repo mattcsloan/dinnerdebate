@@ -1,23 +1,14 @@
-.searchbox.inline.pull-right
-  i.icon.icon-search
-  input.mgn-top-0(type="text", data-ng-model="searchQuery", placeholder="Search")
-a.btn.pull-right.mgn-right-16(data-ui-sref="recipes.create") 
-  i.icon.icon-plus.helper-text.mgn-right-8
-  span Create New Recipe
+.action-items.block-sm
+  a.btn.pull-left.mgn-right-16(data-ui-sref="recipes.create") 
+    i.icon.icon-plus.helper-text.mgn-right-8
+    span Create New Recipe
+  .searchbox.inline.pull-left
+    i.icon.icon-search
+    input.mgn-top-0(type="text", data-ng-model="searchQuery", placeholder="Search")
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="recipes.title")
-.secondary
-  //- a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
-  //-   span(data-ng-if="recipes.selectedCategories.length") Deselect All
-  //-   span(data-ng-if="!recipes.selectedCategories.length") Select All
-  h2.mgn-top-0 Categories
-  ul.list.filters
-    li
-      a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Recipes
-    li(data-ng-repeat="category in recipes.categoryOptions")
-      a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
 .main
   .error(data-ng-if="recipes.noCategoryMessage")
     a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(0)")
@@ -39,21 +30,32 @@ h1(data-ng-bind="recipes.title")
     thead
       tr
         th Name
-        th Prep Time
-        th Cook Time
-        th Servings
+        th.sm-hide Prep Time
+        th.sm-hide Cook Time
+        th.sm-hide Servings
+    tbody
       tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria")
         td.title
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-bind="recipe.name")
-        td
+        td.sm-hide
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.prepTime")
             strong(data-ng-bind="recipe.prepTime")
             span Minutes
-        td
+        td.sm-hide
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.cookTime")
             strong(data-ng-bind="recipe.cookTime")
             span Minutes
-        td
+        td.sm-hide
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
             strong(data-ng-bind="recipe.servings")
             span Servings
+.secondary.xs-hide
+  //- a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
+  //-   span(data-ng-if="recipes.selectedCategories.length") Deselect All
+  //-   span(data-ng-if="!recipes.selectedCategories.length") Select All
+  h2.mgn-top-0 Categories
+  ul.list.filters
+    li
+      a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Recipes
+    li(data-ng-repeat="category in recipes.categoryOptions")
+      a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
