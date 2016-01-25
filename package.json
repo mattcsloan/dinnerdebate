@@ -1,5 +1,6 @@
 {
   "name": "dinnerdebate",
+  "description": "recipe book application",
   "main": "server.js",
   "scripts": {
     "start": "gulp && node server.js",
