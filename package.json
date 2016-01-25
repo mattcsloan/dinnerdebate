@@ -9,15 +9,16 @@
     "body-parser": "~1.4.2",
     "express": "~4.5.1",
     "express-stormpath": "~2.3.0",
-    "jade": "^1.9.2",
-    "method-override": "~2.0.2",
-    "mongodb": "^2.1.0",
-    "mongoose": "~3.8.0",
-    "stormpath-sdk-angularjs": "^0.8.2",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jade": "^1.1.0",
     "gulp-rename": "^1.2.2",
-    "gulp-stylus": "^2.0.7"
+    "gulp-stylus": "^2.0.7",
+    "jade": "^1.9.2",
+    "method-override": "~2.0.2",
+    "mongodb": "^2.1.0",
+    "mongoose": "~3.8.0",
+    "multer": "^1.1.0",
+    "stormpath-sdk-angularjs": "^0.8.2"
   }
 }
