@@ -7,6 +7,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.user = $rootScope.user;
 
   vm.uploadFile = uploadFile;
+  vm.removeImage = removeImage;
   vm.addRecipe = addRecipe;
   vm.addIngredient = addIngredient;
   vm.editIngredient = editIngredient;
@@ -192,6 +193,10 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     } else {
       console.log('required fields not met');
     }
+  }
+
+  function removeImage() {
+    vm.recipeImage = null;
   }
 
   function uploadFile(file, errFiles) {

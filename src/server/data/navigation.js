@@ -3,12 +3,14 @@ module.exports = {
     {
       key: 'home',
       label: 'Home',
-      url: 'home'
+      url: 'home',
+      icon: 'icon-home'
     },
     {
       key: 'recipes',
       label: 'Recipes',
-      url: 'recipes'
+      url: 'recipes',
+      icon: ' icon-dd-recipes'
     }  
   ]
 };

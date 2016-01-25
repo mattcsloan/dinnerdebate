@@ -67,24 +67,35 @@ label.mgn-top-16
         span.text-muted.helper-text.mgn-left-8 (ex. "Marinade" or "Sauce")
       input.mgn-btm-0.inline(type="text", placeholder="Ingredient List Title", data-ng-model="ingredientSet.title")
       h2.mgn-top-16(data-ng-show="ingredientSet.title", data-ng-bind="ingredientSet.title + ':'")
-      h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
-    ul.ingredients
+    h2.mgn-top-16(data-ng-hide="ingredientSet.title") Ingredients:
+    ul.ingredients.list
       li(data-ng-repeat="ingredient in ingredientSet.list")
-        span(data-ng-bind="ingredient", data-ng-hide="updating")
+        span.mgn-right-16(data-ng-bind="ingredient", data-ng-hide="updating")
         form(data-ng-submit="editrecipe.editIngredient($index, ingredient, $parent.$index)", data-ng-show="updating")
           input.inline.pull-left(type="text", data-ng-model="ingredient")
           input.btn.inline.mgn-left-16(type="submit", value="Update")
-        a(data-ng-click="updating = true").helper-text.remove Edit
-        a(data-ng-click="editrecipe.removeIngredient($index, $parent.$index)").helper-text.remove Remove
-        a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.remove Move Up
-        a(data-ng-click="editrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.remove Move Down
+          a.btn.btn-subtle.inline.mgn-left-16(data-ng-click="updating = false")
+            i.icon.icon-cross.mgn-right-8.helper-text
+            | Cancel
+        a(data-ng-click="updating = true").helper-text.mgn-right-8.tooltip
+          i.icon.icon-reverse.subtle.icon-pencil2
+          span Edit
+        a(data-ng-click="editrecipe.removeIngredient($index, $parent.$index)").helper-text.mgn-right-8.tooltip
+          i.icon.icon-reverse.subtle.icon-cross
+          span Remove
+        a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.mgn-right-8.tooltip
+          i.icon.icon-reverse.subtle.icon-arrow-up
+          span Move&nbsp;Up
+        a(data-ng-click="editrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.tooltip
+          i.icon.icon-reverse.subtle.icon-arrow-down
+          span Move&nbsp;Down
     form(data-ng-submit="editrecipe.addIngredient($index)")
       input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient[$index]")
       input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
     hr.mgn-top-0
     a.btn.btn-subtle(data-ng-show="$index == editrecipe.ingredientSets.length - 1", data-ng-click="editrecipe.addIngredientSet()") Add another set of ingredients 
-      span.text-muted.helper-text (ex. for a marinade or sauce)
-    a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
+      //- span.text-muted.helper-text (ex. for a marinade or sauce)
+    a.btn.btn-subtle.mgn-left-16(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
 //- label Recipe Pairings:
@@ -94,7 +105,9 @@ textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.d
   p.text-muted(data-ng-hide="editrecipe.image") No image provided.
 .main.pull-left
   label Image:
-  button.btn.mgn-top-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Upload New Photo
+  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
+    i.icon.icon-image.helper-text.mgn-right-8
+    span Upload New Photo
   .upload-status(data-ng-if="editrecipe.errFile.name || editrecipe.errorMsg")
     span.error(data-ng-if="editrecipe.errFile.name") Error uploading 
       strong
@@ -106,11 +119,13 @@ textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.d
     p.text-muted
       em(data-ng-if="editrecipe.f.name", data-ng-bind="'Uploading ' + editrecipe.f.name")
       strong(data-ng-bind="editrecipe.f.progress + '%'")
+  a.btn.btn-subtle(data-ng-show="editrecipe.image", data-ng-click="editrecipe.removeImage()") Remove Image
 label.clear Tags:
 .pills
   .pill(data-ng-repeat="tag in editrecipe.tags")
     span(data-ng-bind="tag")
-    a(data-ng-click="editrecipe.removeTag($index)").helper-text.remove Remove
+    a(data-ng-click="editrecipe.removeTag($index)")
+      i.icon.icon-cross.subtle.helper-text.mgn-left-8
 form(data-ng-submit="editrecipe.addTag()")
   input.inline.pull-left(type="text", placeholder="New Tag", data-ng-model="editrecipe.newTag")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")

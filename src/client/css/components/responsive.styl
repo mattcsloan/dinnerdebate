@@ -1,0 +1,85 @@
+@media all and (max-width : 768px)
+  .header
+    .logo
+      margin-left -60px
+      width 120px
+      padding 0 16px
+    .wrapper
+      padding 0
+  .navigation
+    li
+      a
+        padding 21px 18px
+        line-height 24px
+        &.active
+          padding-top 18px
+  h2
+    margin-top 21px
+  .med-hide
+    display none
+
+
+
+
+@media all and (max-width : 630px)
+  .navigation
+    i
+      margin-right 0
+    span
+      display none
+  .sm-hide
+    display none
+  .columns
+    .col
+      &.half
+        width auto
+        display block
+        float none
+        &:nth-child(even)
+          float none
+        &.half-sm
+          width 48%
+          float left
+          &:nth-child(even)
+            float right
+      &.thirds
+        width auto
+        display block
+        float none
+        margin-right 0
+  .searchbox
+    width 130px
+
+
+      
+@media all and (max-width : 500px)
+  .header
+    .logo
+      margin-left -50px
+      width 100px
+      padding 0 8px
+  .main
+  .secondary
+    float none
+    width auto
+    display block
+  .action-items
+    float none
+    display block
+    margin 16px 0 0 0
+    &.block-sm
+      .btn
+      .searchbox
+        float none
+        display block
+        width auto
+        margin-right 0
+        input
+          width 100%
+          box-sizing(border-box)
+      &:after
+        content ''
+        clear both
+        display block
+  .xs-hide
+    display none

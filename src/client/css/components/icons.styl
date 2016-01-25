@@ -1,0 +1,25 @@
+.icon
+  &.subtle
+    color $subtle
+  &.icon-reverse
+    padding 4px
+    border-radius(4px)
+    color $body-bg
+    background $secondary-color
+    &.white
+      color #fff
+a
+  .icon
+    &.subtle
+      color $subtle
+    &.icon-reverse
+      &.subtle
+        background $subtle
+  &:hover
+    .icon
+      text-decoration none
+      &.subtle
+        color $primary-color
+      &.icon-reverse
+        background $primary-color
+

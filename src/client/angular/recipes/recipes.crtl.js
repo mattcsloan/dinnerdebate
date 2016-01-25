@@ -4,6 +4,8 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   Page.setTitle('Recipes');   
   vm.title = 'Recipes';
 
+  vm.querystring = $location.search();
+
   vm.categoryOptions = CategoryResource.allCategories();
 
   vm.selectedCategory = selectedCategory;
@@ -44,8 +46,13 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
 
   vm.dismiss = dismiss;
 
-  function dismiss() {
-    vm.noCategoryMessage = '';
+  function dismiss(item) {
+    if(item == 0) {
+      vm.noCategoryMessage = '';
+    } else if(item == 1) {
+      vm.querystring.message = '';
+    }
+    $location.search('message', null);
   }
 
 

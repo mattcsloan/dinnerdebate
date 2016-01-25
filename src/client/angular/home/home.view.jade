@@ -6,9 +6,9 @@
   .wrapper
     a.btn(data-ui-sref="recipes") View All Recipes
     .columns
-      .col.half(data-if-not-user)
+      .col.half.half-sm(data-if-not-user)
         a.btn(data-ng-click="home.toggleLogin()", data-ng-hide="home.viewLogin") Login
-      .col.half(data-if-not-user)
+      .col.half.half-sm(data-if-not-user)
         a.btn(data-ui-sref="register", data-ng-hide="home.viewLogin") Register
     .login-form(sp-login-form, data-ng-show="home.viewLogin")
     div(data-if-user)

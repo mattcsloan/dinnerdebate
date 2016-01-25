@@ -23,8 +23,6 @@
       float left
       width 50%    
   .details
-    width 48%
-    float left
     &.full
       float none
       width auto
@@ -37,9 +35,6 @@
         font-size 12px
         &:first-child
           text-align center
-  .media
-    width 48%
-    float right
 .remove
   margin-left 8px
   &:before
@@ -78,4 +73,12 @@ ul.list
       cursor default
       color $copy-color
       text-decoration none
-    
+.searchbox
+  position relative
+  .icon
+    position absolute
+    top 10px
+    left 12px
+    color $copy-lighten
+  input
+    padding-left 35px
