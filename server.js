@@ -61,8 +61,8 @@ app.use(stormpath.init(app, {
       enabled: true,
       nextUri: '/'
     }
-
-  }
+  },
+  debug: 'info, error'
 }));
 
 // app.use(multer({
