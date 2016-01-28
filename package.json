@@ -6,6 +6,9 @@
     "start": "gulp && node server.js",
     "build": "gulp"
   },
+  "engines": {
+    "node": "0.12.7"
+  },
   "dependencies": {
     "body-parser": "~1.4.2",
     "cloudinary": "^1.3.0",
@@ -18,8 +21,8 @@
     "gulp-stylus": "^2.0.7",
     "jade": "^1.9.2",
     "method-override": "~2.0.2",
-    "mongodb": "^2.1.0",
-    "mongoose": "^3.8.39",
+    "mongodb": "^2.1.x",
+    "mongoose": "^4.3.7",
     "multer": "^1.1.0",
     "stormpath-sdk-angularjs": "^0.8.2"
   }
