@@ -99,7 +99,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
   .main.pull-left
     label Upload Image:
-    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") 
+    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB") 
       i.icon.icon-image.helper-text.mgn-right-8
       span Select File To Upload
     .upload-status(data-ng-if="createrecipe.errFile.name || createrecipe.errorMsg")
