@@ -17,7 +17,11 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         $location.url('/recipes?message=Recipe%20does%20not%20exist.');
       } else {
         vm.recipeDetail = data;
-        Page.setTitle('View Recipe | ' + vm.recipeDetail.name);   
+        Page.setTitle('View Recipe | ' + vm.recipeDetail.name);  
+        if(vm.recipeDetail.image && vm.recipeDetail.image.indexOf('http://res.cloudinary.com/sloan/image/upload')) {
+          var newImage = vm.recipeDetail.image.split('http://res.cloudinary.com/sloan/image/upload');
+          vm.recipeDetail.image = 'http://res.cloudinary.com/sloan/image/upload' + '/a_ignore' + newImage[1];
+        } 
       }
     })
     .error(function(data, status) {
