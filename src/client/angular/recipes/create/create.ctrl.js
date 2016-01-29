@@ -199,14 +199,14 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     vm.recipeImage = null;
   }
 
-  function uploadFile(file) {
+  function uploadFile(file, errFiles) {
     if(vm.recipeKey) {
       vm.newFileName = vm.recipeKey;
     } else {
       vm.newFileName = 'recipe-image';
     }
     vm.f = file;
-    vm.errFile = null;
+    vm.errFile = errFiles && errFiles[0];
     if (file) {
       file.upload = Upload.upload({
           url: '/api/upload',
