@@ -23,7 +23,9 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
           vm.recipeDetail.image = '//res.cloudinary.com/hesjwyhax/image/upload' + '/a_ignore' + newImage[1];
           console.log('new url ending: ' + newImage[1]);
           console.log('new url: ' + vm.recipeDetail.image);
-        } 
+        } else {
+          console.log(vm.recipeDetail.image);
+        }
       }
     })
     .error(function(data, status) {
