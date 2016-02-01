@@ -21,10 +21,6 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         if(vm.recipeDetail.image && vm.recipeDetail.image.indexOf('http://res.cloudinary.com/hesjwyhax/image/upload') > -1) {
           var newImage = vm.recipeDetail.image.split('http://res.cloudinary.com/hesjwyhax/image/upload');
           vm.recipeDetail.image = '//res.cloudinary.com/hesjwyhax/image/upload' + '/a_exif' + newImage[1];
-          console.log('new url ending: ' + newImage[1]);
-          console.log('new url: ' + vm.recipeDetail.image);
-        } else {
-          console.log(vm.recipeDetail.image);
         }
       }
     })

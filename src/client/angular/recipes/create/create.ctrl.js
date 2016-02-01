@@ -58,11 +58,13 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   function addIngredient(setNum) {
     if(vm.newIngredient[setNum]) {
-      // check first to see if value already exists in array
-      if(vm.ingredientSets[setNum].list.indexOf(vm.newIngredient[setNum]) == -1) {
-        vm.ingredientSets[setNum].list.push(vm.newIngredient[setNum]);
-        vm.newIngredient[setNum] = '';
+      for(i = 0; i < vm.newIngredient[setNum].length; i++) {
+        // check first to see if value already exists in array
+        if(vm.ingredientSets[setNum].list.indexOf(vm.newIngredient[setNum][i]) == -1) {
+          vm.ingredientSets[setNum].list.push(vm.newIngredient[setNum][i]);
+        }
       }
+      vm.newIngredient[setNum] = '';
     }
   }
 
