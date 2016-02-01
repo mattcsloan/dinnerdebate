@@ -3,7 +3,7 @@
   "description": "recipe book application",
   "main": "server.js",
   "scripts": {
-    "start": "gulp && node server.js",
+    "start": "node server.js",
     "build": "gulp"
   },
   "engines": {
