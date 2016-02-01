@@ -10,7 +10,7 @@ module.exports = function(app) {
     // server routes ===========================================================
     // api calls
     app.get('/api/navigation', function(req, res) {
-        res.json(201, navigation.items);
+        res.status(201).json(navigation.items);
     });
 
     // get all recipes
@@ -73,7 +73,7 @@ module.exports = function(app) {
                     if(err) {
                         res.send(err);
                     }
-                    res.json(201, recipes);
+                    res.status(201).json(recipes);
                 });
             } else {
                 res.send('Recipe already exists.');
@@ -158,7 +158,7 @@ module.exports = function(app) {
                                 if(err) {
                                     res.send(err);
                                 }
-                                res.json(201, recipe);
+                                res.status(201).json(recipe);
                             });
                         }
                     });
@@ -203,7 +203,7 @@ module.exports = function(app) {
         fileName = fileName[0];
         cloudinary.uploader.upload(req.file.path, function(result, error) {
             if(result.url) {
-                res.json(200, result.url);
+                res.status(200).json(result.url);
             } else {
                 res.json(error);
             }
@@ -224,7 +224,7 @@ module.exports = function(app) {
       if (!req.user || req.user.status !== 'ENABLED') {
         return res.redirect('/login');
       }
-      res.json(201, req.user);
+      res.status(201).json(req.user);
     });
 
 

@@ -85,12 +85,14 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
             i.icon.icon-reverse.subtle.icon-arrow-down
             span Move&nbsp;Down
       form(data-ng-submit="createrecipe.addIngredient($index)")
-        input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient[$index]")
-        input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
+        input.inline.pull-left.mgn-right-16(type="text", placeholder="New Ingredient", data-ng-model="createrecipe.newIngredient[$index]", data-ng-list="\n", data-ng-trim="false", data-ng-hide="multipleIngredients")
+        textarea(placeholder="New Ingredient(s)", data-ng-model="createrecipe.newIngredient[$index]", data-ng-list="\n", data-ng-trim="false", data-ng-show="multipleIngredients")
+        input.btn.inline(type="submit", value="+ Add Ingredient")
       hr.mgn-top-0
-      a.btn.btn-subtle(data-ng-show="$index == createrecipe.ingredientSets.length - 1", data-ng-click="createrecipe.addIngredientSet()") Add another set of ingredients 
+      a.btn.btn-empty.helper-text.mgn-right-16(data-ng-click="multipleIngredients = true", data-ng-hide="multipleIngredients") Add multiple ingredients at once
+      a.btn.btn-subtle.mgn-right-16(data-ng-show="$index == createrecipe.ingredientSets.length - 1", data-ng-click="createrecipe.addIngredientSet()") Add another set of ingredients 
         //- span.text-muted.helper-text (ex. for a marinade or sauce)
-      a.btn.btn-subtle.mgn-left-16(data-ng-show="createrecipe.ingredientSets.length > 1", data-ng-click="createrecipe.removeIngredientSet($index)") Remove this set 
+      a.btn.btn-subtle(data-ng-show="createrecipe.ingredientSets.length > 1", data-ng-click="createrecipe.removeIngredientSet($index)") Remove this set 
   label Directions:
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   //- label Recipe Pairings:
@@ -99,7 +101,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
   .main.pull-left
     label Upload Image:
-    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") 
+    button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") 
       i.icon.icon-image.helper-text.mgn-right-8
       span Select File To Upload
     .upload-status(data-ng-if="createrecipe.errFile.name || createrecipe.errorMsg")

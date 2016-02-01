@@ -90,12 +90,14 @@ label.mgn-top-16
           i.icon.icon-reverse.subtle.icon-arrow-down
           span Move&nbsp;Down
     form(data-ng-submit="editrecipe.addIngredient($index)")
-      input.inline.pull-left(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient[$index]")
-      input.btn.inline.mgn-left-16(type="submit", value="+ Add Ingredient")
+      input.inline.pull-left.mgn-right-16(type="text", placeholder="New Ingredient", data-ng-model="editrecipe.newIngredient[$index]", data-ng-list="\n", data-ng-trim="false", data-ng-hide="multipleIngredients")
+      textarea(placeholder="New Ingredient(s)", data-ng-model="editrecipe.newIngredient[$index]", data-ng-list="\n", data-ng-trim="false", data-ng-show="multipleIngredients")
+      input.btn.inline(type="submit", value="+ Add Ingredient")
     hr.mgn-top-0
-    a.btn.btn-subtle(data-ng-show="$index == editrecipe.ingredientSets.length - 1", data-ng-click="editrecipe.addIngredientSet()") Add another set of ingredients 
+    a.btn.btn-empty.helper-text.mgn-right-16(data-ng-click="multipleIngredients = true", data-ng-hide="multipleIngredients") Add multiple ingredients at once
+    a.btn.btn-subtle.mgn-right-16(data-ng-show="$index == editrecipe.ingredientSets.length - 1", data-ng-click="editrecipe.addIngredientSet()") Add another set of ingredients 
       //- span.text-muted.helper-text (ex. for a marinade or sauce)
-    a.btn.btn-subtle.mgn-left-16(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
+    a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
 //- label Recipe Pairings:
@@ -105,7 +107,7 @@ textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.d
   p.text-muted(data-ng-hide="editrecipe.image") No image provided.
 .main.pull-left
   label Image:
-  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="1MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
+  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
     i.icon.icon-image.helper-text.mgn-right-8
     span Upload New Photo
   .upload-status(data-ng-if="editrecipe.errFile.name || editrecipe.errorMsg")
