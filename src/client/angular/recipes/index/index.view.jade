@@ -21,7 +21,7 @@ h1(data-ng-bind="recipes.title")
   .headline-container
     .sort.pull-right.text-small.text-muted
       span View by: 
-      a(data-ng-click="recipes.changeCriteria('date')", data-ng-class="{active: recipes.orderCriteria == 'date'}") Newest
+      a(data-ng-click="recipes.changeCriteria('-date')", data-ng-class="{active: recipes.orderCriteria == '-date'}") Newest
       span  | 
       a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
     h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
