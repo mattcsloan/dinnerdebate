@@ -47,15 +47,7 @@ app.use(stormpath.init(app, {
     },
     register: {
       autoLogin: true,
-      nextUri: '/dashboard',    // Where to send the user to, if auto login is enabled
-      fields: {
-        givenName: {
-          enabled: false
-        },
-        surname: {
-          enabled: false
-        }
-      }
+      nextUri: '/dashboard'    // Where to send the user to, if auto login is enabled
     },
     logout: {
       enabled: true,
