@@ -138,6 +138,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     });
 
   function updateRecipe() {
+    vm.submittingForm = true;
     if(vm.name && vm.key && vm.category && vm.categoryKey) {
       if(vm.keyIsAvailable || (vm.key == recipeName && vm.categoryKey == categoryKey)) {
         Recipe.update(vm.categoryKey, vm.key, vm.recipeDetail._id, {
@@ -165,6 +166,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
             vm.keyIsAvailable = false;
             vm.completedKeys = true;
             vm.showURLStatus = true;
+            vm.submittingForm = false;
           } else {
             $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.key);
           }
@@ -173,16 +175,20 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.keyIsAvailable = false;
         vm.completedKeys = true;
         vm.showURLStatus = true;
+        vm.submittingForm = false;
       }
     } else {
       console.log('required fields not met');
+      vm.submittingForm = false;
     }
   }
 
   function deleteRecipe() {
+    vm.submittingForm = true;
     Recipe.delete(vm.recipeDetail._id)
       .success(function () {
         $location.url('/recipes');
+        vm.submittingForm = false;
       });
   }
 

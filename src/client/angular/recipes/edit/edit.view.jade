@@ -136,5 +136,5 @@ form(data-ng-submit="editrecipe.addTag()")
 span.error(data-ng-show="(!editrecipe.keyIsAvailable && editrecipe.completedKeys && editrecipe.showURLStatus) || (updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid) || (updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid)") Please correct any errors above and submit again.
 .btn-panel.clear
   //- a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
-  input(type="submit", value="Update Recipe", data-ng-disabled="updateRecipeForm.$invalid || !editrecipe.keyIsAvailable", data-ng-click="editrecipe.updateRecipe()").btn.inline
-  a.btn.btn-subtle(data-ng-click="editrecipe.deleteRecipe()") Delete Recipe
+  input(type="submit", value="Update Recipe", data-ng-disabled="updateRecipeForm.$invalid || !editrecipe.keyIsAvailable || editrecipe.submittingForm", data-ng-click="editrecipe.updateRecipe()").btn.inline
+  input(type="submit", value="Delete Recipe", data-ng-click="editrecipe.deleteRecipe()", data-ng-disabled="editrecipe.submittingForm").btn.btn-subtle.inline

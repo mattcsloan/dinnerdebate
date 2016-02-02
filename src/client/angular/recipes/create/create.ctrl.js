@@ -150,6 +150,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function addRecipe() {
+    vm.submittingForm = true;
     if(!vm.recipeImage) {
       vm.recipeImage = null;
     }
@@ -185,16 +186,20 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
             vm.keyIsAvailable = false;
             vm.completedKeys = true;
             vm.showURLStatus = true;
+            vm.submittingForm = false;
           } else {
             $location.url('/recipes/view/' + vm.categoryKey + '/' + vm.recipeKey);
           }
         });
       } else {
         console.log('key is not available');
+        vm.submittingForm = false;
       }
     } else {
       console.log('required fields not met');
+      vm.submittingForm = false;
     }
+    vm.submittingForm = false;
   }
 
   function removeImage() {
