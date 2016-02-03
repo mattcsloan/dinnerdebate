@@ -1,6 +1,12 @@
 angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, CategoryResource, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
   var vm = this;
 
+  vm.modalShown = false;
+  vm.toggleModal = function() {
+    vm.modalShown = !vm.modalShown;
+  };
+  
+
   Page.setTitle('Edit Recipe');   
   vm.title = 'Edit Recipe';
 
