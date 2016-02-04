@@ -15,6 +15,8 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.removeIngredient = removeIngredient;
   vm.addTag = addTag;
   vm.removeTag = removeTag;
+  vm.addHint = addHint;
+  vm.removeHint = removeHint;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
   vm.keyAvailability = keyAvailability;
@@ -101,7 +103,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   vm.tags = [];
 
   function addTag() {
-    if(vm.newTag) {
+    if(vm.newTag && vm.tags.indexOf(vm.newTag) == -1) {
       vm.tags.push(vm.newTag);
       vm.newTag = '';
     }
@@ -109,6 +111,19 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   function removeTag(item) {
     vm.tags.splice(item, 1);
+  }
+
+  vm.hints = [];
+
+  function addHint() {
+    if(vm.newHint && vm.hints.indexOf(vm.newHint) == -1) {
+      vm.hints.push(vm.newHint);
+      vm.newHint = '';
+    }
+  }
+
+  function removeHint(item) {
+    vm.hints.splice(item, 1);
   }
 
   function createKey() {
@@ -178,6 +193,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           cookTime: vm.recipeCookTime,
           ingredients: vm.ingredientSets,
           directions: vm.recipeDirections,
+          hints: vm.hints,
           pairings: vm.recipePairings,
           image: vm.recipeImage,
           servings: vm.recipeServings,
@@ -257,7 +273,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
         }
       })
       .error(function(data, status) {
-        console.log("Error retreiving recipes");
+        console.log("Error retrieving recipes");
       });
 
     vm.showSimilarItems = true;
@@ -265,13 +281,19 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function addSimilarItem() {
-    if(vm.similarItems.indexOf(vm.similarItem) == -1 && vm.similarItems.length < 3) {
-      vm.similarItem.url = vm.similarItem.categoryKey + '/' + vm.similarItem.key;
-      vm.similarItem = {
-        name: vm.similarItem.name,
-        url: vm.similarItem.url,
-        thumb: vm.similarItem.thumb,        
-      }
+    vm.similarItem.url = vm.similarItem.categoryKey + '/' + vm.similarItem.key;
+    vm.similarItem = {
+      name: vm.similarItem.name,
+      url: vm.similarItem.url,
+      thumb: vm.similarItem.thumb,        
+    };
+
+    //check to see if url value already exists anywhere in vm.similarItems array
+    var found = vm.similarItems.some(function(arrVal) {
+      return vm.similarItem.url === arrVal.url;
+    });
+
+    if(!found && vm.similarItems.length < 3) {
       vm.similarItems.push(vm.similarItem);
     }
 

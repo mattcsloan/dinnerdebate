@@ -87,7 +87,7 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
       vm.recipes = data;
     })
     .error(function(data, status) {
-      console.log("Error retreiving recipes");
+      console.log("Error retrieving recipes");
     });
 
 });

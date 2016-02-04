@@ -100,6 +100,14 @@ label.mgn-top-16
     a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
+label.clear Notes/Hints:
+.message(data-ng-repeat="hint in editrecipe.hints")
+  a.close.pull-right.text-small.mgn-left-8(data-ng-click="editrecipe.removeHint($index)")
+    i.icon.icon-cross
+  span(data-ng-bind="hint")
+form(data-ng-submit="editrecipe.addHint()")
+  input(type="text", placeholder="New Hint", data-ng-model="editrecipe.newHint")
+  input.btn.inline(type="submit", value="+ Add Hint")
 //- label Recipe Pairings:
 //- input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 .secondary.pull-right

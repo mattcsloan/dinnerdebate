@@ -47,6 +47,7 @@ module.exports = function(app) {
             if (err) {
                 res.send(err);
             }
+
             // check to see if response returned an already existing recipe
             if (recipe == null) {
                 var recipe = new Recipes({
@@ -63,6 +64,7 @@ module.exports = function(app) {
                     cookTime: req.body.cookTime,
                     ingredients: req.body.ingredients,
                     directions: req.body.directions,
+                    hints: req.body.hints,
                     pairings: req.body.pairings,
                     image: req.body.image,
                     servings: req.body.servings,
@@ -146,6 +148,7 @@ module.exports = function(app) {
                         recipe.cookTime = req.body.cookTime;
                         recipe.ingredients = req.body.ingredients;
                         recipe.directions = req.body.directions;
+                        recipe.hints = req.body.hints;
                         recipe.pairings = req.body.pairings;
                         recipe.image = req.body.image;
                         recipe.servings = req.body.servings;

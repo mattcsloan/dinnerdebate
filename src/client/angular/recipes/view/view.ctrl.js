@@ -25,6 +25,6 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
       }
     })
     .error(function(data, status) {
-      alert("Error retreiving recipe");
+      alert("Error retrieving recipe");
     });
 });

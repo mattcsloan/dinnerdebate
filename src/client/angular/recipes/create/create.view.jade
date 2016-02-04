@@ -95,6 +95,14 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       a.btn.btn-subtle(data-ng-show="createrecipe.ingredientSets.length > 1", data-ng-click="createrecipe.removeIngredientSet($index)") Remove this set 
   label Directions:
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
+  label.clear Notes/Hints:
+  .message(data-ng-repeat="hint in createrecipe.hints")
+    a.close.pull-right.text-small.mgn-left-8(data-ng-click="createrecipe.removeHint($index)")
+      i.icon.icon-cross
+    span(data-ng-bind="hint")
+  form(data-ng-submit="createrecipe.addHint()")
+    input(type="text", placeholder="New Hint", data-ng-model="createrecipe.newHint")
+    input.btn.inline(type="submit", value="+ Add")
   //- label Recipe Pairings:
   //- input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   .secondary.pull-right
