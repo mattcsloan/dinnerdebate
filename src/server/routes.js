@@ -67,7 +67,8 @@ module.exports = function(app) {
                     image: req.body.image,
                     servings: req.body.servings,
                     tags: req.body.tags,
-                    featured: req.body.featured
+                    featured: req.body.featured,
+                    relatedItems: req.body.relatedItems
                 });
                 recipe.save(function(err, recipes) {
                     if(err) {
@@ -150,6 +151,7 @@ module.exports = function(app) {
                         recipe.servings = req.body.servings;
                         recipe.tags = req.body.tags;
                         recipe.featured = req.body.featured;
+                        recipe.relatedItems = req.body.relatedItems;
                         if (err) {
                             res.send(err);
                         }

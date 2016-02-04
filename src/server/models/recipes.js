@@ -22,9 +22,11 @@ module.exports = mongoose.model('Recipes', {
         list: {type : Array, default: []}
     }],
     directions : {type : String, default: ''},
+    hints : {type : String, default: ''},
     pairings : {type : Array, default: []},
     image : {type : String, default: ''},
     servings : {type : String, default: ''},
     tags : {type : Array, default: []},
-    featured : {type : Boolean, default: false}
+    featured : {type : Boolean, default: false},
+    relatedItems : {type : Array, default: []}
 });
