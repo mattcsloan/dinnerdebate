@@ -232,6 +232,19 @@ module.exports = function(app) {
       res.status(201).json(req.user);
     });
 
+    //update user profiles (stormpath)
+    app.post('/auth/user/photo', stormpath.loginRequired, function(req, res, next) {
+      var photoUrl = req.body.photoUrl;
+      console.log(photoUrl);
+      req.user.customData.photoUrl = photoUrl;
+      req.user.customData.save(function(err) {
+        if (err) {
+          next(err);  // this will throw an error if something breaks when you try to save your changes
+        } else {
+          res.send('success!');
+        }
+      });
+    });
 
     // frontend routes =========================================================
     // route to handle all angular requests

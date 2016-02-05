@@ -1,13 +1,31 @@
-.action-items
-  a.btn.mgn-right-16(data-ui-sref="recipes.create") Create New Recipe
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="dashboard.title")
-div(data-ng-if="dashboard.user.fullName") 
-  p Welcome, 
-    span(data-ng-bind="dashboard.user.fullName")
-    | !
+hr
+.hero
+  .secondary
+    .profile
+      //- img(data-ng-if="user.customData.photoUrl", data-ng-src="{{user.customData.photoUrl}}" alt="user.fullName")
+      img.default(data-ng-if="user.customData.photoUrl", src="/img/touch-icon.png" alt="Add a photo!")
+    .btn.mgn-btm-0(data-ng-click="dashboard.addCustomData()") Add Profile Image
+  .main
+    .action-items
+      a.btn.mgn-top-8(data-ui-sref="recipes.create") Create New Recipe
+    h6(data-ng-if="user.fullName") Welcome!
+    h1(data-ng-if="user.fullName", data-ng-bind="user.fullName")
+    table.full-table(cellpadding="0", cellspacing="0")
+      thead
+        tr
+          th(data-ng-if="dashboard.usersOwnRecipes.length") Own Recipes
+          th(data-ng-if="dashboard.userAddedRecipes.length") Added Recipes
+      tbody
+        tr
+          td(data-ng-if="dashboard.usersOwnRecipes.length")
+            strong(data-ng-bind="dashboard.usersOwnRecipes.length")
+          td(data-ng-if="dashboard.userAddedRecipes.length")
+            strong(data-ng-bind="dashboard.userAddedRecipes.length")
+
 .columns
   .col.half
     h2.mgn-top-0 My Own Recipes

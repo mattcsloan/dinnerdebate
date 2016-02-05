@@ -1,6 +1,8 @@
 angular.module('DashboardCtrl', []).controller('DashboardController', function(Page, $http, $rootScope) {
   var vm = this;
 
+  vm.addCustomData = addCustomData;
+
   Page.setTitle('Dashboard');   
   vm.title = 'Dashboard';
 
@@ -25,6 +27,12 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
       } else{
         vm.userAddedRecipes.push(item);
       }
+    });
+  }
+
+  function addCustomData() {
+    $http.post('/auth/user/photo', {
+      photoUrl: 'https://pbs.twimg.com/profile_images/2581632910/b5v4ux2oijeclln8l3rr.jpeg'
     });
   }
 
