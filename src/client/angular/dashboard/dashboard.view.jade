@@ -6,9 +6,27 @@ hr
 .hero
   .secondary
     .profile
-      //- img(data-ng-if="user.customData.photoUrl", data-ng-src="{{user.customData.photoUrl}}" alt="user.fullName")
-      img.default(data-ng-if="user.customData.photoUrl", src="/img/touch-icon.png" alt="Add a photo!")
-    .btn.mgn-btm-0(data-ng-click="dashboard.addCustomData()") Add Profile Image
+      img(data-ng-if="dashboard.profileImage", data-ng-src="{{dashboard.profileImage}}" alt="user.fullName")
+      img.default(data-ng-if="!dashboard.profileImage", src="/img/touch-icon.png" alt="Add a photo!")
+    button.btn.mgn-btm-0(data-ng-if="!dashboard.profileImage", type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
+      i.icon.icon-image.helper-text.mgn-right-8
+      span Add Profile Image
+    .columns(data-ng-if="dashboard.profileImage")
+      .col.half.mgn-btm-8
+        button.btn.mgn-btm-0(type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Update
+      .col.half
+        a.btn.mgn-btm-0(data-ng-show="dashboard.profileImage", data-ng-click="dashboard.removeImage()") Remove
+    .upload-status(data-ng-if="dashboard.errFile.name || dashboard.errorMsg")
+      span.error(data-ng-if="dashboard.errFile.name") Error uploading 
+        strong
+          em(data-ng-bind="dashboard.errFile.name")
+        | . Please make sure you are uploading an image file.
+      span.error(data-ng-if="dashboard.errorMsg", data-ng-bind="dashboard.errorMsg")
+    .progress(data-ng-show="dashboard.f.progress >= 0")
+      span(style="width:{{dashboard.f.progress}}%")
+      p.text-muted
+        em(data-ng-if="dashboard.f.name", data-ng-bind="'Uploading ' + dashboard.f.name")
+        strong(data-ng-bind="dashboard.f.progress + '%'")
   .main
     .action-items
       a.btn.mgn-top-8(data-ui-sref="recipes.create") Create New Recipe
