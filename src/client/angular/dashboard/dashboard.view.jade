@@ -1,17 +1,53 @@
-.action-items
-  a.btn.mgn-right-16(data-ui-sref="recipes.create") Create New Recipe
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="dashboard.title")
-div(data-ng-if="dashboard.user.fullName") 
-  p Welcome, 
-    span(data-ng-bind="dashboard.user.fullName")
-    | !
+hr
+.hero
+  .secondary
+    .profile
+      img(data-ng-if="dashboard.profileImage", data-ng-src="{{dashboard.profileImage}}" alt="user.fullName")
+      img.default(data-ng-if="!dashboard.profileImage", src="/img/touch-icon.png" alt="Add a photo!")
+    button.btn.mgn-btm-0(data-ng-if="!dashboard.profileImage", type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
+      i.icon.icon-image.helper-text.mgn-right-8
+      span Add Profile Image
+    .columns(data-ng-if="dashboard.profileImage")
+      .col.half.mgn-btm-8
+        button.btn.mgn-btm-0(type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Update
+      .col.half
+        a.btn.mgn-btm-0(data-ng-show="dashboard.profileImage", data-ng-click="dashboard.removeImage()") Remove
+    .upload-status(data-ng-if="dashboard.errFile.name || dashboard.errorMsg")
+      span.error(data-ng-if="dashboard.errFile.name") Error uploading 
+        strong
+          em(data-ng-bind="dashboard.errFile.name")
+        | . Please make sure you are uploading an image file.
+      span.error(data-ng-if="dashboard.errorMsg", data-ng-bind="dashboard.errorMsg")
+    .progress(data-ng-show="dashboard.f.progress >= 0")
+      span(style="width:{{dashboard.f.progress}}%")
+      p.text-muted
+        em(data-ng-if="dashboard.f.name", data-ng-bind="'Uploading ' + dashboard.f.name")
+        strong(data-ng-bind="dashboard.f.progress + '%'")
+  .main
+    .action-items
+      a.btn.mgn-top-8(data-ui-sref="recipes.create") Create New Recipe
+    h6(data-ng-if="user.fullName") Welcome!
+    h1(data-ng-if="user.fullName", data-ng-bind="user.fullName")
+    table.full-table(cellpadding="0", cellspacing="0")
+      thead
+        tr
+          th(data-ng-if="dashboard.usersOwnRecipes.length") Own Recipes
+          th(data-ng-if="dashboard.userAddedRecipes.length") Added Recipes
+      tbody
+        tr
+          td(data-ng-if="dashboard.usersOwnRecipes.length")
+            strong(data-ng-bind="dashboard.usersOwnRecipes.length")
+          td(data-ng-if="dashboard.userAddedRecipes.length")
+            strong(data-ng-bind="dashboard.userAddedRecipes.length")
+
 .columns
   .col.half
     h2.mgn-top-0 My Own Recipes
-    table.full-table(cellpadding="0", cellspacing="0")
+    table.full-table(cellpadding="0", cellspacing="0", data-ng-show="dashboard.usersOwnRecipes.length")
       thead
         tr
           th Name
@@ -34,10 +70,13 @@ div(data-ng-if="dashboard.user.fullName")
             a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
               strong(data-ng-bind="recipe.servings")
               span Servings
+    .message.subtle.center(data-ng-hide="dashboard.usersOwnRecipes.length")
+      span.block You have not added any of your own recipes yet.
+      a.btn.btn-subtle.mgn-top-16.mgn-btm-0(data-ui-sref="recipes.create") Add One Now
   .col.half
     h2.mgn-top-0 My Added Recipes
       em.text-muted.text-small.mgn-left-16.med-hide (from other sources)
-    table.full-table(cellpadding="0", cellspacing="0")
+    table.full-table(cellpadding="0", cellspacing="0", data-ng-show="dashboard.userAddedRecipes.length")
       thead
         tr
           th Name
@@ -60,3 +99,6 @@ div(data-ng-if="dashboard.user.fullName")
             a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
               strong(data-ng-bind="recipe.servings")
               span Servings
+    .message.subtle.center(data-ng-hide="dashboard.userAddedRecipes.length")
+      span.block You have not added any recipes from other sources yet.
+      a.btn.btn-subtle.mgn-top-16.mgn-btm-0(data-ui-sref="recipes.create") Add One Now

@@ -100,6 +100,14 @@ label.mgn-top-16
     a.btn.btn-subtle(data-ng-show="editrecipe.ingredientSets.length > 1", data-ng-click="editrecipe.removeIngredientSet($index)") Remove this set 
 label Directions:
 textarea(value="editrecipe.recipeDetail.directions", data-ng-model="editrecipe.directions")
+label.clear Notes/Hints:
+.message(data-ng-repeat="hint in editrecipe.hints")
+  a.close.pull-right.text-small.mgn-left-8(data-ng-click="editrecipe.removeHint($index)")
+    i.icon.icon-cross
+  span(data-ng-bind="hint")
+form(data-ng-submit="editrecipe.addHint()")
+  input(type="text", placeholder="New Hint", data-ng-model="editrecipe.newHint")
+  input.btn.inline(type="submit", value="+ Add Hint")
 //- label Recipe Pairings:
 //- input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 .secondary.pull-right
@@ -133,8 +141,26 @@ form(data-ng-submit="editrecipe.addTag()")
   input.btn.inline.mgn-left-16(type="submit", value="+ Add")
 //- label Feature this item?:
 //- input(type="text", value="editrecipe.recipeDetail.featured", data-ng-model="editrecipe.featured")
+
+h2 Similar Items
+a.btn.btn-primary.mgn-right-16(data-ng-show="editrecipe.showSimilarBtn", data-ng-click="editrecipe.getSimilarItems()") Add a related item
+select.mgn-top-0(data-ng-show="editrecipe.showSimilarItems", data-ng-change="editrecipe.addSimilarItem()", data-ng-options="recipe.name for recipe in editrecipe.recipeList | orderBy: 'name'", data-ng-model="editrecipe.similarItem")
+div(data-ng-if="editrecipe.similarItems.length > 0")
+  ul.thumbs
+    li(data-ng-repeat="similarItem in editrecipe.similarItems").thumb
+      i.icon.icon-cross.helper-text(data-ng-click="editrecipe.removeSimilarItem($index)")
+      img(data-ng-show="similarItem.thumb", data-ng-src="{{ similarItem.thumb }}")
+      span(data-ng-bind="similarItem.name")
+
+
 span.error(data-ng-show="(!editrecipe.keyIsAvailable && editrecipe.completedKeys && editrecipe.showURLStatus) || (updateRecipeForm.title.$touched && updateRecipeForm.title.$invalid) || (updateRecipeForm.categories.$touched && updateRecipeForm.categories.$invalid)") Please correct any errors above and submit again.
 .btn-panel.clear
   //- a.btn(data-ng-click="editrecipe.updateRecipe()") Update Recipe
   input(type="submit", value="Update Recipe", data-ng-disabled="updateRecipeForm.$invalid || !editrecipe.keyIsAvailable || editrecipe.submittingForm", data-ng-click="editrecipe.updateRecipe()").btn.inline
-  input(type="submit", value="Delete Recipe", data-ng-click="editrecipe.deleteRecipe()", data-ng-disabled="editrecipe.submittingForm").btn.btn-subtle.inline
+  input(type="submit", value="Delete Recipe", data-ng-click="editrecipe.toggleModal()", data-ng-disabled="editrecipe.submittingForm").btn.btn-subtle.inline
+modal(show="editrecipe.modalShown")
+  h2.modal-title Are you sure you want to delete this recipe?
+  .btn-panel
+    a.btn.btn-primary.inline(data-ng-click="editrecipe.deleteRecipe()") Delete Now
+    a.btn.btn-subtle.inline(data-ng-click="editrecipe.toggleModal()") Cancel
+

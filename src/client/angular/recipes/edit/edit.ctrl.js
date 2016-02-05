@@ -1,6 +1,12 @@
 angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, CategoryResource, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
   var vm = this;
 
+  vm.modalShown = false;
+  vm.toggleModal = function() {
+    vm.modalShown = !vm.modalShown;
+  };
+
+
   Page.setTitle('Edit Recipe');   
   vm.title = 'Edit Recipe';
 
@@ -12,11 +18,16 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.reorderIngredient = reorderIngredient;
   vm.addTag = addTag;
   vm.removeTag = removeTag;
+  vm.addHint = addHint;
+  vm.removeHint = removeHint;
   vm.uploadFile = uploadFile;
   vm.removeImage = removeImage;
   vm.createKey = createKey;
   vm.createCategoryKey = createCategoryKey;
   vm.keyAvailability = keyAvailability;
+  vm.getSimilarItems = getSimilarItems;
+  vm.addSimilarItem = addSimilarItem;
+  vm.removeSimilarItem = removeSimilarItem;
   vm.requiredFields = [
     vm.name,
     vm.key,
@@ -114,11 +125,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.cookTime = vm.recipeDetail.cookTime;
         vm.ingredientSets = vm.recipeDetail.ingredients;
         vm.directions = vm.recipeDetail.directions;
+        vm.hints = vm.recipeDetail.hints;
         vm.pairings = vm.recipeDetail.pairings;
         vm.image = vm.recipeDetail.image;
         vm.servings = vm.recipeDetail.servings;
         vm.tags = vm.recipeDetail.tags;
         vm.featured = vm.recipeDetail.featured;
+        vm.similarItems = vm.recipeDetail.relatedItems;
 
         if(vm.recipeDetail.source || vm.recipeDetail.sourceURL) {
           vm.recipeOwnership = true;
@@ -130,14 +143,21 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
           vm.multipleLists = true;
         }
 
+        if(vm.similarItems.length < 3) {
+          vm.showSimilarBtn = true;
+        } else {
+          vm.showSimilarBtn = false;
+        }
+
         Page.setTitle('Edit Recipe | ' + vm.recipeDetail.name);   
       }
     })
     .error(function(data, status) {
-      console.log("Error retreiving recipe");
+      console.log("Error retrieving recipe");
     });
 
   function updateRecipe() {
+    console.log(vm.similarItems);
     vm.submittingForm = true;
     if(vm.name && vm.key && vm.category && vm.categoryKey) {
       if(vm.keyIsAvailable || (vm.key == recipeName && vm.categoryKey == categoryKey)) {
@@ -155,11 +175,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
           cookTime: vm.cookTime,
           ingredients: vm.ingredientSets,
           directions: vm.directions,
+          hints: vm.hints,
           pairings: vm.pairings,
           image: vm.image,
           servings: vm.servings,
           tags: vm.tags,
-          featured: vm.featured
+          featured: vm.featured,
+          relatedItems: vm.similarItems
         })
         .success(function (res) {
           if(res == 'Recipe already exists.') {
@@ -244,7 +266,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   }
 
   function addTag() {
-    if(vm.newTag) {
+    if(vm.newTag && vm.tags.indexOf(vm.newTag) == -1) {
       vm.tags.push(vm.newTag);
       vm.newTag = '';
     }
@@ -252,6 +274,17 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
 
   function removeTag(item) {
     vm.tags.splice(item, 1);
+  }
+
+  function addHint() {
+    if(vm.newHint && vm.hints.indexOf(vm.newHint) == -1) {
+      vm.hints.push(vm.newHint);
+      vm.newHint = '';
+    }
+  }
+
+  function removeHint(item) {
+    vm.hints.splice(item, 1);
   }
 
   function removeImage() {
@@ -285,5 +318,65 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       });
     } 
   };
+
+  function getSimilarItems() {
+    Recipe.getAll()
+      .success(function(data, status) {
+        vm.recipeList = data;
+        for(i = 0; i < vm.recipeList.length; i++) {
+          if(vm.recipeList[i].image) {
+            var imageUrl = vm.recipeList[i].image;
+            if(imageUrl.indexOf('image/upload') > -1) {
+              var thumbUrl = imageUrl.split('image/upload');
+              thumbUrl = thumbUrl[0] + 'image/upload/w_300,h_200,c_fill' + thumbUrl[1]
+              vm.recipeList[i].thumb = thumbUrl;
+            }
+          }
+        }
+      })
+      .error(function(data, status) {
+        console.log("Error retrieving recipes");
+      });
+
+    vm.showSimilarItems = true;
+    vm.showSimilarBtn = false;
+  }
+
+  function addSimilarItem() {
+    vm.similarItem.url = vm.similarItem.categoryKey + '/' + vm.similarItem.key;
+    vm.similarItem = {
+      name: vm.similarItem.name,
+      url: vm.similarItem.url,
+      thumb: vm.similarItem.thumb,        
+    };
+
+    //check to see if url value already exists anywhere in vm.similarItems array
+    var found = vm.similarItems.some(function(arrVal) {
+      return vm.similarItem.url === arrVal.url;
+    });
+
+    if(!found && vm.similarItems.length < 3) {
+      vm.similarItems.push(vm.similarItem);
+    }
+
+    if(vm.similarItems.length >= 3) {
+      vm.showSimilarItems = false;
+    } else {
+      vm.showSimilarItems = true;
+    }
+  }
+
+  function removeSimilarItem(item) {
+    vm.similarItems.splice(item, 1);
+    
+    if(vm.similarItems.length >= 3) {
+      vm.showSimilarItems = false;
+    } else {
+      if(!vm.recipeList) {
+        getSimilarItems();
+      }
+      vm.showSimilarItems = true;
+    }
+  }
 
 });

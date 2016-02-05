@@ -1,3 +1,10 @@
+@media all and (max-width : 1000px)
+  .thumbs
+    .thumb
+      width 210px
+      height 140px
+      margin-right 16px
+
 @media all and (max-width : 768px)
   .header
     .logo
@@ -18,8 +25,11 @@
   .med-hide
     display none
 
-
-
+@media all and (max-width : 700px)
+  .thumbs
+    .thumb
+      width 141px
+      height 94px
 
 @media all and (max-width : 630px)
   .navigation
@@ -49,8 +59,21 @@
         margin-right 0
   .searchbox
     width 130px
-
-
+  .modal-container
+    width 80%
+  .hero
+    padding 16px
+    margin-bottom 16px
+    h6
+      margin-top 24px
+    .btn
+      display block
+    button.btn
+      width 100%
+    .full-table
+      margin-top 16px
+    .progress
+      display none
       
 @media all and (max-width : 500px)
   .header
@@ -83,3 +106,11 @@
         display block
   .xs-hide
     display none
+  .thumbs
+    .thumb
+      float none
+      width 288px
+      height 192px
+      margin 0 auto 16px
+      &:nth-child(3n)
+        margin-right auto

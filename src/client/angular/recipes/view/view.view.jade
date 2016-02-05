@@ -53,13 +53,22 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
       h2 Directions:
       p.multiline(data-ng-bind="viewrecipe.recipeDetail.directions")
       hr
+    .message(data-ng-if="viewrecipe.recipeDetail.hints.length", data-ng-repeat="hint in viewrecipe.recipeDetail.hints")
+      span(data-ng-bind="hint")
     div(data-ng-if="viewrecipe.recipeDetail.pairings.length")
       label Recipe Pairings:
       p(data-ng-bind="viewrecipe.recipeDetail.pairings")
     .pills(data-ng-if="viewrecipe.recipeDetail.tags.length")
       label.pill-label Tags:
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
-  .media.col.half(data-ng-if="viewrecipe.recipeDetail.image")
+  .media.col.half.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image")
     img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
+  .clear(data-ng-if="viewrecipe.recipeDetail.relatedItems.length > 0")
+    h2 You may also like
+    ul.thumbs
+      li(data-ng-repeat="similarItem in viewrecipe.recipeDetail.relatedItems").thumb
+        a(data-ng-href="/recipes/view/{{ similarItem.url }}")
+          img(data-ng-show="similarItem.thumb", data-ng-src="{{ similarItem.thumb }}")
+          span(data-ng-bind="similarItem.name")
 a.btn.mgn-top-16(if-user-in-group="'Admin'", data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit Recipe
 a.btn(if-user-not-in-group="'Admin'", data-ng-if="viewrecipe.username == viewrecipe.recipeDetail.addedBy.username" data-ui-sref="recipes.edit({categoryKey: viewrecipe.categoryKey, recipeName: viewrecipe.recipeName})") Edit My Recipe

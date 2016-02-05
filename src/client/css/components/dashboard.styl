@@ -1,0 +1,42 @@
+.hero
+  background $primary-darken
+  color #fff
+  padding 32px
+  margin-bottom 32px
+  border-radius(4px)
+  .secondary
+    text-align center
+  .btn
+    background-color $primary-color
+    &:hover
+      background-color $secondary-color
+  &:after
+    content ''
+    display block
+    clear both
+  .full-table
+    margin-top 54px
+    margin-bottom 0
+    th
+      color $copy-lighten
+      font-weight normal
+      &:first-child
+        text-align center
+    tbody
+      tr
+        td
+          padding 16px
+        &:nth-child(2n+1)
+          background-color $primary-color
+  .progress
+    margin-top 32px
+    margin-bottom 0
+.profile
+  img
+    width 150px
+    border-radius(75px)
+    box-sizing(border-box)
+    box-shadow(0 4px 12px rgba(0,0,0,0.05))
+    padding 3px
+    border 2px solid $primary-color
+    margin 0 auto 16px

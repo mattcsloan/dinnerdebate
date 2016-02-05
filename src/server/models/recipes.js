@@ -11,20 +11,21 @@ module.exports = mongoose.model('Recipes', {
     source : {type : String, default: ''},
     sourceURL : {type : String, default: ''},
     addedBy : {
-        username : {type : String },
-        fullName : {type : String }
+        username : {type : String, default: '' },
+        fullName : {type : String, default: '' }
     },
     prepTime : {type : Number, default: ''},
     cookTime : {type : Number, default: ''},
-    // ingredients : {type : Array, default: []},
     ingredients : [{
         title: {type : String, default: ''},
         list: {type : Array, default: []}
     }],
     directions : {type : String, default: ''},
+    hints : {type : Array, default: []},
     pairings : {type : Array, default: []},
     image : {type : String, default: ''},
     servings : {type : String, default: ''},
     tags : {type : Array, default: []},
-    featured : {type : Boolean, default: false}
+    featured : {type : Boolean, default: false},
+    relatedItems : {type : Array, default: []}
 });
