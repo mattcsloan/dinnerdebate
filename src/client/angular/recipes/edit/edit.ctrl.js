@@ -19,6 +19,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   vm.addTag = addTag;
   vm.removeTag = removeTag;
   vm.addHint = addHint;
+  vm.editHint = editHint;
   vm.removeHint = removeHint;
   vm.uploadFile = uploadFile;
   vm.removeImage = removeImage;
@@ -149,7 +150,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
           vm.showSimilarBtn = false;
         }
 
-        Page.setTitle('Edit Recipe | ' + vm.recipeDetail.name);   
+        Page.setTitle('Edit | ' + vm.recipeDetail.name);   
       }
     })
     .error(function(data, status) {
@@ -280,6 +281,13 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     if(vm.newHint && vm.hints.indexOf(vm.newHint) == -1) {
       vm.hints.push(vm.newHint);
       vm.newHint = '';
+    }
+  }
+
+  function editHint(item, value) {
+    // check first to see if value already exists in array
+    if(vm.hints.indexOf(value) == -1) {
+      vm.hints.splice(item, 1, value);
     }
   }
 

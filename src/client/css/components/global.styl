@@ -164,6 +164,9 @@ button
     border 1px solid transparent
     &:hover
       color $main-link-hover
+  &.active
+    box-shadow(inset 0 2px 4px rgba(0,0,0,0.2))
+    border-color $subtle
 a.btn
   padding-top 9px
   padding-bottom 10px
@@ -172,6 +175,16 @@ a.btn
     margin-right 16px
     &:last-child
       margin-right 0
+    &.btn-uniform
+      padding-top 0
+      padding-bottom 0
+      line-height 36px
+      float left
+      display block
+  &:after
+    content ''
+    display block
+    clear both
 .pills
   margin-bottom 16px
   &:after

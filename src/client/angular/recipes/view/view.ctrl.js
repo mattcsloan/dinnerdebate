@@ -17,7 +17,7 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         $location.url('/recipes?message=Recipe%20does%20not%20exist.');
       } else {
         vm.recipeDetail = data;
-        Page.setTitle('View Recipe | ' + vm.recipeDetail.name);  
+        Page.setTitle(vm.recipeDetail.name);  
         if(vm.recipeDetail.image && vm.recipeDetail.image.indexOf('http://res.cloudinary.com/hesjwyhax/image/upload') > -1) {
           var newImage = vm.recipeDetail.image.split('http://res.cloudinary.com/hesjwyhax/image/upload');
           vm.recipeDetail.image = '//res.cloudinary.com/hesjwyhax/image/upload' + '/a_exif' + newImage[1];

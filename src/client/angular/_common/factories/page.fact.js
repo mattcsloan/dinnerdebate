@@ -10,7 +10,7 @@
   function page() {
     var title = '';
     return {
-      title: function() { return title + ' | Dinner Debate'; },
+      title: function() { return title; },
       setTitle: function(newTitle) { title = newTitle + ' | Dinner Debate' }
     };
   }

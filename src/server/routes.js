@@ -235,8 +235,19 @@ module.exports = function(app) {
     //update user profiles (stormpath)
     app.post('/auth/user/photo', stormpath.loginRequired, function(req, res, next) {
       var photoUrl = req.body.photoUrl;
-      console.log(photoUrl);
       req.user.customData.photoUrl = photoUrl;
+      req.user.customData.save(function(err) {
+        if (err) {
+          next(err);  // this will throw an error if something breaks when you try to save your changes
+        } else {
+          res.send('success!');
+        }
+      });
+    });
+
+    app.post('/auth/user/fontSize', stormpath.loginRequired, function(req, res, next) {
+      var fontSize = req.body.fontSize;
+      req.user.customData.fontSize = fontSize;
       req.user.customData.save(function(err) {
         if (err) {
           next(err);  // this will throw an error if something breaks when you try to save your changes
