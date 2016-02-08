@@ -4,6 +4,7 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
   vm.removeImage = removeImage;
   vm.addCustomData = addCustomData;
   vm.profileImage = $rootScope.user.customData.photoUrl;
+  vm.fontSize = $rootScope.user.customData.fontSize;
 
   Page.setTitle('Dashboard');   
   vm.title = 'Dashboard';
@@ -32,15 +33,21 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
     });
   }
 
-  function addCustomData(photoUrl) {
-    $http.post('/auth/user/photo', {
-      photoUrl: photoUrl
-    });
+  function addCustomData(item, value) {
+    if(item == 'photo') {
+      $http.post('/auth/user/' + item, {
+        photoUrl: value
+      });
+    } else if(item == 'fontSize') {
+      $http.post('/auth/user/' + item, {
+          fontSize: value
+        });
+    }
   }
 
   function removeImage() {
     vm.profileImage = null;
-    addCustomData('')
+    addCustomData('photo', '')
   }
 
   function uploadFile(file, errFiles) {
@@ -60,7 +67,7 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
               thumbUrl = thumbUrl[0] + 'image/upload/w_280,h_280,c_fill' + thumbUrl[1]
               vm.profileImage = thumbUrl;
             }
-            addCustomData(vm.profileImage);
+            addCustomData('photo', vm.profileImage);
           });
       }, function (response) {
           if (response.status > 0)

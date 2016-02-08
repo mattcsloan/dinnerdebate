@@ -97,9 +97,17 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   textarea(placeholder="Recipe Directions", data-ng-model="createrecipe.recipeDirections")
   label.clear Notes/Hints:
   .message(data-ng-repeat="hint in createrecipe.hints")
-    a.close.pull-right.text-small.mgn-left-8(data-ng-click="createrecipe.removeHint($index)")
+    a.close.pull-right.text-small.mgn-left-16(data-ng-click="createrecipe.removeHint($index)")
       i.icon.icon-cross
-    span(data-ng-bind="hint")
+    a.close.pull-right.text-small.mgn-left-8(data-ng-click="updating = true", data-ng-hide="updating")
+      i.icon.icon-pencil2
+    form(data-ng-submit="createrecipe.editHint($index, hint)", data-ng-show="updating")
+      input.inline.pull-left.mgn-btm-0(type="text", data-ng-model="hint")
+      input.btn.inline.mgn-left-16.mgn-btm-0(type="submit", value="Update")
+      a.btn.btn-subtle.inline.mgn-left-16.mgn-btm-0(data-ng-click="updating = false")
+        i.icon.icon-cross.mgn-right-8.helper-text
+        | Cancel
+    span(data-ng-bind="hint", data-ng-hide="updating")
   form(data-ng-submit="createrecipe.addHint()")
     input(type="text", placeholder="New Hint", data-ng-model="createrecipe.newHint")
     input.btn.inline(type="submit", value="+ Add")
@@ -137,9 +145,6 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     input.btn.inline.mgn-left-16(type="submit", value="+ Add")
   //- label Feature this item?:
   //- input(type="text", placeholder="Feature this item?", data-ng-model="createrecipe.recipeFeatured")
-
-
-
   h2 Similar Items
   a.btn.btn-primary.mgn-right-16(data-ng-show="createrecipe.showSimilarBtn", data-ng-click="createrecipe.getSimilarItems()") Add a related item
   select.mgn-top-0(data-ng-show="createrecipe.showSimilarItems", data-ng-change="createrecipe.addSimilarItem()", data-ng-options="recipe.name for recipe in createrecipe.recipeList | orderBy: 'name'", data-ng-model="createrecipe.similarItem")

@@ -43,6 +43,11 @@ hr
             strong(data-ng-bind="dashboard.usersOwnRecipes.length")
           td(data-ng-if="dashboard.userAddedRecipes.length")
             strong(data-ng-bind="dashboard.userAddedRecipes.length")
+label.pull-left.mgn-right-16.mgn-top-8 Recipe Font Size:
+.btn-panel
+  a.btn.btn-subtle.btn-uniform(data-ng-click="dashboard.addCustomData('fontSize', 1)", data-ng-class="{active: user.customData.fontSize == 1}") Aa
+  a.btn.btn-subtle.btn-uniform.font-size-2(data-ng-click="dashboard.addCustomData('fontSize', 2)", data-ng-class="{active: user.customData.fontSize == 2}") Aa
+  a.btn.btn-subtle.btn-uniform.font-size-3(data-ng-click="dashboard.addCustomData('fontSize', 3)", data-ng-class="{active: user.customData.fontSize == 3}") Aa
 
 .columns
   .col.half
