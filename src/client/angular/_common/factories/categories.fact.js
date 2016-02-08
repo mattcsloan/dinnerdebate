@@ -26,7 +26,7 @@
         "Kids",
         "Pies",
         "Pets",
-        "Salads",
+        "Salads and Dressings",
         "Sauces and Marinades",
         "Sides",
         "Soups"
