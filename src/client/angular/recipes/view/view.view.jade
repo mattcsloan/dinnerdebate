@@ -50,7 +50,7 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
           ul.ingredients.list(data-ng-class="{'font-size-{{user.customData.fontSize}}': user.customData.fontSize}")
             li(data-ng-repeat="ingredient in ingredientList.list", data-ng-bind="ingredient")
     div(data-ng-if="viewrecipe.recipeDetail.directions")
-      h2 Directions: {{user.customData.fontSize}}
+      h2 Directions:
       p.multiline(data-ng-bind="viewrecipe.recipeDetail.directions", data-ng-class="{'font-size-{{user.customData.fontSize}}': user.customData.fontSize}")
       hr
     .message(data-ng-if="viewrecipe.recipeDetail.hints.length", data-ng-repeat="hint in viewrecipe.recipeDetail.hints")
