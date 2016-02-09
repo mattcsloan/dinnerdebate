@@ -30,6 +30,11 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
     vm.recipeCategory,
     vm.categoryKey
   ];
+  vm.recipeImage = {
+    url: '',
+    width: '',
+    height: ''
+  };
 
   vm.categoryOptions = CategoryResource.allCategories();
 
@@ -177,8 +182,8 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
 
   function addRecipe() {
     vm.submittingForm = true;
-    if(!vm.recipeImage) {
-      vm.recipeImage = null;
+    if(!vm.recipeImage.url) {
+      vm.recipeImage.url = null;
     }
     if(vm.recipeTitle && vm.recipeKey && vm.recipeCategory && vm.categoryKey) {
       if(vm.keyIsAvailable) {
@@ -203,7 +208,11 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
           directions: vm.recipeDirections,
           hints: vm.hints,
           pairings: vm.recipePairings,
-          image: vm.recipeImage,
+          image: {
+            url: vm.recipeImage.url,
+            width: vm.recipeImage.width,
+            height: vm.recipeImage.height
+          },
           servings: vm.recipeServings,
           tags: vm.tags,
           featured: vm.recipeFeatured,
@@ -231,7 +240,11 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function removeImage() {
-    vm.recipeImage = null;
+    vm.recipeImage = {
+      url: '',
+      width: '',
+      height: ''
+    };
   }
 
   function uploadFile(file, errFiles) {
@@ -251,7 +264,9 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       // file.rename();
       file.upload.then(function (response) {
           $timeout(function () {
-              vm.recipeImage = response.data;
+              vm.recipeImage.url = response.data.fileUrl;
+              vm.recipeImage.width = response.data.fileWidth;
+              vm.recipeImage.height = response.data.fileHeight;
           });
       }, function (response) {
           if (response.status > 0)
@@ -270,8 +285,8 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       .success(function(data, status) {
         vm.recipeList = data;
         for(i = 0; i < vm.recipeList.length; i++) {
-          if(vm.recipeList[i].image) {
-            var imageUrl = vm.recipeList[i].image;
+          if(vm.recipeList[i].image.url) {
+            var imageUrl = vm.recipeList[i].image.url;
             if(imageUrl.indexOf('image/upload') > -1) {
               var thumbUrl = imageUrl.split('image/upload');
               thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]

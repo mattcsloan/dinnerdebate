@@ -207,9 +207,15 @@ module.exports = function(app) {
         var randomNumber = Math.floor((Math.random() * 100000) + 1);
         fileName = fileName[0];
 
+
+
         cloudinary.uploader.upload(req.file.path, function(result, error) {
             if(result.url) {
-                res.status(200).json(result.url);
+                res.status(200).json({
+                    fileUrl: result.url,
+                    fileWidth: result.width,
+                    fileHeight: result.height
+                });
             } else {
                 res.json(error);
             }
