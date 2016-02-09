@@ -113,6 +113,14 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       } else {
         vm.recipeDetail = data;
 
+        if(typeof vm.recipeDetail.image == 'string') {
+          vm.recipeDetail.image = {
+              url: vm.recipeDetail.image,
+              width: null,
+              height: null
+          }
+        }
+
         vm.name = vm.recipeDetail.name;
         vm.key = vm.recipeDetail.key;
         vm.description = vm.recipeDetail.description;
@@ -128,7 +136,11 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
         vm.directions = vm.recipeDetail.directions;
         vm.hints = vm.recipeDetail.hints;
         vm.pairings = vm.recipeDetail.pairings;
-        vm.image = vm.recipeDetail.image;
+        vm.image = {
+          url: vm.recipeDetail.image.url,
+          width: vm.recipeDetail.image.width,
+          height: vm.recipeDetail.image.height
+        };
         vm.servings = vm.recipeDetail.servings;
         vm.tags = vm.recipeDetail.tags;
         vm.featured = vm.recipeDetail.featured;
@@ -158,7 +170,6 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
     });
 
   function updateRecipe() {
-    console.log(vm.similarItems);
     vm.submittingForm = true;
     if(vm.name && vm.key && vm.category && vm.categoryKey) {
       if(vm.keyIsAvailable || (vm.key == recipeName && vm.categoryKey == categoryKey)) {
@@ -296,7 +307,11 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   }
 
   function removeImage() {
-    vm.image = null;
+    vm.image = {
+      url: '',
+      width: '',
+      height: ''
+    };
   }
 
   function uploadFile(file, errFiles) {
@@ -316,7 +331,11 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       // file.rename();
       file.upload.then(function (response) {
           $timeout(function () {
-              vm.image = response.data;
+              vm.image = {
+                url: response.data.fileUrl,
+                width: response.data.fileWidth,
+                height: response.data.fileHeight,
+              };
           });
       }, function (response) {
           if (response.status > 0)
@@ -332,8 +351,8 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       .success(function(data, status) {
         vm.recipeList = data;
         for(i = 0; i < vm.recipeList.length; i++) {
-          if(vm.recipeList[i].image) {
-            var imageUrl = vm.recipeList[i].image;
+          if(vm.recipeList[i].image.url) {
+            var imageUrl = vm.recipeList[i].image.url;
             if(imageUrl.indexOf('image/upload') > -1) {
               var thumbUrl = imageUrl.split('image/upload');
               thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_200' + thumbUrl[1]

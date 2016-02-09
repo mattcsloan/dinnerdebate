@@ -61,7 +61,7 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
 
       file.upload.then(function (response) {
           $timeout(function () {
-            vm.profileImage = response.data;
+            vm.profileImage = response.data.fileUrl;
             if(vm.profileImage.indexOf('image/upload') > -1) {
               var thumbUrl = vm.profileImage.split('image/upload');
               thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_300,w_300' + thumbUrl[1]

@@ -114,7 +114,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
   //- label Recipe Pairings:
   //- input(type="text", placeholder="Recipe Pairings", data-ng-model="createrecipe.recipePairings")
   .secondary.pull-right
-    img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage", data-ng-src="{{createrecipe.recipeImage}}" alt="{{createrecipe.recipeKey}}")
+    img.upload-preview.mgn-btm-16(data-ng-show="createrecipe.recipeImage.url", data-ng-src="{{createrecipe.recipeImage.url}}" alt="{{createrecipe.recipeKey}}")
   .main.pull-left
     label Upload Image:
     button.btn.mgn-top-16(type="file", ngf-select="createrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="4000", ngf-max-size="5MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") 
@@ -133,7 +133,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       p.text-muted
         em(data-ng-if="createrecipe.f.name", data-ng-bind="'Uploading ' + createrecipe.f.name")
         strong(data-ng-bind="createrecipe.f.progress + '%'")
-    a.btn.btn-subtle(data-ng-show="createrecipe.recipeImage", data-ng-click="createrecipe.removeImage()") Remove Image
+    a.btn.btn-subtle(data-ng-show="createrecipe.recipeImage.url", data-ng-click="createrecipe.removeImage()") Remove Image
   label.clear Tags:
   .pills
     .pill(data-ng-repeat="tag in createrecipe.tags")

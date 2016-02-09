@@ -126,8 +126,8 @@ form(data-ng-submit="editrecipe.addHint()")
 //- label Recipe Pairings:
 //- input(type="text", value="editrecipe.recipeDetail.pairings", data-ng-model="editrecipe.pairings")
 .secondary.pull-right
-  img.upload-preview.mgn-btm-16(data-ng-show="editrecipe.image", data-ng-src="{{editrecipe.image}}" alt="{{editrecipe.recipeKey}}")
-  p.text-muted(data-ng-hide="editrecipe.image") No image provided.
+  img.upload-preview.mgn-btm-16(data-ng-show="editrecipe.image.url", data-ng-src="{{editrecipe.image.url}}" alt="{{editrecipe.recipeKey}}")
+  p.text-muted(data-ng-hide="editrecipe.image.url") No image provided.
 .main.pull-left
   label Image:
   button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="4000", ngf-max-size="5MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
@@ -144,7 +144,7 @@ form(data-ng-submit="editrecipe.addHint()")
     p.text-muted
       em(data-ng-if="editrecipe.f.name", data-ng-bind="'Uploading ' + editrecipe.f.name")
       strong(data-ng-bind="editrecipe.f.progress + '%'")
-  a.btn.btn-subtle(data-ng-show="editrecipe.image", data-ng-click="editrecipe.removeImage()") Remove Image
+  a.btn.btn-subtle(data-ng-show="editrecipe.image.url", data-ng-click="editrecipe.removeImage()") Remove Image
 label.clear Tags:
 .pills
   .pill(data-ng-repeat="tag in editrecipe.tags")

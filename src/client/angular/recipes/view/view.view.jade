@@ -7,7 +7,9 @@ h6.breadcrumb
   span  &raquo;
 h1(data-ng-bind="viewrecipe.recipeDetail.name")
 .recipe.columns
-  .details(data-ng-class="{ 'full': !viewrecipe.recipeDetail.image, 'col half': viewrecipe.recipeDetail.image }")
+  .media.full.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image.url && viewrecipe.layout == 'horizontal'")
+    img(data-ng-src="{{viewrecipe.recipeDetail.image.url}}")
+  .details(data-ng-class="{ 'full': !viewrecipe.recipeDetail.image.url || viewrecipe.layout == 'horizontal', 'col half': viewrecipe.recipeDetail.image.url && viewrecipe.layout == 'vertical' }")
     .info
       p.timestamp Added on 
         span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
@@ -43,7 +45,7 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
     p.multiline(data-ng-class="{'font-size-{{user.customData.fontSize}}': user.customData.fontSize}", data-ng-if="viewrecipe.recipeDetail.description")
       em(data-ng-bind="viewrecipe.recipeDetail.description")
     .columns
-      div(data-ng-repeat="ingredientList in viewrecipe.recipeDetail.ingredients", data-ng-class="{ 'col half': !viewrecipe.recipeDetail.image && viewrecipe.recipeDetail.ingredients.length > 1 }")
+      div(data-ng-repeat="ingredientList in viewrecipe.recipeDetail.ingredients", data-ng-class="{ 'col half': !viewrecipe.recipeDetail.image.url && viewrecipe.recipeDetail.ingredients.length > 1 }")
         div(data-ng-if="ingredientList.list.length")
           h2(data-ng-hide="ingredientList.title") Ingredients:
           h2(data-ng-show="ingredientList.title", data-ng-bind="ingredientList.title + ':'")
@@ -61,8 +63,8 @@ h1(data-ng-bind="viewrecipe.recipeDetail.name")
     .pills(data-ng-if="viewrecipe.recipeDetail.tags.length")
       label.pill-label Tags:
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
-  .media.col.half.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image")
-    img(data-ng-src="{{viewrecipe.recipeDetail.image}}")
+  .media.col.half.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image.url && viewrecipe.layout == 'vertical'")
+    img(data-ng-src="{{viewrecipe.recipeDetail.image.url}}")
   .clear(data-ng-if="viewrecipe.recipeDetail.relatedItems.length > 0")
     h2 You may also like
     ul.thumbs
