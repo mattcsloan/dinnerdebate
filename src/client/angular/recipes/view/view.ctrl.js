@@ -18,9 +18,17 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
       } else {
         vm.recipeDetail = data;
         Page.setTitle(vm.recipeDetail.name);  
-        if(vm.recipeDetail.image && vm.recipeDetail.image.indexOf('image/upload') > -1) {
-          var newImage = vm.recipeDetail.image.split('image/upload');
-          vm.recipeDetail.image = newImage[0] + 'image/upload' + '/a_exif,w_1000' + newImage[1];
+        if(typeof vm.recipeDetail.image == 'string') {
+          console.log(vm.recipeDetail.image);
+          vm.recipeDetail.image = {
+              url: vm.recipeDetail.image
+          }
+          console.log("string moved to url: " + vm.recipeDetail.image.url);
+        }
+        if(vm.recipeDetail.image.url && vm.recipeDetail.image.url.indexOf('image/upload') > -1) {
+          var newImage = vm.recipeDetail.image.url.split('image/upload');
+          vm.recipeDetail.image.url = newImage[0] + 'image/upload' + '/a_exif,w_1000' + newImage[1];
+          console.log("transformations added: " + vm.recipeDetail.image.url);
         }
       }
     })

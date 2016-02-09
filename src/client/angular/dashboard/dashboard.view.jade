@@ -13,7 +13,7 @@ hr
       span Add Profile Image
     .columns(data-ng-if="dashboard.profileImage")
       .col.half.mgn-btm-8
-        button.btn.mgn-btm-0(type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Update
+        button.btn.mgn-btm-0(type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="4000", ngf-max-size="5MB", ngf-pattern="'image/*'", ngf-accept="'image/*'") Update
       .col.half
         a.btn.mgn-btm-0(data-ng-show="dashboard.profileImage", data-ng-click="dashboard.removeImage()") Remove
     .upload-status(data-ng-if="dashboard.errFile.name || dashboard.errorMsg")
