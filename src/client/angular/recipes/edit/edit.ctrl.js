@@ -336,7 +336,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
             var imageUrl = vm.recipeList[i].image;
             if(imageUrl.indexOf('image/upload') > -1) {
               var thumbUrl = imageUrl.split('image/upload');
-              thumbUrl = thumbUrl[0] + 'image/upload/w_300,h_200,c_fill' + thumbUrl[1]
+              thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_200' + thumbUrl[1]
               vm.recipeList[i].thumb = thumbUrl;
             }
           }

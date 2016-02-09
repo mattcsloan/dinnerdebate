@@ -130,14 +130,14 @@ form(data-ng-submit="editrecipe.addHint()")
   p.text-muted(data-ng-hide="editrecipe.image") No image provided.
 .main.pull-left
   label Image:
-  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="1100", ngf-max-size="2MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
+  button.btn.mgn-top-16.mgn-right-16(type="file", ngf-select="editrecipe.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="4000", ngf-max-size="5MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
     i.icon.icon-image.helper-text.mgn-right-8
     span Upload New Photo
   .upload-status(data-ng-if="editrecipe.errFile.name || editrecipe.errorMsg")
     span.error(data-ng-if="editrecipe.errFile.name") Error uploading 
       strong
         em(data-ng-bind="editrecipe.errFile.name")
-      | . Please make sure you are uploading an image file.
+      | . Please make sure you are uploading an image file, and it is less than 4000px wide and less than 5MB.
     span.error(data-ng-if="editrecipe.errorMsg", data-ng-bind="editrecipe.errorMsg")
   .progress(data-ng-show="editrecipe.f.progress >= 0")
     span(style="width:{{editrecipe.f.progress}}%")
