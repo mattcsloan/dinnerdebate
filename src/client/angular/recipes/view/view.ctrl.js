@@ -18,9 +18,9 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
       } else {
         vm.recipeDetail = data;
         Page.setTitle(vm.recipeDetail.name);  
-        if(vm.recipeDetail.image && vm.recipeDetail.image.indexOf('http://res.cloudinary.com/hesjwyhax/image/upload') > -1) {
-          var newImage = vm.recipeDetail.image.split('http://res.cloudinary.com/hesjwyhax/image/upload');
-          vm.recipeDetail.image = '//res.cloudinary.com/hesjwyhax/image/upload' + '/a_exif' + newImage[1];
+        if(vm.recipeDetail.image && vm.recipeDetail.image.indexOf('image/upload') > -1) {
+          var newImage = vm.recipeDetail.image.split('image/upload');
+          vm.recipeDetail.image = newImage[0] + 'image/upload' + '/a_exif,w_1000' + newImage[1];
         }
       }
     })

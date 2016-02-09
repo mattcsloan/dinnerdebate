@@ -64,7 +64,7 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
             vm.profileImage = response.data;
             if(vm.profileImage.indexOf('image/upload') > -1) {
               var thumbUrl = vm.profileImage.split('image/upload');
-              thumbUrl = thumbUrl[0] + 'image/upload/w_280,h_280,c_fill' + thumbUrl[1]
+              thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_300,w_300' + thumbUrl[1]
               vm.profileImage = thumbUrl;
             }
             addCustomData('photo', vm.profileImage);
