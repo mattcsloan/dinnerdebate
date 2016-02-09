@@ -113,6 +113,14 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       } else {
         vm.recipeDetail = data;
 
+        if(typeof vm.recipeDetail.image == 'string') {
+          vm.recipeDetail.image = {
+              url: vm.recipeDetail.image,
+              width: null,
+              height: null
+          }
+        }
+
         vm.name = vm.recipeDetail.name;
         vm.key = vm.recipeDetail.key;
         vm.description = vm.recipeDetail.description;

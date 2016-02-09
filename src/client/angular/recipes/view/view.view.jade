@@ -6,12 +6,10 @@ h6.breadcrumb
   a(data-ui-sref="recipes.categories({categoryName: viewrecipe.categoryKey})", data-ng-bind="viewrecipe.recipeDetail.category | lowercase")
   span  &raquo;
 h1(data-ng-bind="viewrecipe.recipeDetail.name")
-h2(data-ng-bind="'image dimenstions: (' + viewrecipe.recipeDetail.image.width + ', ' + viewrecipe.recipeDetail.image.height + ')'")
-h2(data-ng-show="viewrecipe.recipeDetail.image.width < viewrecipe.recipeDetail.image.height") Vertical Image
-h2(data-ng-show="viewrecipe.recipeDetail.image.width > viewrecipe.recipeDetail.image.height") Horizontal Image
-h2(data-ng-show="viewrecipe.recipeDetail.image.width && viewrecipe.recipeDetail.image.height && viewrecipe.recipeDetail.image.width == viewrecipe.recipeDetail.image.height") Square Image
 .recipe.columns
-  .details(data-ng-class="{ 'full': !viewrecipe.recipeDetail.image.url, 'col half': viewrecipe.recipeDetail.image.url }")
+  .media.full.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image.url && viewrecipe.layout == 'horizontal'")
+    img(data-ng-src="{{viewrecipe.recipeDetail.image.url}}")
+  .details(data-ng-class="{ 'full': !viewrecipe.recipeDetail.image.url || viewrecipe.layout == 'horizontal', 'col half': viewrecipe.recipeDetail.image.url && viewrecipe.layout == 'vertical' }")
     .info
       p.timestamp Added on 
         span(data-ng-bind="viewrecipe.recipeDetail.date | date:'MM/dd/yyyy'")
@@ -65,7 +63,7 @@ h2(data-ng-show="viewrecipe.recipeDetail.image.width && viewrecipe.recipeDetail.
     .pills(data-ng-if="viewrecipe.recipeDetail.tags.length")
       label.pill-label Tags:
       span.pill(data-ng-repeat="tag in viewrecipe.recipeDetail.tags", data-ng-bind="tag")
-  .media.col.half.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image.url")
+  .media.col.half.mgn-btm-16(data-ng-if="viewrecipe.recipeDetail.image.url && viewrecipe.layout == 'vertical'")
     img(data-ng-src="{{viewrecipe.recipeDetail.image.url}}")
   .clear(data-ng-if="viewrecipe.recipeDetail.relatedItems.length > 0")
     h2 You may also like

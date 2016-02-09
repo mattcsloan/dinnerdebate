@@ -9,6 +9,7 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
   vm.user = $rootScope.user;
   vm.username = vm.user.username;
   // vm.userGroup = vm.user.groups.items[0].name;
+  vm.layout = 'vertical';
 
   Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {
@@ -19,16 +20,20 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         vm.recipeDetail = data;
         Page.setTitle(vm.recipeDetail.name);  
         if(typeof vm.recipeDetail.image == 'string') {
-          console.log(vm.recipeDetail.image);
           vm.recipeDetail.image = {
-              url: vm.recipeDetail.image
+              url: vm.recipeDetail.image,
+              width: null,
+              height: null
           }
-          console.log("string moved to url: " + vm.recipeDetail.image.url);
         }
         if(vm.recipeDetail.image.url && vm.recipeDetail.image.url.indexOf('image/upload') > -1) {
           var newImage = vm.recipeDetail.image.url.split('image/upload');
           vm.recipeDetail.image.url = newImage[0] + 'image/upload' + '/a_exif,w_1000' + newImage[1];
-          console.log("transformations added: " + vm.recipeDetail.image.url);
+        }
+        if(vm.recipeDetail.image.width && vm.recipeDetail.image.height) {
+          if(vm.recipeDetail.image.width > vm.recipeDetail.image.height && vm.recipeDetail.image.width > 968) {
+            vm.layout = 'horizontal';
+          }
         }
       }
     })
