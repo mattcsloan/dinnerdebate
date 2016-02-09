@@ -206,6 +206,7 @@ module.exports = function(app) {
         var fileName = req.file.originalname.split('.');
         var randomNumber = Math.floor((Math.random() * 100000) + 1);
         fileName = fileName[0];
+
         cloudinary.uploader.upload(req.file.path, function(result, error) {
             if(result.url) {
                 res.status(200).json(result.url);
@@ -215,7 +216,12 @@ module.exports = function(app) {
         }, { 
             public_id: randomNumber + '/' + fileName,
             overwrite: false,
-            allowed_formats: ['jpg', 'jpeg', 'png', 'gif']
+            allowed_formats: ['jpg', 'jpeg', 'png', 'gif'],
+            eager: [
+                { width: 1000, angle: 'exif' }, 
+                { width: 300, height: 200, crop: "fill", angle: 'exif' }, 
+                { width: 300, height: 300, crop: "fill", angle: 'exif' } 
+            ]
         });
       } else {
         console.log('no file specified');
