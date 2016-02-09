@@ -38,6 +38,6 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
       }
     })
     .error(function(data, status) {
-      alert("Error retrieving recipe");
+      $location.url('/recipes?message=We%20could%20not%20load%20the%20recipe%20at%20this%20time.%20Please%20try%20again%20or%20view%20another%20recipe.');
     });
 });
