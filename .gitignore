@@ -4,3 +4,4 @@ dist
 .env
 uploads
 bower_components
+src/client/libs
