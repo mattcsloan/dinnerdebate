@@ -4,7 +4,7 @@
   "main": "server.js",
   "scripts": {
     "start": "gulp && node server.js",
-    "postinstall": "bower install",
+    "postinstall": "bower install && gulp",
     "build": "gulp"
   },
   "engines": {
