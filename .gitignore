@@ -1,6 +1,7 @@
 node_modules
 npm-debug.log
-dist
+/dist
 .env
 uploads
 bower_components
+src/client/libs
