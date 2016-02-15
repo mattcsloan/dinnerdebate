@@ -1,4 +1,4 @@
-angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $location) {
+angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $location, $window) {
   var vm = this;
 
   Page.setTitle('Recipes');   
@@ -6,10 +6,23 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   vm.querystring = $location.search();
   vm.categoryOptions = CategoryResource.allCategories();
   vm.selectedCategory = selectedCategory;
-  vm.orderCriteria = 'name';
   vm.changeCriteria = changeCriteria;
-  vm.view = 'list';
+  vm.localStoredView = $window.localStorage.getItem('recipes-view');
+  vm.localStoredCriteria = $window.localStorage.getItem('recipes-criteria');
   vm.changeView = changeView;
+
+
+  if(vm.localStoredView) {
+    vm.view = vm.localStoredView;
+  } else {
+    vm.view = 'list';
+  }
+
+  if(vm.localStoredCriteria) {
+    vm.orderCriteria = vm.localStoredCriteria;
+  } else {
+    vm.orderCriteria = 'name';
+  }
 
   //translate url (categoryName) to title case
   if(categoryName) {
@@ -40,10 +53,12 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
 
   function changeCriteria(criteria) {
     vm.orderCriteria = criteria;
+    $window.localStorage.setItem('recipes-criteria', criteria);
   }
 
   function changeView(view) {
     vm.view = view;
+    $window.localStorage.setItem('recipes-view', view);
   }
 
   vm.dismiss = dismiss;
@@ -56,32 +71,6 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     }
     $location.search('message', null);
   }
-
-  // vm.selectedCategories = [];
-  // vm.toggleCategory = toggleCategory;
-  // vm.toggleAll = toggleAll;
-
-  // function toggleCategory(category) {
-  //   var categoryIndex = vm.selectedCategories.indexOf(category);
-  //   if (categoryIndex > -1) {
-  //     vm.selectedCategories.splice(categoryIndex, 1);
-  //   } else {
-  //     vm.selectedCategories.push(category);
-  //   }
-  // }
-
-  // function toggleAll() {
-  //   var categoryNum = vm.categoryOptions.length;
-  //   if(vm.selectedCategories.length) {
-  //     //deselect all
-  //     vm.selectedCategories.length = 0;
-  //   } else {
-  //     //select all
-  //     for(i = 0; i < categoryNum; i++) {
-  //       vm.selectedCategories.push(vm.categoryOptions[i]);
-  //     }
-  //   }
-  // }
 
   Recipe.getAll()
     .success(function(data, status) {
