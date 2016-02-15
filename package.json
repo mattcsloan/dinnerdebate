@@ -1,16 +1,18 @@
 {
   "name": "dinnerdebate",
-  "description": "recipe book application",
+  "description": "recipe book application.",
   "main": "server.js",
   "scripts": {
-    "start": "gulp && node server.js",
-    "build": "gulp"
+    "start": "node server.js",
+    "postinstall": "bower install && gulp",
+    "dev": "gulp && node server.js"
   },
   "engines": {
     "node": "0.12.7"
   },
   "dependencies": {
     "body-parser": "~1.4.2",
+    "bower": "^1.7.7",
     "cloudinary": "^1.3.0",
     "express": "4.13.1",
     "express-stormpath": "~2.3.0",

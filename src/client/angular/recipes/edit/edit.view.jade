@@ -165,6 +165,7 @@ div(data-ng-if="editrecipe.similarItems.length > 0")
     li(data-ng-repeat="similarItem in editrecipe.similarItems").thumb
       i.icon.icon-cross.helper-text(data-ng-click="editrecipe.removeSimilarItem($index)")
       img(data-ng-show="similarItem.thumb", data-ng-src="{{ similarItem.thumb }}")
+      img(data-ng-hide="similarItem.thumb", data-ng-src="/img/logo-grayscale-300.png")
       span(data-ng-bind="similarItem.name")
 
 

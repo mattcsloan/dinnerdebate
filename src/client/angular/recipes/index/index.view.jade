@@ -1,15 +1,47 @@
-.action-items.block-sm
-  a.btn.pull-left.mgn-right-16(data-ui-sref="recipes.create") 
-    i.icon.icon-plus.helper-text.mgn-right-8
-    span Create New Recipe
-  .searchbox.inline.pull-left
-    i.icon.icon-search
-    input.mgn-top-0(type="text", data-ng-model="searchQuery", placeholder="Search")
+a.btn.pull-right(data-ui-sref="recipes.create") 
+  i.icon.icon-plus.helper-text.mgn-right-8
+  span Create New Recipe
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="recipes.title")
-.main
+.view-options.sort.mgn-btm-16(data-ng-class="{secondary : recipes.view == 'list'}")
+  h2.mgn-top-0 Sort/Filter
+  .columns
+    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
+      .text-small.text-muted.xs-hide(data-ng-show="recipes.view == 'thumb'")
+        span Search recipes:
+      .searchbox
+        i.icon.icon-search
+        input(type="text", data-ng-model="searchQuery", placeholder="Search")
+    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
+      .text-small.text-muted(data-ng-show="recipes.view == 'thumb'")
+        span Filter by category: 
+        select(ng-options="category as category for category in recipes.categoryOptions", ng-model="recipes.category", ng-change="recipes.selectedCategory(recipes.category)")
+          option(value="") All Recipes
+    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
+      p.text-small.text-muted.clear
+        span Sort by: 
+        a(data-ng-click="recipes.changeCriteria('-date')", data-ng-class="{active: recipes.orderCriteria == '-date'}") Newest
+        span  | 
+        a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
+      p.text-small.text-muted
+        span View as: 
+        a(data-ng-click="recipes.changeView('thumb')", data-ng-class="{active: recipes.view == 'thumb'}") Thumbnails
+        span  | 
+        a(data-ng-click="recipes.changeView('list')", data-ng-class="{active: recipes.view == 'list'}") List
+      label.with-checkbox.text-small.text-muted.mgn-btm-16(data-ng-show="recipes.view == 'thumb'")
+        input(type="checkbox", checked, data-ng-model="showThumbs")
+        i.icon(data-ng-class="{'icon-checkbox-checked': showThumbs, 'icon-checkbox-unchecked': !showThumbs}").mgn-right-8
+        | Only recipes with image
+  .xs-hide(data-ng-hide="recipes.view == 'thumb'")
+    h2 Categories
+    ul.list.filters
+      li
+        a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Recipes
+      li(data-ng-repeat="category in recipes.categoryOptions")
+        a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
+div(data-ng-class="{main: recipes.view == 'list'}")
   .error(data-ng-if="recipes.noCategoryMessage")
     a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(0)")
       i.icon.icon-cross
@@ -18,15 +50,20 @@ h1(data-ng-bind="recipes.title")
     a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(1)")
       i.icon.icon-cross
     span(data-ng-bind="recipes.querystring.message")
-  .headline-container
-    .sort.pull-right.text-small.text-muted
-      span View by: 
-      a(data-ng-click="recipes.changeCriteria('-date')", data-ng-class="{active: recipes.orderCriteria == '-date'}") Newest
-      span  | 
-      a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
-    h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
-    h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
-  table.full-table(cellpadding="0", cellspacing="0")
+  h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
+  h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
+  ul.thumbs.clear(data-ng-show="recipes.view == 'thumb'")
+    li(data-ng-if="recipe.thumb && showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
+      a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
+        img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
+        img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
+        span(data-ng-bind="recipe.name")
+    li(data-ng-if="!showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
+      a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
+        img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
+        img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
+        span(data-ng-bind="recipe.name")
+  table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list'")
     thead
       tr
         th Name
@@ -49,13 +86,3 @@ h1(data-ng-bind="recipes.title")
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
             strong(data-ng-bind="recipe.servings")
             span Servings
-.secondary.xs-hide
-  //- a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
-  //-   span(data-ng-if="recipes.selectedCategories.length") Deselect All
-  //-   span(data-ng-if="!recipes.selectedCategories.length") Select All
-  h2.mgn-top-0 Categories
-  ul.list.filters
-    li
-      a(data-ng-click="recipes.selectedCategory()", data-ng-class="{active: recipes.category == ''}") All Recipes
-    li(data-ng-repeat="category in recipes.categoryOptions")
-      a(data-ng-bind="category", data-ng-click="recipes.selectedCategory(category)", data-ng-class="{active: category == recipes.category}")
