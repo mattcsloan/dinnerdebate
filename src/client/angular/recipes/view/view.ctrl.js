@@ -18,7 +18,16 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         $location.url('/recipes?message=Recipe%20does%20not%20exist.');
       } else {
         vm.recipeDetail = data;
-        Page.setTitle(vm.recipeDetail.name);  
+        Page.setTitle(vm.recipeDetail.name);
+        
+        if(vm.recipeDetail.image == null) {
+          vm.recipeDetail.image = {
+              url: null,
+              width: null,
+              height: null
+          }
+        }
+
         if(typeof vm.recipeDetail.image == 'string') {
           vm.recipeDetail.image = {
               url: vm.recipeDetail.image,

@@ -154,6 +154,7 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
       li(data-ng-repeat="similarItem in createrecipe.similarItems").thumb
         i.icon.icon-cross.helper-text(data-ng-click="createrecipe.removeSimilarItem($index)")
         img(data-ng-show="similarItem.thumb", data-ng-src="{{ similarItem.thumb }}")
+        img(data-ng-hide="similarItem.thumb", data-ng-src="/img/logo-grayscale-300.png")
         span(data-ng-bind="similarItem.name")
 
 

@@ -1,14 +1,28 @@
-angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $location) {
+angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $location, $window) {
   var vm = this;
 
   Page.setTitle('Recipes');   
   vm.title = 'Recipes';
-
   vm.querystring = $location.search();
-
   vm.categoryOptions = CategoryResource.allCategories();
-
   vm.selectedCategory = selectedCategory;
+  vm.changeCriteria = changeCriteria;
+  vm.localStoredView = $window.localStorage.getItem('recipes-view');
+  vm.localStoredCriteria = $window.localStorage.getItem('recipes-criteria');
+  vm.changeView = changeView;
+
+
+  if(vm.localStoredView) {
+    vm.view = vm.localStoredView;
+  } else {
+    vm.view = 'list';
+  }
+
+  if(vm.localStoredCriteria) {
+    vm.orderCriteria = vm.localStoredCriteria;
+  } else {
+    vm.orderCriteria = 'name';
+  }
 
   //translate url (categoryName) to title case
   if(categoryName) {
@@ -36,12 +50,15 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     }
   }
 
-  vm.orderCriteria = 'name';
-
-  vm.changeCriteria = changeCriteria;
 
   function changeCriteria(criteria) {
     vm.orderCriteria = criteria;
+    $window.localStorage.setItem('recipes-criteria', criteria);
+  }
+
+  function changeView(view) {
+    vm.view = view;
+    $window.localStorage.setItem('recipes-view', view);
   }
 
   vm.dismiss = dismiss;
@@ -55,36 +72,36 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     $location.search('message', null);
   }
 
-
-  // vm.selectedCategories = [];
-  // vm.toggleCategory = toggleCategory;
-  // vm.toggleAll = toggleAll;
-
-  // function toggleCategory(category) {
-  //   var categoryIndex = vm.selectedCategories.indexOf(category);
-  //   if (categoryIndex > -1) {
-  //     vm.selectedCategories.splice(categoryIndex, 1);
-  //   } else {
-  //     vm.selectedCategories.push(category);
-  //   }
-  // }
-
-  // function toggleAll() {
-  //   var categoryNum = vm.categoryOptions.length;
-  //   if(vm.selectedCategories.length) {
-  //     //deselect all
-  //     vm.selectedCategories.length = 0;
-  //   } else {
-  //     //select all
-  //     for(i = 0; i < categoryNum; i++) {
-  //       vm.selectedCategories.push(vm.categoryOptions[i]);
-  //     }
-  //   }
-  // }
-
   Recipe.getAll()
     .success(function(data, status) {
       vm.recipes = data;
+
+      for(i = 0; i < vm.recipes.length; i++) {
+        if(vm.recipes[i].image == null) {
+          vm.recipes[i].image = {
+              url: null,
+              width: null,
+              height: null
+          }
+        }
+
+        if(typeof vm.recipes[i].image == 'string') {
+          vm.recipes[i].image = {
+              url: vm.recipes[i].image,
+              width: null,
+              height: null
+          }
+        }
+
+        if(vm.recipes[i].image.url) {
+          var imageUrl = vm.recipes[i].image.url;
+          if(imageUrl.indexOf('image/upload') > -1) {
+            var thumbUrl = imageUrl.split('image/upload');
+            thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
+            vm.recipes[i].thumb = thumbUrl;
+          }
+        }
+      }
     })
     .error(function(data, status) {
       console.log("Error retrieving recipes");
