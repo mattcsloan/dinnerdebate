@@ -359,6 +359,20 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       .success(function(data, status) {
         vm.recipeList = data;
         for(i = 0; i < vm.recipeList.length; i++) {
+          if(vm.recipeList[i].image == null) {
+            vm.recipeList[i].image = {
+                url: null,
+                width: null,
+                height: null
+            }
+          }
+          if(typeof vm.recipeList[i].image == 'string') {
+            vm.recipeList[i].image = {
+                url: vm.recipeList[i].image,
+                width: null,
+                height: null
+            }
+          }
           if(vm.recipeList[i].image.url) {
             var imageUrl = vm.recipeList[i].image.url;
             if(imageUrl.indexOf('image/upload') > -1) {
@@ -384,13 +398,15 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       url: vm.similarItem.url,
       thumb: vm.similarItem.thumb,        
     };
+    vm.pageUrl = vm.categoryKey + '/' + vm.key;
+
 
     //check to see if url value already exists anywhere in vm.similarItems array
     var found = vm.similarItems.some(function(arrVal) {
       return vm.similarItem.url === arrVal.url;
     });
 
-    if(!found && vm.similarItems.length < 3) {
+    if(!found && vm.similarItems.length < 3 && vm.similarItem.url !== vm.pageUrl) {
       vm.similarItems.push(vm.similarItem);
     }
 

@@ -38,9 +38,6 @@ div(data-ng-class="{main: recipes.view == 'list'}")
       span Category: 
       select(ng-options="category as category for category in recipes.categoryOptions", ng-model="recipes.category", ng-change="recipes.selectedCategory(recipes.category)")
         option(value="") All Recipes
-
-
-
   ul.thumbs.clear(data-ng-show="recipes.view == 'thumb'")
     li(data-ng-if="recipe.thumb && showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")

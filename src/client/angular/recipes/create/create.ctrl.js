@@ -285,6 +285,20 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
       .success(function(data, status) {
         vm.recipeList = data;
         for(i = 0; i < vm.recipeList.length; i++) {
+          if(vm.recipeList[i].image == null) {
+            vm.recipeList[i].image = {
+                url: null,
+                width: null,
+                height: null
+            }
+          }
+          if(typeof vm.recipeList[i].image == 'string') {
+            vm.recipeList[i].image = {
+                url: vm.recipeList[i].image,
+                width: null,
+                height: null
+            }
+          }
           if(vm.recipeList[i].image.url) {
             var imageUrl = vm.recipeList[i].image.url;
             if(imageUrl.indexOf('image/upload') > -1) {
@@ -294,6 +308,7 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
             }
           }
         }
+        console.log(vm.recipeList);
       })
       .error(function(data, status) {
         console.log("Error retrieving recipes");
