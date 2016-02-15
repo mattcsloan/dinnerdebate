@@ -104,9 +104,7 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
           }
         }
 
-        console.log(vm.recipes[i].category + ': ' + vm.recipes[i].name + ': ' + vm.recipes[i].image);
         if(vm.recipes[i].image.url) {
-          console.log('has image url');
           var imageUrl = vm.recipes[i].image.url;
           if(imageUrl.indexOf('image/upload') > -1) {
             var thumbUrl = imageUrl.split('image/upload');

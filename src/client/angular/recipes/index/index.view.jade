@@ -9,7 +9,7 @@ h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="recipes.title")
-.main
+div(data-ng-class="{main: recipes.view == 'list'}")
   .error(data-ng-if="recipes.noCategoryMessage")
     a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(0)")
       i.icon.icon-cross
@@ -34,14 +34,23 @@ h1(data-ng-bind="recipes.title")
     label.text-small.text-muted.pull-left(data-ng-show="recipes.view == 'thumb'")
       input(type="checkbox", checked, data-ng-model="showThumbs")
       | Only show recipes with images
+    .text-small.text-muted.pull-left.mgn-right-8(data-ng-show="recipes.view == 'thumb'")
+      span Category: 
+      select(ng-options="category as category for category in recipes.categoryOptions", ng-model="recipes.category", ng-change="recipes.selectedCategory(recipes.category)")
+        option(value="") All Recipes
+
+
+
   ul.thumbs.clear(data-ng-show="recipes.view == 'thumb'")
     li(data-ng-if="recipe.thumb && showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
         img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
+        img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
         span(data-ng-bind="recipe.name")
     li(data-ng-if="!showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
         img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
+        img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
         span(data-ng-bind="recipe.name")
   table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list'")
     thead
@@ -66,7 +75,7 @@ h1(data-ng-bind="recipes.title")
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
             strong(data-ng-bind="recipe.servings")
             span Servings
-.secondary.xs-hide
+.secondary.xs-hide(data-ng-hide="recipes.view == 'thumb'")
   //- a.text-small.pull-right(data-ng-click="recipes.toggleAll()") 
   //-   span(data-ng-if="recipes.selectedCategories.length") Deselect All
   //-   span(data-ng-if="!recipes.selectedCategories.length") Select All
