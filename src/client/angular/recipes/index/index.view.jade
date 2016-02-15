@@ -18,15 +18,32 @@ h1(data-ng-bind="recipes.title")
     a.close.pull-right.text-small.mgn-left-8(data-ng-click="recipes.dismiss(1)")
       i.icon.icon-cross
     span(data-ng-bind="recipes.querystring.message")
-  .headline-container
-    .sort.pull-right.text-small.text-muted
+  h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
+  h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
+  .view-options.sort
+    .pull-right.text-small.text-muted
       span View by: 
       a(data-ng-click="recipes.changeCriteria('-date')", data-ng-class="{active: recipes.orderCriteria == '-date'}") Newest
       span  | 
       a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
-    h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
-    h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
-  table.full-table(cellpadding="0", cellspacing="0")
+    .text-small.text-muted.pull-left.mgn-right-8
+      span View: 
+      a(data-ng-click="recipes.changeView('thumb')", data-ng-class="{active: recipes.view == 'thumb'}") Thumbs
+      span  | 
+      a(data-ng-click="recipes.changeView('list')", data-ng-class="{active: recipes.view == 'list'}") List
+    label.text-small.text-muted.pull-left(data-ng-show="recipes.view == 'thumb'")
+      input(type="checkbox", checked, data-ng-model="showThumbs")
+      | Only show recipes with images
+  ul.thumbs.clear(data-ng-show="recipes.view == 'thumb'")
+    li(data-ng-if="recipe.thumb && showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
+      a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
+        img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
+        span(data-ng-bind="recipe.name")
+    li(data-ng-if="!showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
+      a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
+        img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
+        span(data-ng-bind="recipe.name")
+  table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list'")
     thead
       tr
         th Name

@@ -113,6 +113,14 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
       } else {
         vm.recipeDetail = data;
 
+        if(vm.recipeDetail.image == null) {
+          vm.recipeDetail.image = {
+              url: null,
+              width: null,
+              height: null
+          }
+        }
+
         if(typeof vm.recipeDetail.image == 'string') {
           vm.recipeDetail.image = {
               url: vm.recipeDetail.image,
@@ -355,7 +363,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
             var imageUrl = vm.recipeList[i].image.url;
             if(imageUrl.indexOf('image/upload') > -1) {
               var thumbUrl = imageUrl.split('image/upload');
-              thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_200' + thumbUrl[1]
+              thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
               vm.recipeList[i].thumb = thumbUrl;
             }
           }
