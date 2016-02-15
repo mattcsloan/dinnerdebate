@@ -308,7 +308,6 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
             }
           }
         }
-        console.log(vm.recipeList);
       })
       .error(function(data, status) {
         console.log("Error retrieving recipes");
