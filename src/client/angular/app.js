@@ -7,6 +7,7 @@ var app = angular.module('app', [
   'stormpath.templates',
   'ngFileUpload',
   'app.directives',
+  'angularUtils.directives.dirPagination',
   'app.factories',
   'app.filters',
   'MainCtrl', 
