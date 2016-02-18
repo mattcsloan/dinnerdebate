@@ -17,6 +17,9 @@
     o.getAll = function() {
       return $http.get(uri);
     },
+    o.getFirst = function(numItems, sort) {
+      return $http.get(uri + '/first/' + numItems + '/' + sort);
+    },
     o.getOne = function(category, name) {
       return $http.get(uri + '/' + category + '/' + name);
     },

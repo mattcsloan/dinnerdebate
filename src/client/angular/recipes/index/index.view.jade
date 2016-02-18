@@ -14,26 +14,29 @@ h1(data-ng-bind="recipes.title")
       .searchbox
         i.icon.icon-search
         input(type="text", data-ng-model="searchQuery", placeholder="Search")
-    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
-      .text-small.text-muted(data-ng-show="recipes.view == 'thumb'")
-        span Filter by category: 
-        select(ng-options="category as category for category in recipes.categoryOptions", ng-model="recipes.category", ng-change="recipes.selectedCategory(recipes.category)")
-          option(value="") All Recipes
-    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
       p.text-small.text-muted.clear
         span Sort by: 
         a(data-ng-click="recipes.changeCriteria('-date')", data-ng-class="{active: recipes.orderCriteria == '-date'}") Newest
         span  | 
         a(data-ng-click="recipes.changeCriteria('name')", data-ng-class="{active: recipes.orderCriteria == 'name'}") Alphabetical
+    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
+      .text-small.text-muted(data-ng-show="recipes.view == 'thumb'")
+        span Filter by category: 
+        select(ng-options="category as category for category in recipes.categoryOptions", ng-model="recipes.category", ng-change="recipes.selectedCategory(recipes.category)")
+          option(value="") All Recipes
       p.text-small.text-muted
         span View as: 
         a(data-ng-click="recipes.changeView('thumb')", data-ng-class="{active: recipes.view == 'thumb'}") Thumbnails
         span  | 
         a(data-ng-click="recipes.changeView('list')", data-ng-class="{active: recipes.view == 'list'}") List
+    div(data-ng-class="{'col thirds' : recipes.view == 'thumb'}")
+      .text-small.text-muted
+        span Items per page: 
+        select(data-ng-options="item as item for item in recipes.numItemsOptions track by item", data-ng-model="recipes.numItems", data-ng-change="recipes.changeNumItems(recipes.numItems)")
       label.with-checkbox.text-small.text-muted.mgn-btm-16(data-ng-show="recipes.view == 'thumb'")
-        input(type="checkbox", checked, data-ng-model="showThumbs")
-        i.icon(data-ng-class="{'icon-checkbox-checked': showThumbs, 'icon-checkbox-unchecked': !showThumbs}").mgn-right-8
-        | Only recipes with image
+        input(type="checkbox", checked, data-ng-model="recipes.showWithThumbsOnly", data-ng-change="recipes.resetPaginationPage()")
+        i.icon(data-ng-class="{'icon-checkbox-checked': recipes.showWithThumbsOnly, 'icon-checkbox-unchecked': !recipes.showWithThumbsOnly}").mgn-right-8
+        | Only show recipes with an image
   .xs-hide(data-ng-hide="recipes.view == 'thumb'")
     h2 Categories
     ul.list.filters
@@ -52,17 +55,20 @@ div(data-ng-class="{main: recipes.view == 'list'}")
     span(data-ng-bind="recipes.querystring.message")
   h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
   h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
-  ul.thumbs.clear(data-ng-show="recipes.view == 'thumb'")
-    li(data-ng-if="recipe.thumb && showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
+  ul.thumbs.clear(data-ng-show="recipes.view == 'thumb' && recipes.showWithThumbsOnly")
+    li(dir-paginate="recipe in recipes.recipes | removeNonMatchedKeyValues: 'thumb':null | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems", current-page="recipes.currentPage", pagination-id="thumbs-only").thumb
+      a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
+        img(data-ng-src="{{ recipe.thumb }}")
+        span(data-ng-bind="recipe.name")
+  dir-pagination-controls(pagination-id="thumbs-only", data-ng-show="recipes.view == 'thumb' && recipes.showWithThumbsOnly")
+  ul.thumbs.clear(data-ng-show="recipes.view == 'thumb' && !recipes.showWithThumbsOnly")
+    li(dir-paginate="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems", current-page="recipes.currentPage", pagination-id="all-thumbs").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
         img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
         img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
         span(data-ng-bind="recipe.name")
-    li(data-ng-if="!showThumbs", data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria").thumb
-      a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
-        img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
-        img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
-        span(data-ng-bind="recipe.name")
+  dir-pagination-controls(pagination-id="all-thumbs", data-ng-show="recipes.view == 'thumb' && !recipes.showWithThumbsOnly")
+
   table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list'")
     thead
       tr
@@ -71,7 +77,7 @@ div(data-ng-class="{main: recipes.view == 'list'}")
         th.sm-hide Cook Time
         th.sm-hide Servings
     tbody
-      tr(data-ng-repeat="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria")
+      tr(dir-paginate="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems", current-page="recipes.currentPage", pagination-id="list-view")
         td.title
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-bind="recipe.name")
         td.sm-hide
@@ -86,3 +92,4 @@ div(data-ng-class="{main: recipes.view == 'list'}")
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-if="recipe.servings")
             strong(data-ng-bind="recipe.servings")
             span Servings
+  dir-pagination-controls(pagination-id="list-view", boundary-links="true", data-ng-show="recipes.view == 'list'")

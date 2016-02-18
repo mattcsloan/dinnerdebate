@@ -24,6 +24,23 @@ module.exports = function(app) {
         });
     });
 
+    // get n number of recipes
+    app.get('/api/recipes/first/:numItems/:sort', function(req, res) {
+        var numItems = req.params.numItems;
+        var sort = req.params.sort;
+        // use mongoose to get all recipes in the database
+        Recipes
+            .find()
+            .limit(numItems)
+            .sort(sort)
+            .exec(function(err, recipes) {
+                if (err) {
+                    res.send(err);
+                }
+                res.json(recipes);
+            });
+    });
+
     // get all recipes by user
     app.get('/api/recipes/by/user', function(req, res) {
         // use mongoose to get all recipes in the database
@@ -34,7 +51,6 @@ module.exports = function(app) {
             res.json(recipes); // return all recipes in JSON format
         });
     });
-
 
     // create recipe
     app.post('/api/recipes', stormpath.loginRequired, function(req, res) {

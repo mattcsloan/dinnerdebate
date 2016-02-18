@@ -9,7 +9,13 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   vm.changeCriteria = changeCriteria;
   vm.localStoredView = $window.localStorage.getItem('recipes-view');
   vm.localStoredCriteria = $window.localStorage.getItem('recipes-criteria');
+  vm.localStoredNumItems = $window.localStorage.getItem('recipes-numItems');
   vm.changeView = changeView;
+  vm.currentPage = 1;
+  vm.numItems = 24;
+  vm.numItemsOptions = [12,24,48,96];
+  vm.changeNumItems = changeNumItems;
+  vm.resetPaginationPage = resetPaginationPage;
 
 
   if(vm.localStoredView) {
@@ -22,6 +28,16 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     vm.orderCriteria = vm.localStoredCriteria;
   } else {
     vm.orderCriteria = 'name';
+  }
+
+  if(vm.localStoredNumItems) {
+    vm.numItems = vm.localStoredNumItems;
+  } else {
+    vm.numItems = 24;
+  }
+
+  function resetPaginationPage() {
+    vm.currentPage = 1;
   }
 
   //translate url (categoryName) to title case
@@ -56,9 +72,15 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     $window.localStorage.setItem('recipes-criteria', criteria);
   }
 
+  function changeNumItems(num) {
+    vm.numItems = num;
+    $window.localStorage.setItem('recipes-numItems', num);
+  }
+
   function changeView(view) {
     vm.view = view;
     $window.localStorage.setItem('recipes-view', view);
+    vm.showWithThumbsOnly = false;
   }
 
   vm.dismiss = dismiss;
@@ -72,7 +94,7 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     $location.search('message', null);
   }
 
-  Recipe.getAll()
+  Recipe.getFirst(vm.numItems, 'name')
     .success(function(data, status) {
       vm.recipes = data;
 
@@ -102,9 +124,50 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
           }
         }
       }
+
+      getAllRecipes();
+
     })
     .error(function(data, status) {
       console.log("Error retrieving recipes");
     });
+
+
+  function getAllRecipes() {
+    Recipe.getAll()
+      .success(function(data, status) {
+        vm.recipes = data;
+
+        for(i = 0; i < vm.recipes.length; i++) {
+          if(vm.recipes[i].image == null) {
+            vm.recipes[i].image = {
+                url: null,
+                width: null,
+                height: null
+            }
+          }
+
+          if(typeof vm.recipes[i].image == 'string') {
+            vm.recipes[i].image = {
+                url: vm.recipes[i].image,
+                width: null,
+                height: null
+            }
+          }
+
+          if(vm.recipes[i].image.url) {
+            var imageUrl = vm.recipes[i].image.url;
+            if(imageUrl.indexOf('image/upload') > -1) {
+              var thumbUrl = imageUrl.split('image/upload');
+              thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
+              vm.recipes[i].thumb = thumbUrl;
+            }
+          }
+        }
+      })
+      .error(function(data, status) {
+        console.log("Error retrieving recipes");
+      });
+  }
 
 });
