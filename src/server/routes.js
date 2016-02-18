@@ -24,17 +24,6 @@ module.exports = function(app) {
         });
     });
 
-    // get all recipes by page
-    app.get('/api/recipes/by/page/:pageNum/:numItems', function(req, res) {
-        // use mongoose to get all recipes in the database
-        Recipes.find( { "addedBy.username": req.user.username }, function(err, recipes) {
-            if (err) {
-                res.send(err);
-            }
-            res.json(recipes); // return all recipes in JSON format
-        });
-    });
-
     // get n number of recipes
     app.get('/api/recipes/first/:numItems/:sort', function(req, res) {
         var numItems = req.params.numItems;
