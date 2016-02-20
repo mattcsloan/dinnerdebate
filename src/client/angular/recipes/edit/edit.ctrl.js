@@ -1,4 +1,4 @@
-angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, CategoryResource, $rootScope, $location, categoryKey, recipeName, $timeout, Upload) {
+angular.module('RecipesEditCtrl', []).controller('RecipesEditController', function(Page, Recipe, CategoryResource, $rootScope, $location, $http, categoryKey, recipeName, $timeout, Upload) {
   var vm = this;
 
   vm.modalShown = false;
@@ -315,6 +315,11 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   }
 
   function removeImage() {
+    var publicId = vm.image.url.split('image/upload/')[1];
+    publicId = publicId.split('/');
+    publicId = publicId[1] + '/' + publicId[2];
+    publicId = publicId.replace(/\//g, "%2F");
+    $http.delete('/api/upload?id=' + publicId);
     vm.image = {
       url: '',
       width: '',
@@ -323,6 +328,9 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
   }
 
   function uploadFile(file, errFiles) {
+    if(vm.image.url) {
+      removeImage();
+    }
     if(vm.recipeKey) {
       vm.newFileName = vm.recipeKey;
     } else {

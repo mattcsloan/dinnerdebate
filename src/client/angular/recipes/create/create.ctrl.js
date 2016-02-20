@@ -1,4 +1,4 @@
-angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $rootScope, $location, $timeout, Upload, CategoryResource) {
+angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', function(Page, Recipe, $http, $rootScope, $location, $timeout, Upload, CategoryResource) {
   var vm = this;
 
   Page.setTitle('Create New Recipe');   
@@ -240,6 +240,11 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function removeImage() {
+    var publicId = vm.recipeImage.url.split('image/upload/')[1];
+    publicId = publicId.split('/');
+    publicId = publicId[1] + '/' + publicId[2];
+    publicId = publicId.replace(/\//g, "%2F");
+    $http.delete('/api/upload?id=' + publicId);
     vm.recipeImage = {
       url: '',
       width: '',
@@ -248,6 +253,9 @@ angular.module('RecipesCreateCtrl', []).controller('RecipesCreateController', fu
   }
 
   function uploadFile(file, errFiles) {
+    if(vm.recipeImage.url) {
+      removeImage();
+    }
     if(vm.recipeKey) {
       vm.newFileName = vm.recipeKey;
     } else {

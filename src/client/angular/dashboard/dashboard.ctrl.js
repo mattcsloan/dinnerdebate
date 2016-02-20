@@ -46,11 +46,19 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
   }
 
   function removeImage() {
+    var publicId = vm.profileImage.split('image/upload/a_exif,c_fill,h_300,w_300/')[1];
+    publicId = publicId.split('/');
+    publicId = publicId[1] + '/' + publicId[2];
+    publicId = publicId.replace(/\//g, "%2F");
+    $http.delete('/api/upload?id=' + publicId);
     vm.profileImage = null;
     addCustomData('photo', '')
   }
 
   function uploadFile(file, errFiles) {
+    if(vm.profileImage) {
+      removeImage();
+    }
     vm.f = file;
     vm.errFile = errFiles && errFiles[0];
     if (file) {
@@ -77,6 +85,4 @@ angular.module('DashboardCtrl', []).controller('DashboardController', function(P
       });
     } 
   }
-
-
 });

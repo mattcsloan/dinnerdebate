@@ -222,9 +222,6 @@ module.exports = function(app) {
         var fileName = req.file.originalname.split('.');
         var randomNumber = Math.floor((Math.random() * 100000) + 1);
         fileName = fileName[0];
-
-
-
         cloudinary.uploader.upload(req.file.path, function(result, error) {
             if(result.url) {
                 res.status(200).json({
@@ -250,6 +247,17 @@ module.exports = function(app) {
         res.json(200);
       }
 
+    });
+
+    //remove image from cloudinary cdn library (to conserve space)
+    app.delete('/api/upload', stormpath.loginRequired, function(req, res) {
+        var public_id = req.query.id;
+        public_id = public_id.split('.')[0];
+        cloudinary.api.delete_resources([public_id],
+            function(result){
+                res.status(201).json('deleted image: ' + public_id);
+            }
+        );
     });
 
     // authentication routes
