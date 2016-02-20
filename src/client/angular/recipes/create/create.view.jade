@@ -43,14 +43,14 @@ label.helper-text.error.error-msg.inline(data-ng-message="createNewRecipe.$error
     .col.thirds
       label.clear Prep Time:
         span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
-      input(type="text", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
+      input(type="number", name="prepTime", placeholder="Prep Time", data-ng-model="createrecipe.recipePrepTime")
     .col.thirds
       label Cook Time:
         span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
-      input(type="text", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
+      input(type="number", name="cookTime", placeholder="Cook Time", data-ng-model="createrecipe.recipeCookTime")
     .col.thirds
       label Number of Servings:
-      input(type="text", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
+      input(type="number", placeholder="Number of Servings", data-ng-model="createrecipe.recipeServings")
   hr
   label.mgn-top-16
     input(type="checkbox", data-ng-model="createrecipe.multipleLists")

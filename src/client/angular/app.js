@@ -2,6 +2,7 @@ var app = angular.module('app', [
   'ui.router',
   'ngAnimate', 
   'smoothScroll', 
+  'sticky', 
   'appRoutes', 
   'stormpath',
   'stormpath.templates',

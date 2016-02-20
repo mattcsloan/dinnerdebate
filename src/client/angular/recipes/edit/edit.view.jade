@@ -48,14 +48,14 @@ hr
   .col.thirds
     label Prep Time:
       span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
-    input(type="text", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
+    input(type="number", value="editrecipe.recipeDetail.prepTime", data-ng-model="editrecipe.prepTime")
   .col.thirds
     label Cook Time:
       span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
-    input(type="text", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
+    input(type="number", value="editrecipe.recipeDetail.cookTime", data-ng-model="editrecipe.cookTime")
   .col.thirds
     label.clear Number of Servings:
-    input(type="text", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
+    input(type="number", value="editrecipe.recipeDetail.servings", data-ng-model="editrecipe.servings")
 hr
 label.mgn-top-16
   input(type="checkbox", data-ng-model="editrecipe.multipleLists")
