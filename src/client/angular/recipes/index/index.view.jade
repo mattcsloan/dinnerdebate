@@ -56,20 +56,31 @@ div(data-ng-class="{main: recipes.view == 'list'}")
   h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
   h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
   ul.thumbs.clear(data-ng-show="recipes.view == 'thumb' && recipes.showWithThumbsOnly")
-    li(dir-paginate="recipe in recipes.recipes | removeNonMatchedKeyValues: 'thumb':null | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems", current-page="recipes.currentPage", pagination-id="thumbs-only").thumb
+    li(dir-paginate="recipe in recipes.recipes | removeNonMatchedKeyValues: 'thumb':null | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems as filteredCount", current-page="recipes.currentPage", pagination-id="thumbs-only").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
         img(data-ng-src="{{ recipe.thumb }}")
         span(data-ng-bind="recipe.name")
   dir-pagination-controls(pagination-id="thumbs-only", data-ng-show="recipes.view == 'thumb' && recipes.showWithThumbsOnly")
   ul.thumbs.clear(data-ng-show="recipes.view == 'thumb' && !recipes.showWithThumbsOnly")
-    li(dir-paginate="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems", current-page="recipes.currentPage", pagination-id="all-thumbs").thumb
+    li(dir-paginate="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems as filteredCount", current-page="recipes.currentPage", pagination-id="all-thumbs").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
         img(data-ng-show="recipe.thumb", data-ng-src="{{ recipe.thumb }}")
         img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
         span(data-ng-bind="recipe.name")
   dir-pagination-controls(pagination-id="all-thumbs", data-ng-show="recipes.view == 'thumb' && !recipes.showWithThumbsOnly")
 
-  table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list'")
+  p(data-ng-hide="filteredCount.length >= 1").message 
+    | No results found 
+    span(data-ng-if="searchQuery") for 
+      em(data-ng-bind="searchQuery")
+    span(data-ng-if="recipes.category")  within 
+      em(data-ng-bind="recipes.category")
+    | . 
+    span(data-ng-if="recipes.category") Try expanding your search to 
+      a(data-ng-click="recipes.selectedCategory()") 
+        strong All Recipes
+      | .
+  table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list' && filteredCount.length >= 1")
     thead
       tr
         th Name
@@ -77,7 +88,7 @@ div(data-ng-class="{main: recipes.view == 'list'}")
         th.sm-hide Cook Time
         th.sm-hide Servings
     tbody
-      tr(dir-paginate="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems", current-page="recipes.currentPage", pagination-id="list-view")
+      tr(dir-paginate="recipe in recipes.recipes | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems as filteredCount", current-page="recipes.currentPage", pagination-id="list-view")
         td.title
           a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})", data-ng-bind="recipe.name")
         td.sm-hide

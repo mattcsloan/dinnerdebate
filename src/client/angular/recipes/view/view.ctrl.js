@@ -42,6 +42,10 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
         if(vm.recipeDetail.image.width && vm.recipeDetail.image.height) {
           if(vm.recipeDetail.image.width > vm.recipeDetail.image.height && vm.recipeDetail.image.width > 968) {
             vm.layout = 'horizontal';
+            if(vm.recipeDetail.image.url.indexOf('a_exif,w_1000') > -1) {
+              var newImage = vm.recipeDetail.image.url.split('a_exif,w_1000');
+              vm.recipeDetail.image.url = newImage[0] + 'a_exif' + newImage[1];
+            }
           }
         }
       }
