@@ -94,44 +94,45 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     $location.search('message', null);
   }
 
-  Recipe.getFirst(vm.numItems, 'name')
-    .success(function(data, status) {
-      vm.recipes = data;
+  // Recipe.getFirst(vm.numItems, 'name')
+  //   .success(function(data, status) {
+  //     vm.recipes = data;
 
-      for(i = 0; i < vm.recipes.length; i++) {
-        if(vm.recipes[i].image == null) {
-          vm.recipes[i].image = {
-              url: null,
-              width: null,
-              height: null
-          }
-        }
+  //     for(i = 0; i < vm.recipes.length; i++) {
+  //       if(vm.recipes[i].image == null) {
+  //         vm.recipes[i].image = {
+  //             url: null,
+  //             width: null,
+  //             height: null
+  //         }
+  //       }
 
-        if(typeof vm.recipes[i].image == 'string') {
-          vm.recipes[i].image = {
-              url: vm.recipes[i].image,
-              width: null,
-              height: null
-          }
-        }
+  //       if(typeof vm.recipes[i].image == 'string') {
+  //         vm.recipes[i].image = {
+  //             url: vm.recipes[i].image,
+  //             width: null,
+  //             height: null
+  //         }
+  //       }
 
-        if(vm.recipes[i].image.url) {
-          var imageUrl = vm.recipes[i].image.url;
-          if(imageUrl.indexOf('image/upload') > -1) {
-            var thumbUrl = imageUrl.split('image/upload');
-            thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
-            vm.recipes[i].thumb = thumbUrl;
-          }
-        }
-      }
+  //       if(vm.recipes[i].image.url) {
+  //         var imageUrl = vm.recipes[i].image.url;
+  //         if(imageUrl.indexOf('image/upload') > -1) {
+  //           var thumbUrl = imageUrl.split('image/upload');
+  //           thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
+  //           vm.recipes[i].thumb = thumbUrl;
+  //         }
+  //       }
+  //     }
 
-      getAllRecipes();
+  //     getAllRecipes();
 
-    })
-    .error(function(data, status) {
-      console.log("Error retrieving recipes");
-    });
+  //   })
+  //   .error(function(data, status) {
+  //     console.log("Error retrieving recipes");
+  //   });
 
+  getAllRecipes();
 
   function getAllRecipes() {
     Recipe.getAll()
