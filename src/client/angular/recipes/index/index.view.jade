@@ -55,6 +55,21 @@ div(data-ng-class="{main: recipes.view == 'list'}")
     span(data-ng-bind="recipes.querystring.message")
   h2.mgn-top-0(data-ng-show="recipes.category && recipes.category != ''", data-ng-bind="recipes.category")
   h2.mgn-top-0(data-ng-show="recipes.category == ''") All Recipes
+  p(data-ng-hide="filteredCount.length >= 1 || recipes.isLoading").message 
+    | No results found 
+    span(data-ng-if="searchQuery") for 
+      em(data-ng-bind="searchQuery")
+    span(data-ng-if="recipes.category")  within 
+      em(data-ng-bind="recipes.category")
+    | . 
+    span(data-ng-if="recipes.category") Try expanding your search to 
+      a(data-ng-click="recipes.selectedCategory()") 
+        strong All Recipes
+      | .
+  .loading(data-ng-show="recipes.isLoading")
+    span
+      i.icon-spinner9.rotate
+    p [ loading ]
   ul.thumbs.clear(data-ng-show="recipes.view == 'thumb' && recipes.showWithThumbsOnly")
     li(dir-paginate="recipe in recipes.recipes | removeNonMatchedKeyValues: 'thumb':null | filter: searchQuery | filter: {category:recipes.category} | orderBy: recipes.orderCriteria | itemsPerPage: recipes.numItems as filteredCount", current-page="recipes.currentPage", pagination-id="thumbs-only").thumb
       a(data-ui-sref="recipes.view({categoryKey: recipe.categoryKey, recipeName: recipe.key})")
@@ -68,18 +83,6 @@ div(data-ng-class="{main: recipes.view == 'list'}")
         img(data-ng-hide="recipe.thumb", src="/img/logo-grayscale-300.png")
         span(data-ng-bind="recipe.name")
   dir-pagination-controls.clear(pagination-id="all-thumbs", data-ng-show="recipes.view == 'thumb' && !recipes.showWithThumbsOnly")
-
-  p(data-ng-hide="filteredCount.length >= 1").message 
-    | No results found 
-    span(data-ng-if="searchQuery") for 
-      em(data-ng-bind="searchQuery")
-    span(data-ng-if="recipes.category")  within 
-      em(data-ng-bind="recipes.category")
-    | . 
-    span(data-ng-if="recipes.category") Try expanding your search to 
-      a(data-ng-click="recipes.selectedCategory()") 
-        strong All Recipes
-      | .
   table.full-table.clear(cellpadding="0", cellspacing="0", data-ng-show="recipes.view == 'list' && filteredCount.length >= 1")
     thead
       tr

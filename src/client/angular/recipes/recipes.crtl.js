@@ -16,6 +16,7 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   vm.numItemsOptions = [12,24,48,96];
   vm.changeNumItems = changeNumItems;
   vm.resetPaginationPage = resetPaginationPage;
+  vm.isLoading = true;
 
 
   if(vm.localStoredView) {
@@ -165,9 +166,11 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
             }
           }
         }
+        vm.isLoading = false;
       })
       .error(function(data, status) {
         console.log("Error retrieving recipes");
+        vm.isLoading = false;
       });
   }
 

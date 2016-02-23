@@ -10,6 +10,7 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
   vm.username = vm.user.username;
   // vm.userGroup = vm.user.groups.items[0].name;
   vm.layout = 'vertical';
+  vm.isLoading = true;
 
   Recipe.getOne(categoryKey, recipeName)
     .success(function(data, status) {
@@ -49,6 +50,7 @@ angular.module('RecipesViewCtrl', []).controller('RecipesViewController', functi
           }
         }
       }
+      vm.isLoading = false;
     })
     .error(function(data, status) {
       console.log(data);
