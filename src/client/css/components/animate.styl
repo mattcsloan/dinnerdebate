@@ -30,3 +30,22 @@
 //   z-index 9999
 //   position absolute
 //   width 100%
+
+// .rotate
+//   animation(rotate 1s infinite linear)
+
+@-webkit-keyframes rotate
+  from 
+    transform(rotate(0deg))
+  to
+    transform(rotate(359deg))
+    
+@keyframes rotate
+  from 
+    transform(rotate(0deg))
+  to
+    transform(rotate(359deg))
+
+.rotate
+  animation(rotate 1.2s infinite linear)
+  display block
