@@ -2,4 +2,8 @@ h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
 h1(data-ng-bind="login.title")
-div(sp-login-form)
+div(sp-login-form, data-ng-hide="posting")
+.loading.fixed(data-ng-show="posting")
+  span
+    i.icon-spinner9.rotate
+    em [ loading ]
