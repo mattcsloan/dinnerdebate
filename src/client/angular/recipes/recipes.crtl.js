@@ -1,4 +1,4 @@
-angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $location, $window) {
+angular.module('RecipesCtrl', []).controller('RecipesController', function (Page, Recipe, CategoryResource, categoryName, $scope, $location, $window) {
   var vm = this;
 
   Page.setTitle('Recipes');   
@@ -10,14 +10,15 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   vm.localStoredView = $window.localStorage.getItem('recipes-view');
   vm.localStoredCriteria = $window.localStorage.getItem('recipes-criteria');
   vm.localStoredNumItems = $window.localStorage.getItem('recipes-numItems');
+  vm.localStoredImagesOnly = $scope.$eval($window.localStorage.getItem('recipes-images-only'));
   vm.changeView = changeView;
   vm.currentPage = 1;
   vm.numItems = 24;
   vm.numItemsOptions = [12,24,48,96];
   vm.changeNumItems = changeNumItems;
+  vm.changeImagesOnlyOption = changeImagesOnlyOption;
   vm.resetPaginationPage = resetPaginationPage;
   vm.isLoading = true;
-
 
   if(vm.localStoredView) {
     vm.view = vm.localStoredView;
@@ -35,6 +36,12 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     vm.numItems = vm.localStoredNumItems;
   } else {
     vm.numItems = 24;
+  }
+
+  if(vm.localStoredImagesOnly) {
+    vm.showWithThumbsOnly = vm.localStoredImagesOnly;
+  } else {
+    vm.showWithThumbsOnly = false;
   }
 
   function resetPaginationPage() {
@@ -67,10 +74,14 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
     }
   }
 
-
   function changeCriteria(criteria) {
     vm.orderCriteria = criteria;
     $window.localStorage.setItem('recipes-criteria', criteria);
+  }
+
+  function changeImagesOnlyOption() {
+    $window.localStorage.setItem('recipes-images-only', vm.showWithThumbsOnly);
+    resetPaginationPage();
   }
 
   function changeNumItems(num) {
@@ -81,7 +92,9 @@ angular.module('RecipesCtrl', []).controller('RecipesController', function (Page
   function changeView(view) {
     vm.view = view;
     $window.localStorage.setItem('recipes-view', view);
-    vm.showWithThumbsOnly = false;
+    if(view == 'list') {
+      vm.showWithThumbsOnly = false;
+    }
   }
 
   vm.dismiss = dismiss;

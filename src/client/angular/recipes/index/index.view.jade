@@ -34,7 +34,7 @@ h1(data-ng-bind="recipes.title")
         span Items per page: 
         select(data-ng-options="item as item for item in recipes.numItemsOptions track by item", data-ng-model="recipes.numItems", data-ng-change="recipes.changeNumItems(recipes.numItems)")
       label.with-checkbox.text-small.text-muted.mgn-btm-16(data-ng-show="recipes.view == 'thumb'")
-        input(type="checkbox", checked, data-ng-model="recipes.showWithThumbsOnly", data-ng-change="recipes.resetPaginationPage()")
+        input(type="checkbox", data-ng-model="recipes.showWithThumbsOnly", data-ng-change="recipes.changeImagesOnlyOption()")
         i.icon(data-ng-class="{'icon-checkbox-checked': recipes.showWithThumbsOnly, 'icon-checkbox-unchecked': !recipes.showWithThumbsOnly}").mgn-right-8
         | Only show recipes with an image
   .xs-hide(data-ng-hide="recipes.view == 'thumb'")
