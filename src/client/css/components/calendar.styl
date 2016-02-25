@@ -1,29 +1,32 @@
 .calendar
   width 100%
-  border 1px solid $border-color
-  padding-bottom 5px
+  border 1px solid $border-color-lighten
   border-radius(4px)
   .calendar-head
   .calendar-body
     display block
     width 100%
   .calendar-head
-    background $border-color-lighten
+    background $background-lighten
     text-align center
     line-height 44px
-    border-bottom 1px solid $border-color
+    border-bottom 1px solid $border-color-lighten
     margin-bottom 5px
     border-radius(4px 4px 0 0)
     box-sizing(border-box)
     a
       float left
       padding 0 16px
-      border-right 1px solid $border-color
+      border-right 1px solid $border-color-lighten
       line-height 44px
+      text-decoration none
       &:last-child
         float right
         border-right none
-        border-left 1px solid $border-color
+        border-left 1px solid $border-color-lighten
+      &:hover
+        background #fff
+        color $primary-color
     span
       font-size 21px
       text-transform uppercase
@@ -31,21 +34,35 @@
       color $primary-color
   .week
     display-flex()
+    padding 0 5px 5px 5px
     &.names
       color $secondary-color
       text-align center
       .day
         min-height auto
         line-height 32px
-        background $border-color-lighten
+        background $background-lighten
+        border-color $border-color-lighten
     .day
       flex(0 1 32%)
       border 1px solid $border-color
-      min-height 80px
-      padding 4px
+      min-height 120px
+      padding 10px 12px
       margin 5px
+      background #fff
       border-radius(2px)
       &:first-child
         margin-left 10px
+        display none
       &:last-child
         margin-right 10px
+        display none
+      &.different-month
+        border-color $border-color-lighten
+        color $subtle
+        background none
+      &.today
+        box-shadow(0 0 12px rgba(0, 0, 0, 0.1))
+        color $secondary-color
+        border-color $subtle
+        background $background-lighten
