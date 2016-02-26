@@ -12,7 +12,8 @@
       restrict: "E",
       templateUrl: "/templates/_common/templates/calendar.tmpl.html",
       scope: {
-        selected: "="
+        selected: "=",
+        data: "="
       },
       link: function(scope) {
         scope.selected = _removeTime(scope.selected || moment());

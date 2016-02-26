@@ -15,4 +15,7 @@
       .day Fri
       .day Sat
     .week(data-ng-repeat="week in weeks")
-      span.day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days", data-ng-bind="day.number")
+      span.day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days") {{day.number}}
+        a(data-ng-if="day.isCurrentMonth", data-ui-sref="recipes.view({categoryKey: data[month.format('M') - 1][day.number - 1].categoryKey, recipeName: data[month.format('M') - 1][day.number - 1].key})")
+          span(data-ng-bind="data[month.format('M') - 1][day.number - 1].entree")
+          img(data-ng-if="data[month.format('M') - 1][day.number - 1].image", data-ng-src="{{ data[month.format('M') - 1][day.number - 1].image }}", width="90")
