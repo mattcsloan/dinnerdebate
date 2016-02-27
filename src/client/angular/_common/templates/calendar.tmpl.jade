@@ -18,5 +18,14 @@
       .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
         img(data-ng-if="day.isCurrentMonth && data[month.format('M') - 1][day.number - 1].image", data-ng-src="{{ data[month.format('M') - 1][day.number - 1].image }}")
         span.date(data-ng-bind="day.number")
-        a(data-ng-if="day.isCurrentMonth", data-ui-sref="recipes.view({categoryKey: data[month.format('M') - 1][day.number - 1].entree.categoryKey, recipeName: data[month.format('M') - 1][day.number - 1].key})")
+        //- a(data-ng-if="day.isCurrentMonth && data[month.format('M') - 1][day.number - 1].published", data-ui-sref="recipes.view({categoryKey: data[month.format('M') - 1][day.number - 1].entree.categoryKey, recipeName: data[month.format('M') - 1][day.number - 1].entree.key})")
+        a(data-ng-if="day.isCurrentMonth && data[month.format('M') - 1][day.number - 1].published", data-ng-click="toggleDescription(data[month.format('M') - 1][day.number - 1])")
+          span.btn.btn-subtle
+            i.icon.icon-search.mgn-right-8
+            | Meal Details
           span.title(data-ng-if="data[month.format('M') - 1][day.number - 1].entree.title", data-ng-bind="data[month.format('M') - 1][day.number - 1].entree.title")
+modal(show="mealDescription")
+  h2.modal-title(data-ng-bind="mealDescription.entree.title")
+  p(data-ng-bind="mealDescription.mealUrl")
+  ul
+    li(data-ng-repeat="side in mealDescription.sides", data-ng-bind="side")

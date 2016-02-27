@@ -29,6 +29,10 @@
           scope.selected = day.date;  
         };
 
+        scope.toggleDescription = function(item) {
+          scope.mealDescription = item;
+        };
+
         scope.next = function() {
           var next = scope.month.clone();
           _removeTime(next.month(next.month()+1).date(1));
