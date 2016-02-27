@@ -24,19 +24,139 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page) {
     [
       {
         image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
-        entree: "Apricot Chicken",
-        categoryKey: "entrees",
-        key: "apricot-chicken"
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
       },
       {
-        entree: "Yogurt"
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
       },
       {
-        entree: "Cheese"
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
       },
       {
-        entree: "Bread"
-      }
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
+      },
+      {
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
+      },
+      {
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
+      },
+      {
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
+      },
+      {
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
+      },
+      {
+        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+        entree: {
+          title: "Apricot Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: ["broccoli", "applesauce"],
+        sides: ["broccoli", "applesauce"],
+        drinks: ["Milk"],
+        desserts: ["Chocolate Chip Cookies"],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com"
+      },
     ],
     [
       {

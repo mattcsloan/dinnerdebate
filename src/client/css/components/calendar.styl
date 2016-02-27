@@ -9,7 +9,7 @@
   .calendar-head
     background $background-lighten
     text-align center
-    line-height 44px
+    line-height 42px
     border-bottom 1px solid $border-color-lighten
     margin-bottom 5px
     border-radius(4px 4px 0 0)
@@ -40,18 +40,17 @@
       text-align center
       .day
         min-height auto
-        line-height 32px
+        line-height 40px
         background $background-lighten
         border-color $border-color-lighten
     .day
       flex(0 1 32%)
       border 1px solid $border-color
-      min-height 120px
-      padding 10px 12px
+      min-height 70px
       margin 5px
       background #fff
       position relative
-      overflow-hidden
+      overflow hidden
       border-radius(4px)
       &:first-child
         margin-left 10px
@@ -68,9 +67,43 @@
         color $secondary-color
         border-color $subtle
         background $background-lighten
-      img
-        left 0
+      > a
+        padding 10px 12px
         position absolute
         top 0
         left 0
         width 100%
+        height 100%
+        box-sizing(border-box)
+      .title
+        position absolute
+        bottom 0
+        left 0
+        padding 10px 12px
+        background rgba(255,255,255,0.8)
+        color $secondary-color
+        z-index 3
+        width 100%
+        box-sizing(border-box)
+        border-radius(0 0 2px 2px)
+        transition(all .1s ease)
+      img
+        width 100%
+        border-radius(4px)
+        transition(all .1s ease)
+      .date
+        position absolute
+        top 0px
+        left 10px
+        color #fff
+        font-size 60px
+        font-weight 300
+        line-height 1em
+        opacity 0.7
+        text-shadow 0 2px 4px rgba(0, 0, 0, 0.5)
+      &:hover
+        > img
+          filter blur(2px)
+          transform scale(1.2)
+        .title
+          background rgba(255,255,255,0.9)          
