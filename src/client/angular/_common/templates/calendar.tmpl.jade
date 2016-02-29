@@ -26,6 +26,6 @@
           span.title(data-ng-if="data[month.format('M') - 1][day.number - 1].entree.title", data-ng-bind="data[month.format('M') - 1][day.number - 1].entree.title")
 modal(show="mealDescription")
   h2.modal-title(data-ng-bind="mealDescription.entree.title")
-  p(data-ng-bind="mealDescription.mealUrl")
+  p(data-ng-bind="mealDescription.entree.title")
   ul
     li(data-ng-repeat="side in mealDescription.sides", data-ng-bind="side")
