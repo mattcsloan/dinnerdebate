@@ -30,7 +30,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, $sc
         image: {
           main: {
             src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
-            categoryKey: "entrees",
+            categoryKey: null,
             key: "apricot-chicken",
             link: null
           },
@@ -79,6 +79,52 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, $sc
           categoryKey: null,
           key: null
         }],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.google.com",
+        published: true
+      },
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1454992240/96092/banana-bread.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: "http://www.google.com"
+          },
+          secondary: [{
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          }, {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: null,
+            key: null,
+            link: "http://www.thedinnerdebate.com"
+          }]
+        },
+        entree: {
+          title: "Banana Bread",
+          categoryKey: "breads-and-muffins",
+          key: "banana-bread"
+        },
+        appetizers: null,
+        sides: [{
+          title: "bananas",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "walnuts",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: [{
+          title: "Chocolate Milk",
+          categoryKey: null,
+          key: null
+        }],
+        desserts: null,
         prepTime: 35,
         cookTime: 25,
         mealUrl: "http://www.google.com",

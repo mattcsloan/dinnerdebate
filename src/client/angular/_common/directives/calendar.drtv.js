@@ -29,8 +29,9 @@
           scope.selected = day.date;  
         };
 
-        scope.toggleDescription = function(item) {
+        scope.toggleDescription = function(item, date) {
           scope.mealDescription = item;
+          scope.mealDate = moment(date).format('MMMM Do, YYYY');
         };
 
         scope.next = function() {
