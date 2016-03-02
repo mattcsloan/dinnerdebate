@@ -124,4 +124,30 @@
         &.today
           .title
             background rgba(131, 42, 120, 0.9)
-                  
+    &.this-week
+      .day
+        font-size 14px
+        &.different-month
+          border-color $border-color
+          color $copy-color
+          background #fff
+        &.today
+          box-shadow(0 3px 6px rgba(0, 0, 0, 0.1))
+          border 3px solid $secondary-color
+        img
+          border-radius(2px 2px 0 0)
+        a.btn
+          display block
+        h3
+          font-size 16px
+          padding 10px 16px
+          background $body-bg
+          border-bottom 1px solid $border-color-lighten
+        h4
+          font-size 16px
+          color $copy-lighten
+          text-align center
+        &:hover
+          > img
+            filter none
+            transform none

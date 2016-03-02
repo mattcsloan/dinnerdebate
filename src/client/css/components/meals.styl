@@ -1,9 +1,11 @@
 ul.meal-list
   border none
-  margin 8px 0 0 0
+  margin 0
+  &.meal-times
+    margin-top 8px
   li
     border none
-    padding 2px 0 2px 80px
+    padding 2px 0 2px 72px
     position relative
     span
       font-size 10px
@@ -12,7 +14,7 @@ ul.meal-list
       min-width 50px
       display inline-block
       position absolute
-      top 8px
+      top 5px
       left 20px
       &.helper-text
         position static
@@ -22,7 +24,7 @@ ul.meal-list
       color $subtle
       font-size small
       position absolute
-      top 6px
+      top 4px
       left 0
 .image-container
   position relative
@@ -32,3 +34,5 @@ ul.meal-list
     right 8px
     padding 8px 12px
     margin 0
+.meal-details
+  padding 4px 16px 16px 16px

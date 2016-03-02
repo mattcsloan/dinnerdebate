@@ -53,8 +53,8 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, $sc
         },
         appetizers: [{
           title: "broccoli",
-          categoryKey: null,
-          key: null
+          categoryKey: "entrees",
+          key: "apricot-chicken"
         }, {
           title: "broccoli",
           categoryKey: null,
@@ -547,59 +547,143 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, $sc
         published: true
       },
       {
-        image: null,
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: null,
+            key: "apricot-chicken",
+            link: null
+          },
+          secondary: [{
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          }, {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          }]
+        },
         entree: {
-          title: null,
+          title: "Some Chicken",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: [{
+          title: "some",
           categoryKey: null,
           key: null
-        },
-        appetizers: null,
-        sides: null,
-        drinks: null,
-        desserts: null,
-        prepTime: null,
-        cookTime: null,
-        mealUrl: null,
-        published: false
-      },
-      {
-        image: null,
-        entree: {
-          title: null,
+        }, {
+          title: "chicken",
           categoryKey: null,
           key: null
-        },
-        appetizers: null,
-        sides: null,
-        drinks: null,
-        desserts: null,
-        prepTime: null,
-        cookTime: null,
-        mealUrl: null,
-        published: false
-      },
+        }],
+        sides: [{
+          title: "nom nom",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "nom",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: [{
+          title: "Wine",
+          categoryKey: null,
+          key: null
+        }],
+        desserts: [{
+          title: "Cake",
+          categoryKey: null,
+          key: null
+        }],
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.februaryfood.com",
+        published: true
+      }
     ],
     [
       {
-        image: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1452576656/banana-bread.jpg",
-        entree: "Chocolate Test Cookies",
-        categoryKey: "cookies",
-        key: "chocolate-test-cookies",
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          },
+          secondary: [{
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          }, {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1455987881/29205/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          }]
+        },
+        entree: {
+          title: "March Meal",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        },
+        appetizers: null,
+        sides: [{
+          title: "Broccoli",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "Applesauce",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: [{
+          title: "Milk",
+          categoryKey: null,
+          key: null
+        }],
+        desserts: null,
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.marchfood.com",
         published: true
       },
       {
-        entree: "Bacon",
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/sloan/image/upload/a_exif,c_fill,h_200,w_300/v1454993417/42196/DSC_1043-chicken-basil-calzone.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Chicken & Basil Calzones",
+          categoryKey: "entrees",
+          key: "chicken-basil-calzones"
+        },
+        appetizers: null,
+        sides: [{
+          title: "House Salad",
+          categoryKey: "entrees",
+          key: "apricot-chicken"
+        }],
+        drinks: [{
+          title: "Iced Tea",
+          categoryKey: null,
+          key: null
+        }],
+        desserts: null,
+        prepTime: 35,
+        cookTime: 25,
+        mealUrl: "http://www.calzones.com",
         published: true
       },
-      {
-        entree: "Sausage",
-        published: true
-      },
-      {
-        entree: "Pancakes",
-        published: true
-      }
     ]
   ];
-
 });

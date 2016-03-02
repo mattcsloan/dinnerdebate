@@ -16,8 +16,10 @@
         data: "="
       },
       link: function(scope) {
+        console.log('scope: %o', scope);
         scope.selected = _removeTime(scope.selected || moment());
         scope.month = scope.selected.clone();
+        console.log('scope.selected %o', scope.selected);
 
         var start = scope.selected.clone();
         start.date(1);
@@ -51,14 +53,19 @@
     };
     
     function _removeTime(date) {
+      console.log('date %o', date)
       return date.day(0).hour(0).minute(0).second(0).millisecond(0);
     }
 
     function _buildMonth(scope, start, month) {
+      console.log('start %o:', start);
       scope.weeks = [];
       var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
       while (!done) {
-        scope.weeks.push({ days: _buildWeek(date.clone(), month) });
+        scope.weeks.push({
+          days: _buildWeek(date.clone(), month),
+          isCurrentWeek: date.week() === moment().week()
+        });
         date.add(1, "w");
         done = count++ > 2 && monthIndex !== date.month();
         monthIndex = date.month();
@@ -66,11 +73,13 @@
     }
 
     function _buildWeek(date, month) {
+      console.log(date.month() + ': ' + month.month());
       var days = [];
       for (var i = 0; i < 7; i++) {
         days.push({
           name: date.format("dd").substring(0, 1),
           number: date.date(),
+          month: date.month(),
           isCurrentMonth: date.month() === month.month(),
           isToday: date.isSame(new Date(), "day"),
           date: date
