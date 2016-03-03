@@ -33,7 +33,7 @@
 
         scope.toggleDescription = function(item, date) {
           scope.mealDescription = item;
-          scope.mealDate = moment(date).format('MMMM Do, YYYY');
+          scope.mealDate = moment(date).format('MMMM D, YYYY');
         };
 
         scope.next = function() {

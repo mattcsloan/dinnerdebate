@@ -22,7 +22,13 @@
             i.icon.icon-search
           a.btn(data-ng-if="data[day.month][day.number - 1].image.main.link", data-ng-href="{{data[day.month][day.number - 1].image.main.link}}", target="_blank")
             i.icon.icon-search
+        img.meal-preview(data-ng-if="data[day.month][day.number - 1].published && data[day.month][day.number - 1].image.main.src", data-ng-src="{{ data[day.month][day.number - 1].image.main.src }}")
         span.date(data-ng-bind="day.number")
+        a.meal-preview(data-ng-if="data[day.month][day.number - 1].published", data-ng-click="toggleDescription(data[day.month][day.number - 1], day.date)", scroll-to="header")
+          span.btn.btn-subtle
+            i.icon.icon-search.mgn-right-8
+            | Meal Details
+          span.title(data-ng-if="data[day.month][day.number - 1].entree.title", data-ng-bind="data[day.month][day.number - 1].entree.title")
         h3(data-ng-if="data[day.month][day.number - 1].entree.title && data[day.month][day.number - 1].entree.categoryKey && data[day.month][day.number - 1].entree.key")
           a(data-ui-sref="recipes.view({categoryKey: data[day.month][day.number - 1].entree.categoryKey, recipeName: data[day.month][day.number - 1].entree.key})", data-ng-bind="data[day.month][day.number - 1].entree.title")
         h3(data-ng-if="data[day.month][day.number - 1].entree.title && (!data[day.month][day.number - 1].entree.categoryKey || !data[day.month][day.number - 1].entree.key)", data-ng-bind="data[day.month][day.number - 1].entree.title")
@@ -60,23 +66,20 @@
               i.icon.icon-clock.mgn-right-8
               span Prep: 
               strong(data-ng-bind="data[day.month][day.number - 1].prepTime")
-              span.mgn-left-8.helper-text Minutes
+              span.mgn-left-8.helper-text Mins
             li(data-ng-if="data[day.month][day.number - 1].cookTime")
               i.icon.icon-alarm.mgn-right-8
               span Cook: 
               strong(data-ng-bind="data[day.month][day.number - 1].cookTime")
-              span.mgn-left-8.helper-text Minutes
-          div(data-ng-if="data[day.month][day.number - 1].mealUrl")
-            h4.mgn-top-16 View it on our blog
-            a.btn.mgn-btm-0(data-ng-href="{{data[day.month][day.number - 1].mealUrl}}", target="_blank")
-              i.icon.icon-eye.mgn-right-8
-              | Full Meal Details
+              span.mgn-left-8.helper-text Mins
+          .mgn-top-16(data-ng-if="data[day.month][day.number - 1].mealUrl")
+            h4 View it on our blog
+            a.btn.mgn-btm-0(data-ng-href="{{data[day.month][day.number - 1].mealUrl}}", target="_blank") Meal Details
 
       .day(data-ng-if="!week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
         img(data-ng-if="day.isCurrentMonth && data[day.month][day.number - 1].published && data[day.month][day.number - 1].image.main.src", data-ng-src="{{ data[day.month][day.number - 1].image.main.src }}")
         span.date(data-ng-bind="day.number")
-        //- a(data-ng-if="day.isCurrentMonth && data[day.month][day.number - 1].published", data-ui-sref="recipes.view({categoryKey: data[day.month][day.number - 1].entree.categoryKey, recipeName: data[day.month][day.number - 1].entree.key})")
-        a(data-ng-if="day.isCurrentMonth && data[day.month][day.number - 1].published", data-ng-click="toggleDescription(data[day.month][day.number - 1], day.date)")
+        a(data-ng-if="day.isCurrentMonth && data[day.month][day.number - 1].published", data-ng-click="toggleDescription(data[day.month][day.number - 1], day.date)", scroll-to="header")
           span.btn.btn-subtle
             i.icon.icon-search.mgn-right-8
             | Meal Details
@@ -135,9 +138,7 @@ modal(show="mealDescription")
           span.mgn-left-8.helper-text Minutes
       div(data-ng-if="mealDescription.mealUrl")
         h4 View it on our blog
-        a.btn(data-ng-href="{{mealDescription.mealUrl}}", target="_blank")
-          i.icon.icon-eye.mgn-right-8
-          | Full Meal Details
+        a.btn(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
     .col.half
       .image-container
         img.mgn-btm-8(data-ng-if="mealDescription.image.main.src", data-ng-src="{{mealDescription.image.main.src}}")

@@ -134,10 +134,17 @@
         &.today
           box-shadow(0 3px 6px rgba(0, 0, 0, 0.1))
           border 3px solid $secondary-color
+          .meal-details
+            a.btn
+              background $main-link
         img
           border-radius(2px 2px 0 0)
-        a.btn
-          display block
+        .meal-details
+          a.btn
+            display block
+            background $subtle
+            &:hover
+              background $main-link-hover
         h3
           font-size 16px
           padding 10px 16px
@@ -151,3 +158,5 @@
           > img
             filter none
             transform none
+      .meal-preview
+        display none
