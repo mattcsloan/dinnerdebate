@@ -1,3 +1,64 @@
+@media all and (max-width : 1150px)
+  .calendar
+    .week
+      &.this-week
+        .day
+          h4
+            display none
+  .modal-container
+    width 658px
+
+
+@media all and (max-width : 1023px)
+  .calendar
+    .week
+      &.this-week
+        .day
+          ul.meal-list
+            li
+              padding-left 0
+              .icon
+                display none
+              span
+                position static
+                display block
+                &.helper-text
+                  display inline
+  .thumbs
+    .thumb
+      flex(0 1 32%)
+      margin 0 2% 24px 0
+      &:nth-child(4n)
+        margin-right 2%
+      &:nth-child(3n)
+        margin-right 0
+
+
+@media all and (max-width : 900px)
+  .calendar
+    .week
+      .day
+        .title
+        > a .icon
+          display none
+      &.this-week
+        .day
+          .image-container
+          .meal-details
+          > h3
+            display none
+          img
+            border-radius(2px)
+          .meal-preview
+            display block
+          a.meal-preview
+            display flex
+          &:hover
+            > img
+              filter blur(2px)
+              transform scale(1.2)
+
+
 @media all and (max-width : 768px)
   .header
     .logo
@@ -18,6 +79,7 @@
   .med-hide
     display none
 
+
 @media all and (max-width : 700px)
   .thumbs
     .thumb
@@ -27,6 +89,19 @@
         margin 0 4% 24px 0
       &:nth-child(even)
         margin-right 0
+  .modal
+    .columns
+      .col
+        &.half
+          width auto
+          display block
+          float none
+          &:nth-child(even)
+            float none
+    .image-container
+      max-width 300px
+      margin 16px auto  
+
 @media all and (max-width : 630px)
   .navigation
     i
@@ -68,7 +143,15 @@
       margin-top 16px
     .progress
       display none
-      
+  .calendar
+    .week
+      .day
+        min-height 46px
+        .date
+          font-size 32px
+          top 3px
+
+
 @media all and (max-width : 500px)
   .header
     .logo
@@ -109,3 +192,14 @@
       &:nth-child(3n)
         margin-right auto
         margin-left auto
+  .calendar
+    .calendar-head
+      a
+        display none
+    .week
+      display none
+      &.this-week
+        display block
+        .day
+          margin 16px auto
+          max-width 302px

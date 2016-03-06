@@ -2,7 +2,7 @@ angular.module('MainCtrl', []).controller('MainController', function($state, $ro
   var vm = this;
 
   vm.Page = Page;
-  
+
   $http.get('/api/navigation')
     .success(function (res) {
       vm.navigation = res
