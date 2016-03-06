@@ -41,6 +41,26 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             }
         })
 
+        .state('meals', {
+            url: '/meals',
+            views: {
+                header: {
+                    templateUrl: '/templates/_common/templates/header.tmpl.html',
+                },
+                content: {
+                    templateUrl: '/templates/meals/meals.view.html',
+                    controller: 'MealsController',
+                    controllerAs: 'meals'
+                },
+                footer: {
+                    templateUrl: '/templates/_common/templates/footer.tmpl.html',
+                }
+            },
+            sp: {
+                authenticate: true
+            }
+        })
+
         .state('recipes', {
             url: '/recipes',
             views: {

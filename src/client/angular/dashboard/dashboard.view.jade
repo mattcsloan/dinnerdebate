@@ -6,7 +6,7 @@ hr
 .hero
   .secondary
     .profile
-      img(data-ng-if="dashboard.profileImage", data-ng-src="{{dashboard.profileImage}}" alt="user.fullName")
+      img(data-ng-if="dashboard.profileImage", data-ng-src="{{dashboard.profileImage}}" alt="{{user.fullName}}")
       img.default(data-ng-if="!dashboard.profileImage", src="/img/touch-icon.png" alt="Add a photo!")
     button.btn.mgn-btm-0(data-ng-if="!dashboard.profileImage", type="file", ngf-select="dashboard.uploadFile($file, $invalidFiles)", accept="image/*", ngf-max-width="4000", ngf-max-size="5MB", ngf-pattern="'image/*'", ngf-accept="'image/*'")
       i.icon.icon-image.helper-text.mgn-right-8

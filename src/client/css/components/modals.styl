@@ -9,17 +9,19 @@
 
 .modal-container
   z-index 10000
-  position fixed
+  position absolute
   width 50%
-  top 50%
+  max-width 658px
+  top 30px
   left 50%
   transform translate(-50%, -50%)
   -webkit-transform translate(-50%, -50%)
-  -moz-transform translate(-50%, -50%)
+  -moz-transform translate(-50%, 0)
   background-color #fff
   border 1px solid $border-color
   border-radius(4px)
   box-shadow(4px 4px 20px rgba(0, 0, 0, 0.03))
+  margin-bottom 30px
 
 .modal-content
   padding 16px
@@ -30,6 +32,8 @@
   .btn-panel
     .btn
       margin-bottom 0
+  h2
+    color $copy-color
 
 .modal-close
   position absolute
