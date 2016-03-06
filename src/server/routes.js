@@ -1,4 +1,6 @@
 var navigation = require('./data/navigation');
+var meals = require('./data/meals');
+var mealsDev = require('./data/meals-dev');
 var stormpath = require('express-stormpath');
 var Recipes = require('./models/recipes');
 var cloudinary = require('cloudinary');
@@ -11,6 +13,14 @@ module.exports = function(app) {
     // api calls
     app.get('/api/navigation', function(req, res) {
         res.status(201).json(navigation.items);
+    });
+
+    app.get('/api/meals', function(req, res) {
+        res.status(201).json(meals.items);
+    });
+
+    app.get('/api/meals/dev', function(req, res) {
+        res.status(201).json(mealsDev.items);
     });
 
     // get all recipes

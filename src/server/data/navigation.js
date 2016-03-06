@@ -1,11 +1,11 @@
 module.exports = {
   items: [
-    {
-      key: 'home',
-      label: 'Home',
-      url: 'home',
-      icon: 'icon-home'
-    },
+    // {
+    //   key: 'home',
+    //   label: 'Home',
+    //   url: 'home',
+    //   icon: 'icon-home'
+    // },
     {
       key: 'meals',
       label: 'Meals',
