@@ -1,0 +1,40 @@
+.hero
+  &.feature
+    margin-top 40px
+    padding 0
+    height 300px
+    overflow hidden
+    > .col
+      position relative
+      &.half
+        box-sizing(border-box)
+        width 45%
+      &:first-child
+        padding 48px
+      &:nth-child(even)
+        width 55%
+        &:before
+        &:after
+          content ''
+          position absolute
+          top 0
+          left 0
+          width 0
+          height 0
+          border-right 200px solid transparent
+          border-top 300px solid $primary-darken
+        &:before
+          border-right-width 210px
+          border-top-width 315px
+          border-top-color #fff
+      img
+        border-radius(0 4px 4px 0)
+    h1
+      font-size 30px
+      font-weight 400
+      margin-bottom 22px
+    p
+      font-size 18px
+      font-weight 300
+      line-height 1.5em
+      margin-bottom 22px

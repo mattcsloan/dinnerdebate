@@ -1,19 +1,12 @@
-.splash
-  .banner
-    .wrapper
-      .logo
-        img(src="/img/logo.png", alt="Dinner Debate")
-  .wrapper
-    a.btn(data-ui-sref="recipes") View All Recipes
+.hero.feature.columns
+  .col.half
+    h1 What's for dinner tonight?
+    p Let us figure that out for you so you can focus on other things, like actually having time to eat dinner with your family.
     .columns
-      .col.half.half-sm(data-if-not-user)
-        a.btn(data-ng-click="home.toggleLogin()", data-ng-hide="home.viewLogin") Login
-      .col.half.half-sm(data-if-not-user)
-        a.btn(data-ui-sref="register", data-ng-hide="home.viewLogin") Register
-    .login-form(sp-login-form, data-ng-show="home.viewLogin && !posting")
-    .loading.fixed(data-ng-show="posting")
-      span
-        i.icon-spinner9.rotate
-        em [ loading ]
-    div(data-if-user)
-     a.btn.clear(data-ui-sref="dashboard", data-ng-hide="home.viewLogin") Dashboard
+      .col.half
+        a.btn(data-ui-sref="meals") View Tonight's Recipe
+      .col.half
+        a.btn(data-ui-sref="meals") View Tonight's Meal
+  .col.half
+    img(src="http://res.cloudinary.com/hesjwyhax/image/upload/a_exif,c_fill/v1457060633/87888/DSC_1317-ribbon-meatloaf-sm.jpg", alt="tonight's main dish")
+

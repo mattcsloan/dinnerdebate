@@ -3,14 +3,14 @@ angular.module('HomeCtrl', []).controller('HomeController', function(Page) {
 
   Page.setTitle('Home');   
   vm.title = 'Home';
-  vm.viewLogin = false;
-  vm.toggleLogin = toggleLogin;
+  // vm.viewLogin = false;
+  // vm.toggleLogin = toggleLogin;
   
-  function toggleLogin() {
-    if(vm.viewLogin) {
-      vm.viewLogin = false;
-    } else {
-      vm.viewLogin = true;
-    }
-  }
+  // function toggleLogin() {
+  //   if(vm.viewLogin) {
+  //     vm.viewLogin = false;
+  //   } else {
+  //     vm.viewLogin = true;
+  //   }
+  // }
 });
