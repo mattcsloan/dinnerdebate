@@ -51,6 +51,31 @@ module.exports = function(app) {
             });
     });
 
+    // get a random individual recipe
+    app.get('/api/recipes/random', function(req, res) {
+        Recipes.count().exec(function(err, count){
+            var randomNum = Math.floor(Math.random() * count);
+            Recipes.findOne().skip(randomNum).exec(
+                function (err, result) {
+                    res.json(result);
+                }
+            );
+        });
+    }); 
+
+    // get a random individual recipe (only if it has an image)
+    app.get('/api/recipes/random/image/', function(req, res) {
+        Recipes.count().exec(function(err, count){
+            var randomNum = Math.floor(Math.random() * count);
+            Recipes.findOne().where('image').ne(null).skip(randomNum).exec(
+                function (err, result) {
+                    res.json(result);
+                }
+            );
+        });
+    }); 
+
+
     // get all recipes by user
     app.get('/api/recipes/by/user', function(req, res) {
         // use mongoose to get all recipes in the database

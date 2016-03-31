@@ -94,7 +94,7 @@ angular.module('RecipesEditCtrl', []).controller('RecipesEditController', functi
             vm.showURLStatus = true;
           })
           .error(function(data, status) {
-            console.log(status = ': ' + data);
+            console.log(status + ': ' + data);
           });
       }
       vm.completedKeys = true;

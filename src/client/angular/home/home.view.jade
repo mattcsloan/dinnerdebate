@@ -3,10 +3,53 @@
     h1 What's for dinner tonight?
     p Let us figure that out for you so you can focus on other things, like actually having time to eat dinner with your family.
     .columns
-      .col.half
+      .col.half.btn-with-tag
         a.btn(data-ui-sref="meals") View Tonight's Recipe
-      .col.half
+        p [the main dish]
+      .col.half.btn-with-tag
         a.btn(data-ui-sref="meals") View Tonight's Meal
+        p [on our blog]
   .col.half
-    img(src="http://res.cloudinary.com/hesjwyhax/image/upload/a_exif,c_fill/v1457060633/87888/DSC_1317-ribbon-meatloaf-sm.jpg", alt="tonight's main dish")
-
+    img(data-ng-src="{{ home.heroImage }}", alt="tonight's main dish")
+.sub-feature.columns
+  .col.half
+    i.icon.icon-dd-place-setting
+    .content
+      h1
+        a(data-ui-sref="meals") Weekly Meal Suggestions
+      p Every weekend, we provide well-crafted meal suggestions for our Subscribers to give them an idea of what to make each weeknight. Subscribers can then take advantage of this weekly reveal to help them assemble a proper grocery list so they only have to go to the grocery store once each week.
+      p Our meals are planned with an attempt to use common ingredients with the other main dishes for that week so that you can save money at the grocery and shop and cook as efficiently as possible.
+      p We typically provide a main entree, a few side dishes, and the occasional dessert or wine pairing suggestion.
+      a.btn(data-ui-sref="meals") This Week's Meals
+  .col.half
+    a(data-ui-sref="meals")
+      img(src="/img/meals-sample.jpg", alt="Sample Meal Suggestions")
+.sub-feature.columns
+  .col.full.banner
+    a(href="http://blog.thedinnerdebate.com")
+      img(src="/img/logo-blog.png" alt="The Dinner Debate Food Blog")
+    a.pull-right.btn(href="http://blog.thedinnerdebate.com") Our Food Blog
+    h1
+      a(href="http://blog.thedinnerdebate.com") View it on our blog
+    p While only our subscribers can view the weekly meal suggestions, anyone can view the same meals that are released daily on our blog. You just won’t get the benefit of features our community enjoys most - like automated grocery lists, weekly newsletters, tips from a licensed dietitian, and access to our mobile applications. 
+.sub-feature.columns
+  .col.half
+    i.icon.icon-dd-recipes
+    .content
+      h1
+        a(data-ui-sref="recipes") Recipes
+      p Over the years, we have compiled quite the list of recipes. Some of these are family recipes passed down through the generations, while others are inspired by recipes we’ve seen, and even a select few are recipes that others posted which were too good to not include.
+      p We’ve tried every one of these, and at least one of us thought the recipe was worthy of making the cut. There are over 500 recipes (and counting) for you to browse through, whether you’ve subscribed or not.
+      a.btn(data-ui-sref="recipes") View All Recipes
+  .col.half
+    ul.thumbs.single
+      li.thumb
+        a(data-ui-sref="recipes.view({categoryKey: home.randomRecipe.categoryKey, recipeName: home.randomRecipe.key})")
+          span.image-label Sample Recipe
+          img(data-ng-if="home.randomRecipeImage", data-ng-src="{{ home.randomRecipeImage }}", alt="Featured Recipe")
+          span(data-ng-bind="home.randomRecipe.name")
+.sub-feature.columns
+  .col.full
+    i.icon.icon-dd-logo
+    .content
+      h1 Plans and Pricing
