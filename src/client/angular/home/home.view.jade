@@ -2,13 +2,12 @@
   .col.half
     h1 What's for dinner tonight?
     p Let us figure that out for you so you can focus on other things, like actually having time to eat dinner with your family.
-    .columns
-      .col.half.btn-with-tag
-        a.btn(data-ui-sref="meals") View Tonight's Recipe
-        p [the main dish]
-      .col.half.btn-with-tag
-        a.btn(data-ui-sref="meals") View Tonight's Meal
-        p [on our blog]
+    .btn-with-tag
+      a.btn(data-ui-sref="recipes") Tonight's Recipe
+      p [the main dish]
+    .btn-with-tag
+      a.btn(data-ui-sref="meals") Tonight's Meal
+      p [on our blog]
   .col.half
     img(data-ng-src="{{ home.heroImage }}", alt="tonight's main dish")
 .sub-feature.columns
@@ -48,8 +47,8 @@
           span.image-label Sample Recipe
           img(data-ng-if="home.randomRecipeImage", data-ng-src="{{ home.randomRecipeImage }}", alt="Featured Recipe")
           span(data-ng-bind="home.randomRecipe.name")
-.sub-feature.columns
-  .col.full
-    i.icon.icon-dd-logo
-    .content
-      h1 Plans and Pricing
+//- .sub-feature.columns
+//-   .col.full
+//-     i.icon.icon-dd-logo
+//-     .content
+//-       h1 Plans and Pricing

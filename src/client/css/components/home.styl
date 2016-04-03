@@ -11,7 +11,7 @@
         box-sizing(border-box)
         width 45%
       &:first-child
-        padding 36px
+        padding 60px 36px 36px 36px
       &:nth-child(even)
         width 55%
         &:before
@@ -30,27 +30,29 @@
           border-top-color #fff
       img
         border-radius(0 4px 4px 0)
-        margin-top -100px
+        margin-top -50px
     h1
-      font-size 30px
+      font-size 28px
       font-weight 400
-      margin-bottom 22px
+      margin-bottom 16px
     p
-      font-size 18px
+      font-size 17px
       font-weight 300
       line-height 1.5em
-      margin-bottom 22px
       color $subtle
   .btn-with-tag
-    text-align center
     font-weight 400
-    margin-top 12px
+    float left
+    margin 12px 50px 0 0
+    &:nth-child(even)
+      margin-right 0
     .btn
       margin-bottom 3px
       background-color $primary-darkest
     p
       font-size 12px
       color $secondary-feature
+      text-align center
 .sub-feature
   padding 36px
   p
