@@ -20,6 +20,12 @@
     o.getFirst = function(numItems, sort) {
       return $http.get(uri + '/first/' + numItems + '/' + sort);
     },
+    o.getRandom = function() {
+      return $http.get(uri + '/random');
+    },
+    o.getRandomWithImage = function() {
+      return $http.get(uri + '/random/image');
+    },
     o.getOne = function(category, name) {
       return $http.get(uri + '/' + category + '/' + name);
     },

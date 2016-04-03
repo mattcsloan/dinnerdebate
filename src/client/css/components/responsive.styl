@@ -7,6 +7,15 @@
             display none
   .modal-container
     width 658px
+  .hero
+    &.feature
+      > .col
+        &:first-child
+          padding 40px 24px 24px 24px
+        h1
+          font-size 26px
+        img
+          margin-top 0
 
 
 @media all and (max-width : 1023px)
@@ -57,6 +66,48 @@
             > img
               filter blur(2px)
               transform scale(1.2)
+  .hero
+    &.feature
+      > .col
+        &.half
+          width 55%
+        &:first-child
+          padding 24px
+        &:nth-child(even)
+          width 45%
+          &:before
+          &:after
+            content ''
+            position absolute
+            top 0
+            left 0
+            width 0
+            height 0
+            border-right 140px solid transparent
+            border-top 300px solid $primary-color
+          &:before
+            border-right-width 150px
+            border-top-width 315px
+            border-top-color #fff
+        img
+          height 300px
+          max-width none !important
+  .sub-feature
+    padding 16px 0
+    i.icon
+      font-size 40px
+    .content
+      padding-left 0
+      h1
+        padding-left 60px
+    h1
+      margin-bottom 6px
+  .banner
+    padding 16px 16px 0 180px
+    img
+      width 140px
+      margin-top -57px
+      left 16px
 
 
 @media all and (max-width : 768px)
@@ -78,6 +129,11 @@
     margin-top 21px
   .med-hide
     display none
+  .hero
+    .btn-with-tag
+      margin-right 20px
+      &nth-child(even)
+        margin-right 0
 
 
 @media all and (max-width : 700px)
@@ -101,6 +157,30 @@
     .image-container
       max-width 300px
       margin 16px auto  
+  .hero
+    &.feature
+      height auto
+      overflow visible
+      > .col
+        &.half
+          text-align center
+          width auto
+        &:first-child
+          padding 26px 16px 14px 16px
+        &:nth-child(even)
+          display none
+        img
+          border-radius(0 4px 4px 0)
+          margin-top -50px
+      .btn-with-tag
+        width 50%
+        margin 0
+        text-align center
+  .sub-feature
+    h1
+      font-size 26px
+    p
+      font-size 16px
 
 @media all and (max-width : 630px)
   .navigation
@@ -145,6 +225,11 @@
       margin-top 16px
     .progress
       display none
+    &.feature
+      .btn-with-tag
+        margin-bottom 10px
+        .btn
+          display inline-block
   .calendar
     .week
       .day
@@ -152,7 +237,17 @@
         .date
           font-size 32px
           top 3px
-
+  .banner
+    padding 16px 16px 0 16px
+    img
+      display block
+      position relative
+      top auto
+      left auto
+      width 50%
+      margin 0 auto 16px
+    .btn
+      display none
 
 @media all and (max-width : 500px)
   .header
@@ -205,3 +300,13 @@
         .day
           margin 16px auto
           max-width 302px
+  .hero
+    &.feature
+      margin-top 12px
+      .btn-with-tag
+        float none
+        width auto
+  .sub-feature
+    .thumbs
+      .thumb
+        max-width none
