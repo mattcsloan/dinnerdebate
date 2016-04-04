@@ -1,4 +1,4 @@
-angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recipe) {
+angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recipe, MealsResource) {
   var vm = this;
 
   Page.setTitle('Home');   
@@ -17,9 +17,17 @@ angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recip
   // get hero image path
 
   // TODO: Hook up to actual daily meal
-  var todaysRecipe = "http://res.cloudinary.com/hesjwyhax/image/upload/v1457060633/87888/DSC_1317-ribbon-meatloaf-sm.jpg";
+  MealsResource.getToday()
+    .success(function (res) {
+      vm.todaysRecipe = res;
+      var todaysRecipe = res.image.main.src;
+      console.log(todaysRecipe)
+      getProperImageSize(todaysRecipe, 752, 500, 'hero');
+    });
 
-  getProperImageSize(todaysRecipe, 752, 500, 'hero');
+
+  // var todaysRecipe = "http://res.cloudinary.com/hesjwyhax/image/upload/v1457060633/87888/DSC_1317-ribbon-meatloaf-sm.jpg";
+
 
   Recipe.getRandomWithImage()
     .success(function(data, status) {

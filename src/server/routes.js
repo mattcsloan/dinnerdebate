@@ -19,6 +19,14 @@ module.exports = function(app) {
         res.status(201).json(meals.items);
     });
 
+    app.get('/api/meals/today', function(req, res) {
+        var d = new Date();
+        var month = d.getMonth();
+        var date = d.getDate() - 1;
+
+        res.status(201).json(meals.items[month][date]);
+    });
+
     app.get('/api/meals/dev', function(req, res) {
         res.status(201).json(mealsDev.items);
     });
