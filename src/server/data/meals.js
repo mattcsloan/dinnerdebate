@@ -37,7 +37,7 @@ module.exports = {
         desserts: null,
         prepTime: 35,
         cookTime: 15,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -73,7 +73,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -109,7 +109,7 @@ module.exports = {
         desserts: null,
         prepTime: 20,
         cookTime: 120,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -145,7 +145,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -181,7 +181,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -217,7 +217,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -253,7 +253,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -288,7 +288,7 @@ module.exports = {
         desserts: null,
         prepTime: 35,
         cookTime: 15,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -324,7 +324,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -360,7 +360,7 @@ module.exports = {
         }],
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -396,7 +396,7 @@ module.exports = {
         }],
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -432,7 +432,7 @@ module.exports = {
         }],
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -468,7 +468,7 @@ module.exports = {
         }],
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -742,7 +742,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -778,7 +778,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -814,7 +814,7 @@ module.exports = {
         desserts: null,
         prepTime: 20,
         cookTime: 120,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -850,7 +850,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
     ],
@@ -887,7 +887,7 @@ module.exports = {
         desserts: null,
         prepTime: 35,
         cookTime: 15,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -922,7 +922,7 @@ module.exports = {
         desserts: null,
         prepTime: 35,
         cookTime: 15,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -958,7 +958,7 @@ module.exports = {
         desserts: null,
         prepTime: 15,
         cookTime: 30,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
       {
@@ -994,7 +994,7 @@ module.exports = {
         desserts: null,
         prepTime: 20,
         cookTime: 120,
-        mealUrl: "http://www.thedinnerdebate.com",
+        mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
 
