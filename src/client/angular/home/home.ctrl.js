@@ -30,9 +30,10 @@ angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recip
     .success(function(data, status) {
       if(data) {
         vm.randomRecipe = data;
-        if(data.image.url) {
+        if(data.image.url && data.image.url !== null) {
           getProperImageSize(data.image.url, 624, 416, 'random');
-        } else {
+        }
+        if(typeof data.image === 'string') {
           getProperImageSize(data.image, 624, 416, 'random');
         }
       }
