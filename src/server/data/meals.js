@@ -997,9 +997,203 @@ module.exports = {
         mealUrl: "http://blog.thedinnerdebate.com",
         published: true
       },
-
-
-
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/hesjwyhax/image/upload/v1455396204/41929/DSC_1100-fettucinni-quick-ragu-sm.jpg",
+            categoryKey: "entrees",
+            key: "fettuccine-with-quick-ragu",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Fettuccine with Quick Ragu",
+          categoryKey: "entrees",
+          key: "fettuccine-with-quick-ragu"
+        },
+        appetizers: null,
+        sides: [{
+          title: "Applesauce",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "Broccolini",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: [{
+          title: "Milk",
+          categoryKey: null,
+          key: null
+        }],
+        desserts: null,
+        prepTime: 15,
+        cookTime: 30,
+        mealUrl: "http://blog.thedinnerdebate.com",
+        published: true
+      },
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/hesjwyhax/image/upload/v1455584717/39416/DSC_1168-apricot-chicken-sm.jpg",
+            categoryKey: "entrees",
+            key: "apricot-chicken-with-almonds",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Apricot Chicken with Almonds",
+          categoryKey: "entrees",
+          key: "apricot-chicken-with-almonds"
+        },
+        appetizers: null,
+        sides: [{
+          title: "White Rice",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "Asparagus",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: null,
+        desserts: [{
+          title: "Chocolate Molten Cakes",
+          categoryKey: "desserts",
+          key: "chocolate-molten-cakes"
+        }],
+        prepTime: 15,
+        cookTime: 30,
+        mealUrl: "http://blog.thedinnerdebate.com",
+        published: true
+      },
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/hesjwyhax/image/upload/v1455159966/70639/image.jpg",
+            categoryKey: "entrees",
+            key: "taco-pie",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Taco Pie",
+          categoryKey: "entrees",
+          key: "taco-pie"
+        },
+        appetizers: null,
+        sides: [{
+          title: "Tortilla Chips",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "Clementines",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: null,
+        desserts: [{
+          title: "Oatmeal Cookies - 2",
+          categoryKey: "cookies",
+          key: "oatmeal-cookies-2"
+        }],
+        prepTime: 15,
+        cookTime: 30,
+        mealUrl: "http://blog.thedinnerdebate.com",
+        published: true
+      },
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/hesjwyhax/image/upload/v1455159966/70639/image.jpg",
+            categoryKey: "entrees",
+            key: "taco-pie",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Taco Pie",
+          categoryKey: "entrees",
+          key: "taco-pie"
+        },
+        appetizers: null,
+        sides: [{
+          title: "Tortilla Chips",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "Clementines",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: null,
+        desserts: [{
+          title: "Oatmeal Cookies - 2",
+          categoryKey: "cookies",
+          key: "oatmeal-cookies-2"
+        }],
+        prepTime: 15,
+        cookTime: 30,
+        mealUrl: "http://blog.thedinnerdebate.com",
+        published: true
+      },
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/hesjwyhax/image/upload/v1455159966/70639/image.jpg",
+            categoryKey: "entrees",
+            key: "taco-pie",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Taco Pie",
+          categoryKey: "entrees",
+          key: "taco-pie"
+        },
+        appetizers: null,
+        sides: [{
+          title: "Tortilla Chips",
+          categoryKey: null,
+          key: null
+        }, {
+          title: "Clementines",
+          categoryKey: null,
+          key: null
+        }],
+        drinks: null,
+        desserts: [{
+          title: "Oatmeal Cookies - 2",
+          categoryKey: "cookies",
+          key: "oatmeal-cookies-2"
+        }],
+        prepTime: 15,
+        cookTime: 30,
+        mealUrl: "http://blog.thedinnerdebate.com",
+        published: true
+      },
+      {
+        image: {
+          main: {
+            src: "http://res.cloudinary.com/hesjwyhax/image/upload/v1458709914/51485/DSC_1592-lettuce-wraps-sm.jpg",
+            categoryKey: "entrees",
+            key: "asian-turkey-lettuce-wraps",
+            link: null
+          },
+          secondary: null
+        },
+        entree: {
+          title: "Asian Turkey Lettuce Wraps",
+          categoryKey: "entrees",
+          key: "asian-turkey-lettuce-wraps"
+        },
+        published: true
+      }
     ]
   ]
 };
