@@ -7,8 +7,21 @@
   ;
 
   /* @ngInject */
-  function mealsResource($resource) {
+  function mealsResource($http) {
     var uri = '/api/meals/';
-    var timeout = 1000;
+
+    var o = {
+      meal: []
+    };
+
+    o.getAll = function() {
+      return $http.get(uri);
+    },
+
+    o.getToday = function() {
+      return $http.get(uri + 'today');
+    };
+
+    return o;
   }
 })();
