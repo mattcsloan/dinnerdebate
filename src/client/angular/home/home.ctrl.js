@@ -20,9 +20,11 @@ angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recip
   MealsResource.getToday()
     .success(function (res) {
       vm.todaysRecipe = res;
-      var todaysRecipe = res.image.main.src;
-      console.log(vm.todaysRecipe)
-      getProperImageSize(todaysRecipe, 752, 500, 'hero');
+      if(res.image.main.src) {
+        var todaysRecipe = res.image.main.src;
+        console.log(todaysRecipe);
+        getProperImageSize(todaysRecipe, 752, 500, 'hero');
+      }
     });
 
   Recipe.getRandomWithImage()
