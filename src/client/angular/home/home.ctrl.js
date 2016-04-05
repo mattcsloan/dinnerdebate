@@ -20,18 +20,20 @@ angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recip
   MealsResource.getToday()
     .success(function (res) {
       vm.todaysRecipe = res;
-      var todaysRecipe = res.image.main.src;
-      console.log(vm.todaysRecipe)
-      getProperImageSize(todaysRecipe, 752, 500, 'hero');
+      if(res.image.main.src) {
+        var todaysRecipe = res.image.main.src;
+        getProperImageSize(todaysRecipe, 752, 500, 'hero');
+      }
     });
 
   Recipe.getRandomWithImage()
     .success(function(data, status) {
       if(data) {
         vm.randomRecipe = data;
-        if(data.image.url) {
+        if(data.image.url && data.image.url !== null) {
           getProperImageSize(data.image.url, 624, 416, 'random');
-        } else {
+        }
+        if(typeof data.image === 'string') {
           getProperImageSize(data.image, 624, 416, 'random');
         }
       }
