@@ -22,7 +22,6 @@ angular.module('HomeCtrl', []).controller('HomeController', function(Page, Recip
       vm.todaysRecipe = res;
       if(res.image.main.src) {
         var todaysRecipe = res.image.main.src;
-        console.log(todaysRecipe);
         getProperImageSize(todaysRecipe, 752, 500, 'hero');
       }
     });
