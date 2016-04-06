@@ -7,7 +7,11 @@ h1(data-ng-bind="mealsadmin.title")
 hr
 .columns
   .col.half
-    label Select Day
     calendar(selected="mealsadmin.day")
-    p(data-ng-bind="selected")
+    h4 Meal Preview
+    p Calendar View
+    p Modal View
+    a.btn Preview All Meals
   .col.half.meal-preview
+    label Selected Day: 
+      span(data-ng-bind="mealsadmin.day.format('dddd, MMMM Do YYYY')")

@@ -15,10 +15,8 @@
         selected: "="
       },
       link: function(scope) {
-        console.log('scope: %o', scope);
         scope.selected = _removeTime(scope.selected || moment());
         scope.month = scope.selected.clone();
-        console.log('scope.selected %o', scope.selected);
 
         var start = scope.selected.clone();
         start.date(1);
@@ -47,12 +45,10 @@
     };
     
     function _removeTime(date) {
-      console.log('date %o', date)
       return date.day(0).hour(0).minute(0).second(0).millisecond(0);
     }
 
     function _buildMonth(scope, start, month) {
-      console.log('start %o:', start);
       scope.weeks = [];
       var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
       while (!done) {
@@ -67,7 +63,6 @@
     }
 
     function _buildWeek(date, month) {
-      console.log(date.month() + ': ' + month.month());
       var days = [];
       for (var i = 0; i < 7; i++) {
         days.push({
