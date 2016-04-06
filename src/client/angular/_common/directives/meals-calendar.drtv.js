@@ -3,16 +3,17 @@
 
   angular
     .module('app.directives')
-    .directive('calendar', calendar)
+    .directive('mealsCalendar', mealsCalendar)
   ;
 
   /* @ngInject */
-  function calendar() {
+  function mealsCalendar() {
     return {
       restrict: "E",
-      templateUrl: "/templates/_common/templates/calendar.tmpl.html",
+      templateUrl: "/templates/_common/templates/meals-calendar.tmpl.html",
       scope: {
-        selected: "="
+        selected: "=",
+        data: "="
       },
       link: function(scope) {
         console.log('scope: %o', scope);
@@ -28,6 +29,11 @@
 
         scope.select = function(day) {
           scope.selected = day.date;  
+        };
+
+        scope.toggleDescription = function(item, date) {
+          scope.mealDescription = item;
+          scope.mealDate = moment(date).format('MMMM D, YYYY');
         };
 
         scope.next = function() {

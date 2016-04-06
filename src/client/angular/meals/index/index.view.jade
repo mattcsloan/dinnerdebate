@@ -1,0 +1,7 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+h1(data-ng-bind="meals.title")
+hr
+meals-calendar(selected="meals.day", data="meals.items")
+a.btn.mgn-top-16(if-user-in-group="'Admin'", data-ui-sref="meals.admin") Update Meals
