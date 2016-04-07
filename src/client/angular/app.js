@@ -16,6 +16,7 @@ var app = angular.module('app', [
   'HomeCtrl', 
   'DashboardCtrl', 
   'MealsCtrl', 
+  'MealsAdminCtrl', 
   'RecipesCtrl',
   'RecipesCreateCtrl',
   'RecipesEditCtrl',

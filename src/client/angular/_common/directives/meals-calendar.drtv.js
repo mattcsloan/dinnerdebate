@@ -3,20 +3,23 @@
 
   angular
     .module('app.directives')
-    .directive('calendar', calendar)
+    .directive('mealsCalendar', mealsCalendar)
   ;
 
   /* @ngInject */
-  function calendar() {
+  function mealsCalendar() {
     return {
       restrict: "E",
-      templateUrl: "/templates/_common/templates/calendar.tmpl.html",
+      templateUrl: "/templates/_common/templates/meals-calendar.tmpl.html",
       scope: {
-        selected: "="
+        selected: "=",
+        data: "="
       },
       link: function(scope) {
+        console.log('scope: %o', scope);
         scope.selected = _removeTime(scope.selected || moment());
         scope.month = scope.selected.clone();
+        console.log('scope.selected %o', scope.selected);
 
         var start = scope.selected.clone();
         start.date(1);
@@ -26,6 +29,11 @@
 
         scope.select = function(day) {
           scope.selected = day.date;  
+        };
+
+        scope.toggleDescription = function(item, date) {
+          scope.mealDescription = item;
+          scope.mealDate = moment(date).format('MMMM D, YYYY');
         };
 
         scope.next = function() {
@@ -45,10 +53,12 @@
     };
     
     function _removeTime(date) {
+      console.log('date %o', date)
       return date.day(0).hour(0).minute(0).second(0).millisecond(0);
     }
 
     function _buildMonth(scope, start, month) {
+      console.log('start %o:', start);
       scope.weeks = [];
       var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
       while (!done) {
@@ -63,6 +73,7 @@
     }
 
     function _buildWeek(date, month) {
+      console.log(date.month() + ': ' + month.month());
       var days = [];
       for (var i = 0; i < 7; i++) {
         days.push({
