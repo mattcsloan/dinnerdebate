@@ -1,0 +1,17 @@
+h6.breadcrumb
+  a(data-ui-sref="home") home
+  span  &raquo; 
+  a(data-ui-sref="meals") weekly meals
+  span  &raquo; 
+h1(data-ng-bind="mealsadmin.title")
+hr
+.columns
+  .col.half
+    calendar(selected="mealsadmin.day")
+    h4 Meal Preview
+    p Calendar View
+    p Modal View
+    a.btn Preview All Meals
+  .col.half.meal-preview
+    label Selected Day: 
+      span(data-ng-bind="mealsadmin.day.format('dddd, MMMM Do YYYY')")

@@ -41,6 +41,26 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
             }
         })
 
+        // .state('meals', {
+        //     url: '/meals',
+        //     views: {
+        //         header: {
+        //             templateUrl: '/templates/_common/templates/header.tmpl.html',
+        //         },
+        //         content: {
+        //             templateUrl: '/templates/meals/meals.view.html',
+        //             controller: 'MealsController',
+        //             controllerAs: 'meals'
+        //         },
+        //         footer: {
+        //             templateUrl: '/templates/_common/templates/footer.tmpl.html',
+        //         }
+        //     },
+        //     // sp: {
+        //     //     authenticate: true
+        //     // }
+        // })
+
         .state('meals', {
             url: '/meals',
             views: {
@@ -49,17 +69,41 @@ angular.module('appRoutes', []).config(['$stateProvider', '$locationProvider', '
                 },
                 content: {
                     templateUrl: '/templates/meals/meals.view.html',
-                    controller: 'MealsController',
-                    controllerAs: 'meals'
                 },
                 footer: {
                     templateUrl: '/templates/_common/templates/footer.tmpl.html',
                 }
             },
-            sp: {
-                authenticate: true
-            }
+            redirectTo: 'meals.index'
         })
+
+            .state('meals.index', {
+                url: '',
+                views: {
+                    meals: {
+                        templateUrl: '/templates/meals/index/index.view.html',
+                        controller: 'MealsController',
+                        controllerAs: 'meals'
+                    }
+                },
+                // sp: {
+                //     authenticate: true
+                // }
+            })
+
+            .state('meals.admin', {
+                url: '/admin',
+                views: {
+                    meals: {
+                        templateUrl: '/templates/meals/admin/admin.view.html',
+                        controller: 'MealsAdminController',
+                        controllerAs: 'mealsadmin'
+                    }
+                },
+                sp: {
+                    authenticate: true
+                }
+            })
 
         .state('recipes', {
             url: '/recipes',
