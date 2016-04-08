@@ -49,6 +49,10 @@
           scope.month.month(scope.month.month()-1);
           _buildMonth(scope, previous, scope.month);
         };
+
+        scope.loadMeal = function(mealDate) {
+          console.log(mealDate);
+        }
       }
     };
     

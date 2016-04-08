@@ -9,15 +9,16 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   MealsResource.getAll()
     .success(function (res) {
       vm.items = res;
-      for(i = 0; i < vm.items.length; i++) {
-        for(j = 0; j < vm.items[i].length; j++) {
-          if(vm.items[i][j].image.main.src) {
-            var imageUrl = vm.items[i][j].image.main.src;
-            var sizedImage = getProperImageSize(imageUrl, 300, 200);
-            vm.items[i][j].image.main.src = sizedImage;
-          }
-        }
-      }
+      
+      // for(i = 0; i < vm.items.length; i++) {
+      //   for(j = 0; j < vm.items[i].length; j++) {
+      //     if(vm.items[i][j].image.main.src) {
+      //       var imageUrl = vm.items[i][j].image.main.src;
+      //       var sizedImage = getProperImageSize(imageUrl, 300, 200);
+      //       vm.items[i][j].image.main.src = sizedImage;
+      //     }
+      //   }
+      // }
     });
 
   function getProperImageSize(imageUrl, imageWidth, imageHeight) {

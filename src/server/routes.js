@@ -16,7 +16,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/meals', function(req, res) {
-        res.status(201).json(meals.items);
+        res.status(201).json(mealsDev.items);
     });
 
     app.get('/api/meals/today', function(req, res) {
