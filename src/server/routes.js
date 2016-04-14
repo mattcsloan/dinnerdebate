@@ -16,7 +16,7 @@ module.exports = function(app) {
     });
 
     app.get('/api/meals', function(req, res) {
-        res.status(201).json(mealsDev.items);
+        res.status(201).json(meals.items);
     });
 
     app.get('/api/meals/today', function(req, res) {
@@ -29,6 +29,12 @@ module.exports = function(app) {
 
     app.get('/api/meals/dev', function(req, res) {
         res.status(201).json(mealsDev.items);
+    });
+
+    app.get('/api/meals/:mealDate', function(req, res) {
+        var mealDate = req.params.mealDate;
+        // TODO: pull daily meal once meals Model is set up
+        res.status(201).json('Meal found');
     });
 
     // get all recipes
