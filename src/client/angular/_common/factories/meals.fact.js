@@ -28,6 +28,14 @@
 
     o.getToday = function() {
       return $http.get(uri + 'today');
+    },
+
+    o.addMeal = function(postData) {
+      return $http.post(uri, postData);
+    },
+
+    o.updateMeal = function(date, postData) {
+      return $http.put(uri + date, postData);
     };
 
     return o;

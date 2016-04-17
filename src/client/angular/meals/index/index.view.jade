@@ -23,6 +23,8 @@ hr
       .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
         span.date(data-ng-bind="day.number")
         p(data-ng-bind="formattedDate(day.date)")
+        .image-container(data-ng-if="day.image.main.src")
+          img(data-ng-src="{{day.image.main.src}}")
 
 
 

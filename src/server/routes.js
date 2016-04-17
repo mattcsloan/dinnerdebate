@@ -3,6 +3,7 @@ var meals = require('./data/meals');
 var mealsDev = require('./data/meals-dev');
 var stormpath = require('express-stormpath');
 var Recipes = require('./models/recipes');
+var Meals = require('./models/meals');
 var cloudinary = require('cloudinary');
 var multer = require('multer');
 var upload = multer({ dest: './uploads'});
@@ -15,22 +16,57 @@ module.exports = function(app) {
         res.status(201).json(navigation.items);
     });
 
+    // get all meals
     app.get('/api/meals', function(req, res) {
-        res.status(201).json(meals.items);
+        // use mongoose to get all recipes in the database
+        Meals.find(function(err, meals) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(meals); // return all meals in JSON format
+        });
     });
 
-    app.get('/api/meals/today', function(req, res) {
-        var d = new Date();
-        var month = d.getMonth();
-        var date = d.getDate() - 1;
-
-        res.status(201).json(meals.items[month][date]);
+    // create meal
+    app.post('/api/meals', stormpath.loginRequired, function(req, res) {
+        // use mongoose to add a new meal in the database
+        // look for existing meal with same name and category first
+        var meal = new Meals({
+            date: req.body.date,
+            image: req.body.image,
+            entree: req.body.entree,
+            appetizers: req.body.appetizers,
+            sides: req.body.sides,
+            drinks: req.body.drinks,
+            desserts: req.body.desserts,
+            prepTime: req.body.prepTime,
+            cookTime: req.body.cookTime,
+            mealUrl: req.body.mealUrl,
+            published: req.body.published
+        });
+        meal.save(function(err, meals) {
+            if(err) {
+                res.send(err);
+            }
+            res.status(201).json(meals);
+        });
     });
 
-    app.get('/api/meals/dev', function(req, res) {
-        res.status(201).json(mealsDev.items);
-    });
+    //get today's meal
+    // app.get('/api/meals/today', function(req, res) {
+    //     var d = new Date();
+    //     var month = d.getMonth();
+    //     var date = d.getDate() - 1;
 
+    //     res.status(201).json(meals.items[month][date]);
+    // });
+
+    //get all meals - dev environment
+    // app.get('/api/meals/dev', function(req, res) {
+    //     res.status(201).json(mealsDev.items);
+    // });
+
+    //get meal by date
     app.get('/api/meals/:mealDate', function(req, res) {
         var mealDate = req.params.mealDate;
         // TODO: pull daily meal once meals Model is set up
@@ -147,8 +183,6 @@ module.exports = function(app) {
                 res.send('Recipe already exists.');
             }
         });
-
-
     });
 
     // get individual recipe by id
