@@ -8,16 +8,17 @@ hr
 .columns
   .col.half
     calendar(selected="mealsadmin.mealDate")
-    h4 Meal Preview
-    p Calendar View
-    p Modal View
-    a.btn Preview All Meals
+    a.btn.pull-right.mgn-top-16(data-ng-click="mealsadmin.getMealForm(mealsadmin.mealDate)") Choose Day
+    //- h4 Meal Preview
+    //- p Calendar View
+    //- p Modal View
+    //- a.btn Preview All Meals
   .col.half.meal-preview
-    .message.subtle.center(data-ng-hide="mealsadmin.mealDate")
+    .message.subtle.center(data-ng-hide="mealsadmin.mealDateSelected")
       span.block Please choose a date from the calendar in order to add/update a meal.
-    form(data-ng-show="mealsadmin.mealDate", data-ng-submit="mealsadmin.addMeal()")
-      label Meal Date:
-      input(type="text", name="mealDate", placeholder="Date", data-ng-model="mealsadmin.mealDate")
+    form(data-ng-show="mealsadmin.mealDateSelected", data-ng-submit="mealsadmin.addMeal()")
+      h2.mgn-top-0 Daily Meal: 
+        span(data-ng-if="mealsadmin.mealDateSelected", data-ng-bind="mealsadmin.mealDateSelected")
       label Meal Image:
       input(type="text", name="imageMainSrc", placeholder="Image", data-ng-model="mealsadmin.image.main.src")
       label Entree:

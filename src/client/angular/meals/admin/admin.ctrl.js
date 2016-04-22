@@ -1,12 +1,11 @@
-angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function(Page, MealsResource) {
+angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function(Page, MealsResource, $scope) {
   var vm = this;
 
   Page.setTitle('Admin');   
   vm.title = 'Admin';
-  vm.dayChanged = dayChanged;
-  // vm.day = moment().format('dddd, MMMM Do YYYY');
   vm.mealDate = _removeTime(moment());
   vm.addMeal = addMeal;
+  vm.getMealForm = getMealForm;
 
 
   function addMeal() {
@@ -29,8 +28,8 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
 
   }
 
-  function dayChanged() {
-    console.log(vm.mealDate);
+  function getMealForm(date) {
+    vm.mealDateSelected = moment(date).format('ddd MMMM DD, YYYY');
   }
 
   function _removeTime(date) {
