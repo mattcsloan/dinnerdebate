@@ -69,8 +69,19 @@ module.exports = function(app) {
     //get meal by date
     app.get('/api/meals/:mealDate', function(req, res) {
         var mealDate = req.params.mealDate;
-        // TODO: pull daily meal once meals Model is set up
-        res.status(201).json('Meal found');
+        var month = mealDate.substr(0, 2);
+        var day = mealDate.substr(2, 2);
+        var year = mealDate.substr(4, 4);
+        var timeStamp = year + '-' + month + '-' + day + "T00:00:00.000Z";
+
+        Meals.findOne({
+            date: timeStamp
+        }, function(err, meal) { 
+            if (err) {
+                res.send(err);
+            }
+            res.status(201).json(meal);
+        });
     });
 
     // get all recipes
