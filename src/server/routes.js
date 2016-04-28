@@ -67,7 +67,7 @@ module.exports = function(app) {
     // });
 
     //get meal by date
-    app.get('/api/meals/:mealDate', function(req, res) {
+    app.get('/api/meals/on/:mealDate', function(req, res) {
         var mealDate = req.params.mealDate;
         var month = mealDate.substr(0, 2);
         var day = mealDate.substr(2, 2);
@@ -76,6 +76,29 @@ module.exports = function(app) {
 
         Meals.findOne({
             date: timeStamp
+        }, function(err, meal) { 
+            if (err) {
+                res.send(err);
+            }
+            res.status(201).json(meal);
+        });
+    });
+
+    //get meals within date range
+    app.get('/api/meals/from/:beginDate/to/:endDate', function(req, res) {
+        var beginDate = req.params.beginDate;
+        var beginMonth = beginDate.substr(0, 2);
+        var beginDay = beginDate.substr(2, 2);
+        var beginYear = beginDate.substr(4, 4);
+        var beginTimeStamp = beginYear + '-' + beginMonth + '-' + beginDay + "T00:00:00.000Z";
+        var endDate = req.params.endDate;
+        var endMonth = endDate.substr(0, 2);
+        var endDay = endDate.substr(2, 2);
+        var endYear = endDate.substr(4, 4);
+        var endTimeStamp = endYear + '-' + endMonth + '-' + endDay + "T00:00:00.000Z";
+
+        Meals.find({
+            date: {$gte: beginTimeStamp, $lte: endTimeStamp}
         }, function(err, meal) { 
             if (err) {
                 res.send(err);
