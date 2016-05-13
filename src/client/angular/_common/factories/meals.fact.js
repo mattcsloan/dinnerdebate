@@ -26,6 +26,10 @@
       return $http.get(uri + date);
     },
 
+    o.getMonthlyMeals = function(start, end) {
+      return $http.get(uri + 'from/' + start + '/to/' + end);
+    },
+
     o.getToday = function() {
       return $http.get(uri + 'today');
     },

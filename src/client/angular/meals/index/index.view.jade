@@ -1,6 +1,7 @@
 h6.breadcrumb
   a(data-ui-sref="home") home
   span  &raquo; 
+
 h1(data-ng-bind="meals.title")
 hr
 .meals-calendar
@@ -22,7 +23,7 @@ hr
     .week(data-ng-repeat="week in weeks", data-ng-class="{ 'this-week': week.isCurrentWeek }")
       .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
         span.date(data-ng-bind="day.number")
-        p(data-ng-bind="formattedDate(day.date)")
+        p(data-ng-bind="meals.addItemToCalendar(day.isoDate) | json")
         .image-container(data-ng-if="day.image.main.src")
           img(data-ng-src="{{day.image.main.src}}")
 

@@ -4,7 +4,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   Page.setTitle('Weekly Meals');   
   vm.title = 'Weekly Meal Suggestions';
 
-  vm.day = moment();
+  vm.day = moment.utc();
 
   calendarSetUp();
 
@@ -14,10 +14,6 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       imagePath = imagePath[0] + 'image/upload/a_exif,c_fill,h_' + imageHeight + ',w_' + imageWidth + imagePath[1];
       return imagePath;
     }
-  }
-
-  $scope.formattedDate = function(date) {
-    return moment(date).format('ddd MMMM DD, YYYY');
   }
 
   function calendarSetUp() {
@@ -55,12 +51,13 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   }
 
   function _removeTime(date) {
-    return date.day(0).hour(0).minute(0).second(0).millisecond(0);
+    return date.hour(0).minute(0).second(0).millisecond(0);
   }
 
   function _buildMonth(start, month) {
     $scope.weeks = [];
     var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
+    var startDate = formattedDate(date, 'MMDDYYYY');
     while (!done) {
       $scope.weeks.push({
         days: _buildWeek(date.clone(), month),
@@ -70,14 +67,25 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       done = count++ > 2 && monthIndex !== date.month();
       monthIndex = date.month();
     }
+    var endDate = moment(date).subtract(1, "days");
+    endDate = formattedDate(endDate, 'MMDDYYYY');
+
+    console.log(startDate + " - " + endDate);
+    getMonthlyMeals(startDate, endDate); 
   }
 
   function _buildWeek(date, month) {
     var days = [];
     for (var i = 0; i < 7; i++) {
 
-      // get meal data for each day of the week
-      var dailyMeal = getMealData(date);
+      var isoDate = formattedDate(date);
+
+      // var data = {
+      //   date: isoDate,
+      //   test: 'Testing ' + i 
+      // }
+
+      var data = addItemToCalendar(isoDate);
 
       days.push({
         name: date.format("dd").substring(0, 1),
@@ -86,7 +94,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
         isCurrentMonth: date.month() === month.month(),
         isToday: date.isSame(new Date(), "day"),
         date: date,
-        data: dailyMeal
+        isoDate: isoDate
       });
       date = date.clone();
       date.add(1, "d");
@@ -94,11 +102,32 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
     return days;
   }
 
-  function getMealData(date) {
-    MealsResource.getByDate(moment(date).format('MMDDYYYY'))
-      .success(function (res) { 
-        return res;
+  function formattedDate(date, format) {
+    var formattedDate = _removeTime(moment(moment.utc(date)));
+    if(format) {
+      formattedDate = formattedDate.format(format);
+    } else {
+      formattedDate = moment(formattedDate).toISOString();
+    }
+    return formattedDate;
+  }
+
+  function getMonthlyMeals(start, end) {
+    MealsResource.getMonthlyMeals(start, end)
+      .success(function (data) { 
+        vm.monthlyMeals = data;
       });
   }
 
+  vm.addItemToCalendar = addItemToCalendar;
+
+  function addItemToCalendar(individualDate) {
+    if(vm.monthlyMeals) {
+      for (i = 0; i < vm.monthlyMeals.length; i++) {
+        if(vm.monthlyMeals[i]["date"] == formattedDate(individualDate)) {
+          return vm.monthlyMeals[i];
+        }
+      }
+    }
+  }
 });
