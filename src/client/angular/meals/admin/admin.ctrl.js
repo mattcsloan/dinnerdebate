@@ -1,4 +1,4 @@
-angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function(Page, MealsResource, $scope) {
+angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function(Page, MealsResource, Recipe) {
   var vm = this;
 
   Page.setTitle('Admin');   
@@ -6,8 +6,9 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.mealDate = _removeTime(moment());
   vm.addMeal = addMeal;
   vm.getMealForm = getMealForm;
-
-
+  vm.newItemType;
+  vm.loadRecipeList = loadRecipeList;
+  vm.addNewItem = addNewItem;
   function addMeal() {
     MealsResource.addMeal( 
     { 
@@ -34,5 +35,21 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
 
   function _removeTime(date) {
     return date.hour(0).minute(0).second(0).millisecond(0);
+  }
+
+  function loadRecipeList() {
+    console.log(vm.newItemType);
+
+    Recipe.getAll()
+      .success(function(data, status) {
+        vm.recipeList = data;
+      })
+      .error(function(data, status) {
+        console.log("Error retrieving recipes");
+      });
+  }
+
+  function addNewItem() {
+    console.log(vm.newItem);
   }
 });

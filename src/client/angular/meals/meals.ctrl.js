@@ -3,9 +3,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
 
   Page.setTitle('Weekly Meals');   
   vm.title = 'Weekly Meal Suggestions';
-
   vm.day = moment.utc();
-  vm.addItemToCalendar = addItemToCalendar;
 
   calendarSetUp();
 
@@ -56,10 +54,10 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   }
 
   function _buildMonth(start, month) {
-    console.log('begin _buildMonth');
     $scope.weeks = [];
     var done = false, date = start.clone(), monthIndex = date.month(), count = 0;
     var startDate = formattedDate(date, 'MMDDYYYY');
+    var startCount = moment(date);
     while (!done) {
       $scope.weeks.push({
         days: _buildWeek(date.clone(), month),
@@ -70,9 +68,10 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       monthIndex = date.month();
     }
     var endDate = moment(date).subtract(1, "days");
+    var count = endDate.diff(startCount, 'days') + 1;
     endDate = formattedDate(endDate, 'MMDDYYYY');
 
-    getMonthlyMeals(startDate, endDate); 
+    getMonthlyMeals(startDate, endDate, count); 
   }
 
   function _buildWeek(date, month) {
@@ -106,16 +105,29 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
     return formattedDate;
   }
 
-  function getMonthlyMeals(start, end) {
+  function getMonthlyMeals(start, end, count) {
     MealsResource.getMonthlyMeals(start, end)
       .success(function (data) { 
         vm.monthlyMeals = data;
+        assembleMealCollection(data, start, end, count);
       });
   }
 
-  function addItemToCalendar(individualDate) {
-    if(vm.monthlyMeals) {
-      return _.find(vm.monthlyMeals, function(o) { return o.date == individualDate; });
+  function assembleMealCollection(data, start, end, count) {
+    vm.mealsCollection = [];
+    for(i=0;i<count;i++) {
+      //get date to test in proper ISO format
+      var currentDate = formattedDate(moment(start, "MMDDYYYY").add(i, "days"));
+
+      //check if data has an object with a date that matches currentDate
+      var entry = _.find(data, function(o) { return o.date == currentDate; });
+
+      if(entry) {
+        vm.mealsCollection.push(entry);
+      } else {
+        //no item exists in data for this date
+        vm.mealsCollection.push({});
+      }
     }
   }
 });

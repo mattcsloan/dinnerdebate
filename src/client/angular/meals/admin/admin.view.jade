@@ -19,10 +19,24 @@ hr
     form(data-ng-show="mealsadmin.mealDateSelected", data-ng-submit="mealsadmin.addMeal()")
       h2.mgn-top-0 Daily Meal: 
         span(data-ng-if="mealsadmin.mealDateSelected", data-ng-bind="mealsadmin.mealDateSelected")
-      label Meal Image:
-      input(type="text", name="imageMainSrc", placeholder="Image", data-ng-model="mealsadmin.image.main.src")
-      label Entree:
-      input(type="text", name="entreeTitle", placeholder="Title", data-ng-model="mealsadmin.entree.title")
-      label Published:
-      input(type="text", name="published", placeholder="Published", data-ng-model="mealsadmin.published")
+      //- label Meal Image:
+      //- input(type="text", name="imageMainSrc", placeholder="Image", data-ng-model="mealsadmin.image.main.src")
+      //- label Entree:
+      //- input(type="text", name="entreeTitle", placeholder="Title", data-ng-model="mealsadmin.entree.title")
+
+
+      a.btn.btn-primary Add New Item
+      label Choose item type:
+      select(data-ng-model="mealsadmin.newItemType", data-ng-change="mealsadmin.loadRecipeList()")
+        option Entree
+        option Appetizer
+        option Side
+        option Drink
+        option Dessert
+      select.mgn-top-0(data-ng-if="mealsadmin.newItemType", data-ng-change="mealsadmin.addNewItem()" data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
+
+      p
+        label
+          input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
+          | Publish this meal
       input.btn(type="submit", value="Add/Update Meal")
