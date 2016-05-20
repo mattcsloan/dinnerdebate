@@ -6,9 +6,49 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.mealDate = _removeTime(moment());
   vm.addMeal = addMeal;
   vm.getMealForm = getMealForm;
+  vm.mealInfo;
   vm.newItemType;
   vm.loadRecipeList = loadRecipeList;
   vm.addNewItem = addNewItem;
+
+
+  vm.sections = [
+    {
+      name: 'Entree',
+      items: [{
+        name: 'Asian Chicken Lettuce Wraps'
+      }]
+    },
+    {
+      name: 'Appetizers',
+      items: [{
+        name: 'Side Salad'
+      }, {
+        name: 'Egg Rolls'
+      }]
+    },
+    {
+      name: 'Sides',
+      items: [{
+        name: 'Steamed Rice'
+      }, {
+        name: 'Edamame'
+      }]
+    },
+    {
+      name: 'Drinks',
+      items: [{
+        name: 'Iced Tea'
+      }]
+    },
+    {
+      name: 'Desserts',
+      items: [{
+        name: 'Molten Chocolate Cake'
+      }]
+    }
+  ];
+
   function addMeal() {
     MealsResource.addMeal( 
     { 
@@ -30,7 +70,12 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function getMealForm(date) {
+    console.log(date);
     vm.mealDateSelected = moment(date).format('ddd MMMM DD, YYYY');
+    MealsResource.getByDate(moment(date).format('MMDDYYYY'))
+      .success(function(res) {
+        vm.mealInfo = res;
+      });
   }
 
   function _removeTime(date) {

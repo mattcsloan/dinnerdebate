@@ -6,37 +6,73 @@ h6.breadcrumb
 h1(data-ng-bind="mealsadmin.title")
 hr
 .columns
-  .col.half
+  .col.thirds
+    h2 Choose Meal Date
     calendar(selected="mealsadmin.mealDate")
     a.btn.pull-right.mgn-top-16(data-ng-click="mealsadmin.getMealForm(mealsadmin.mealDate)") Choose Day
+    .message.subtle.clear(data-ng-if="mealsadmin.mealInfo", data-ng-bind="mealsadmin.mealInfo | json")
     //- h4 Meal Preview
     //- p Calendar View
     //- p Modal View
     //- a.btn Preview All Meals
-  .col.half.meal-preview
-    .message.subtle.center(data-ng-hide="mealsadmin.mealDateSelected")
-      span.block Please choose a date from the calendar in order to add/update a meal.
+  .col.thirds.meal-preview
+    div(data-ng-hide="mealsadmin.mealDateSelected")
+      h2 Update Meal Information
+      .message.subtle.center
+        span.block Please choose a date from the calendar in order to add/update a meal.
     form(data-ng-show="mealsadmin.mealDateSelected", data-ng-submit="mealsadmin.addMeal()")
-      h2.mgn-top-0 Daily Meal: 
+      h2 Daily Meal: 
         span(data-ng-if="mealsadmin.mealDateSelected", data-ng-bind="mealsadmin.mealDateSelected")
-      //- label Meal Image:
-      //- input(type="text", name="imageMainSrc", placeholder="Image", data-ng-model="mealsadmin.image.main.src")
-      //- label Entree:
-      //- input(type="text", name="entreeTitle", placeholder="Title", data-ng-model="mealsadmin.entree.title")
 
 
-      a.btn.btn-primary Add New Item
-      label Choose item type:
-      select(data-ng-model="mealsadmin.newItemType", data-ng-change="mealsadmin.loadRecipeList()")
-        option Entree
-        option Appetizer
-        option Side
-        option Drink
-        option Dessert
-      select.mgn-top-0(data-ng-if="mealsadmin.newItemType", data-ng-change="mealsadmin.addNewItem()" data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
 
-      p
-        label
-          input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
-          | Publish this meal
-      input.btn(type="submit", value="Add/Update Meal")
+
+          
+      .meal-section(data-ng-repeat="section in mealsadmin.sections")
+        h5(data-ng-bind="section.name")
+        .meal-item(data-ng-repeat="item in section.items")
+          div
+            .action-items
+              a(data-ng-click="updating = true").helper-text.mgn-right-8.tooltip
+                i.icon.icon-reverse.subtle.icon-pencil2
+                span Edit
+              a(data-ng-click="editrecipe.removeIngredient($index, $parent.$index)").helper-text.mgn-right-8.tooltip
+                i.icon.icon-reverse.subtle.icon-cross
+                span Remove
+              a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.mgn-right-8.tooltip
+                i.icon.icon-reverse.subtle.icon-arrow-up
+                span Move&nbsp;Up
+              a(data-ng-click="editrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.tooltip
+                i.icon.icon-reverse.subtle.icon-arrow-down
+                span Move&nbsp;Down
+            p(data-ng-bind="item.name")
+
+      .message.subtle
+        h2.mgn-top-0 Add Meal Item
+        label Choose item type:
+        select(data-ng-model="mealsadmin.newItemType", data-ng-change="mealsadmin.loadRecipeList()")
+          option Entree
+          option Appetizer
+          option Side
+          option Drink
+          option Dessert
+        div(data-ng-if="mealsadmin.newItemType")
+          label Choose item:
+          select(data-ng-change="mealsadmin.addNewItem()" data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
+        a.btn.inline
+          i.icon.icon-plus.mgn-right-8
+          | Add To Meal
+
+  .col.thirds
+    h2 Preview Meal
+    .meals-calendar.admin-preview
+      .week
+        .day
+          .image-container
+            img(src="http://res.cloudinary.com/hesjwyhax/image/upload/a_exif/v1458709914/51485/DSC_1592-lettuce-wraps-sm.jpg")
+          span.date 18
+    p
+      label
+        input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
+        | Publish this meal to calendar
+    input.btn.inline(type="submit", value="Save Meal")

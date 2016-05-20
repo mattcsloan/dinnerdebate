@@ -23,7 +23,7 @@
     },
 
     o.getByDate = function(date) {
-      return $http.get(uri + date);
+      return $http.get(uri + 'on/' + date);
     },
 
     o.getMonthlyMeals = function(start, end) {
