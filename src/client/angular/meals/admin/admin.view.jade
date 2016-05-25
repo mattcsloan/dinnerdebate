@@ -36,7 +36,7 @@ hr
               a(data-ng-click="updating = true").helper-text.mgn-right-8.tooltip
                 i.icon.icon-reverse.subtle.icon-pencil2
                 span Edit
-              a(data-ng-click="editrecipe.removeIngredient($index, $parent.$index)").helper-text.mgn-right-8.tooltip
+              a(data-ng-click="mealsadmin.removeItem($index, $parent.$index)").helper-text.mgn-right-8.tooltip
                 i.icon.icon-reverse.subtle.icon-cross
                 span Remove
               a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.mgn-right-8.tooltip
@@ -58,8 +58,8 @@ hr
           option Dessert
         div(data-ng-if="mealsadmin.newItemType")
           label Choose item:
-          select(data-ng-change="mealsadmin.addNewItem()" data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
-        a.btn.inline
+          select(data-ng-change="mealsadmin.itemSelected()" data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
+        a.btn.inline(data-ng-click="mealsadmin.addItem()")
           i.icon.icon-plus.mgn-right-8
           | Add To Meal
 

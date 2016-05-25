@@ -9,45 +9,74 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.mealInfo;
   vm.newItemType;
   vm.loadRecipeList = loadRecipeList;
-  vm.addNewItem = addNewItem;
+  vm.itemSelected = itemSelected;
+  vm.addItem = addItem;
+  vm.removeItem = removeItem;
 
+  // vm.sections = [
+  //   {
+  //     name: 'Entree',
+  //     items: [{
+  //       name: 'Asian Chicken Lettuce Wraps'
+  //     }]
+  //   },
+  //   {
+  //     name: 'Appetizers',
+  //     items: [{
+  //       name: 'Side Salad'
+  //     }, {
+  //       name: 'Egg Rolls'
+  //     }]
+  //   },
+  //   {
+  //     name: 'Sides',
+  //     items: [{
+  //       name: 'Steamed Rice'
+  //     }, {
+  //       name: 'Edamame'
+  //     }]
+  //   },
+  //   {
+  //     name: 'Drinks',
+  //     items: [{
+  //       name: 'Iced Tea'
+  //     }]
+  //   },
+  //   {
+  //     name: 'Desserts',
+  //     items: [{
+  //       name: 'Molten Chocolate Cake'
+  //     }]
+  //   }
+  // ];
 
-  vm.sections = [
-    {
-      name: 'Entree',
-      items: [{
-        name: 'Asian Chicken Lettuce Wraps'
-      }]
-    },
-    {
-      name: 'Appetizers',
-      items: [{
-        name: 'Side Salad'
-      }, {
-        name: 'Egg Rolls'
-      }]
-    },
-    {
-      name: 'Sides',
-      items: [{
-        name: 'Steamed Rice'
-      }, {
-        name: 'Edamame'
-      }]
-    },
-    {
-      name: 'Drinks',
-      items: [{
-        name: 'Iced Tea'
-      }]
-    },
-    {
-      name: 'Desserts',
-      items: [{
-        name: 'Molten Chocolate Cake'
-      }]
+  vm.sections = [];
+
+  function addItem() {
+    if(vm.newItemType && vm.newItem) {
+      //check if vm.sections has an object with the same section already
+      var section = _.findIndex(vm.sections, function(o) { return o.name == vm.newItemType; });
+
+      if(section > -1) {
+        vm.sections[section].items.push(vm.newItem);
+      } else {
+        var itemToAdd = {
+          name: vm.newItemType,
+          items: [vm.newItem]
+        }
+        vm.sections.push(itemToAdd);
+      }
+      console.log(vm.sections);
     }
-  ];
+  }
+
+  function removeItem(item, section) {
+
+    vm.sections[section].items.splice(item, 1);
+    if(vm.sections[section].items.length == 0) {
+      vm.sections.splice(section, 1);
+    }
+  }
 
   function addMeal() {
     MealsResource.addMeal( 
@@ -70,7 +99,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function getMealForm(date) {
-    console.log(date);
+    console.log('date ' + date);
     vm.mealDateSelected = moment(date).format('ddd MMMM DD, YYYY');
     MealsResource.getByDate(moment(date).format('MMDDYYYY'))
       .success(function(res) {
@@ -83,7 +112,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function loadRecipeList() {
-    console.log(vm.newItemType);
+    console.log('vm.newItemType ' + vm.newItemType);
 
     Recipe.getAll()
       .success(function(data, status) {
@@ -94,7 +123,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
       });
   }
 
-  function addNewItem() {
-    console.log(vm.newItem);
+  function itemSelected() {
+    console.log('vm.newItem ' + vm.newItem);
   }
 });
