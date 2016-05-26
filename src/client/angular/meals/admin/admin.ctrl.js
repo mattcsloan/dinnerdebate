@@ -12,44 +12,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.itemSelected = itemSelected;
   vm.addItem = addItem;
   vm.removeItem = removeItem;
-
-  // vm.sections = [
-  //   {
-  //     name: 'Entree',
-  //     items: [{
-  //       name: 'Asian Chicken Lettuce Wraps'
-  //     }]
-  //   },
-  //   {
-  //     name: 'Appetizers',
-  //     items: [{
-  //       name: 'Side Salad'
-  //     }, {
-  //       name: 'Egg Rolls'
-  //     }]
-  //   },
-  //   {
-  //     name: 'Sides',
-  //     items: [{
-  //       name: 'Steamed Rice'
-  //     }, {
-  //       name: 'Edamame'
-  //     }]
-  //   },
-  //   {
-  //     name: 'Drinks',
-  //     items: [{
-  //       name: 'Iced Tea'
-  //     }]
-  //   },
-  //   {
-  //     name: 'Desserts',
-  //     items: [{
-  //       name: 'Molten Chocolate Cake'
-  //     }]
-  //   }
-  // ];
-
+  vm.reorderItem = reorderItem;
   vm.sections = [];
 
   function addItem() {
@@ -57,9 +20,19 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
       //check if vm.sections has an object with the same section already
       var section = _.findIndex(vm.sections, function(o) { return o.name == vm.newItemType; });
 
+      //if section already exists
       if(section > -1) {
-        vm.sections[section].items.push(vm.newItem);
+        //only add item if section does not already have item
+        var checkForItem = _.findIndex(vm.sections[section].items, function(o) { return o.key == vm.newItem.key; });
+        if(checkForItem === -1) {
+          // only one entree allowed, clear existing entree
+          if(vm.sections[section].name === "Entree") {
+            vm.sections[section].items.splice(0);
+          }
+          vm.sections[section].items.push(vm.newItem);
+        }
       } else {
+        //add item to existing section
         var itemToAdd = {
           name: vm.newItemType,
           items: [vm.newItem]
@@ -71,12 +44,28 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function removeItem(item, section) {
-
     vm.sections[section].items.splice(item, 1);
     if(vm.sections[section].items.length == 0) {
       vm.sections.splice(section, 1);
     }
   }
+
+  function reorderItem(direction, item, section) {
+  var itemToMove = vm.sections[section].items.splice(item, 1);
+  if(direction == 'up') {
+    if(item == 0) {
+      var newIndex = item;
+    } else {
+      var newIndex = item - 1;
+    }
+  } else if(direction == 'down') {
+    var newIndex = item + 1;
+  } else {
+    var newIndex = vm.sections[section].items.length + 1;
+  }
+  vm.sections[section].items.splice(newIndex, 0, itemToMove[0]);
+}
+
 
   function addMeal() {
     MealsResource.addMeal( 
@@ -99,8 +88,8 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function getMealForm(date) {
-    console.log('date ' + date);
     vm.mealDateSelected = moment(date).format('ddd MMMM DD, YYYY');
+    vm.calendarPreviewDate = moment(date).format('D');
     MealsResource.getByDate(moment(date).format('MMDDYYYY'))
       .success(function(res) {
         vm.mealInfo = res;

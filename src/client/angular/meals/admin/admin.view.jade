@@ -33,16 +33,13 @@ hr
         .meal-item(data-ng-repeat="item in section.items")
           div
             .action-items
-              a(data-ng-click="updating = true").helper-text.mgn-right-8.tooltip
-                i.icon.icon-reverse.subtle.icon-pencil2
-                span Edit
-              a(data-ng-click="mealsadmin.removeItem($index, $parent.$index)").helper-text.mgn-right-8.tooltip
+              a(data-ng-click="mealsadmin.removeItem($index, $parent.$index)").helper-text.mgn-left-8.tooltip
                 i.icon.icon-reverse.subtle.icon-cross
                 span Remove
-              a(data-ng-click="editrecipe.reorderIngredient('up', $index, $parent.$index)").helper-text.mgn-right-8.tooltip
+              a(data-ng-show="section.items.length > 1 && $index !== 0", data-ng-click="mealsadmin.reorderItem('up', $index, $parent.$index)").helper-text.mgn-left-8.tooltip
                 i.icon.icon-reverse.subtle.icon-arrow-up
                 span Move&nbsp;Up
-              a(data-ng-click="editrecipe.reorderIngredient('down', $index, $parent.$index)").helper-text.tooltip
+              a(data-ng-show="section.items.length > 1 && $index < section.items.length - 1", data-ng-click="mealsadmin.reorderItem('down', $index, $parent.$index)").helper-text.mgn-left-8.tooltip
                 i.icon.icon-reverse.subtle.icon-arrow-down
                 span Move&nbsp;Down
             p(data-ng-bind="item.name")
@@ -70,7 +67,7 @@ hr
         .day
           .image-container
             img(src="http://res.cloudinary.com/hesjwyhax/image/upload/a_exif/v1458709914/51485/DSC_1592-lettuce-wraps-sm.jpg")
-          span.date 18
+          span.date(data-ng-bind="mealsadmin.calendarPreviewDate")
     p
       label
         input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
