@@ -23,11 +23,6 @@ hr
     form(data-ng-show="mealsadmin.mealDateSelected", data-ng-submit="mealsadmin.addMeal()")
       h2 Daily Meal: 
         span(data-ng-if="mealsadmin.mealDateSelected", data-ng-bind="mealsadmin.mealDateSelected")
-
-
-
-
-          
       .meal-section(data-ng-repeat="section in mealsadmin.sections")
         h5(data-ng-bind="section.name")
         .meal-item(data-ng-repeat="item in section.items")
@@ -43,7 +38,6 @@ hr
                 i.icon.icon-reverse.subtle.icon-arrow-down
                 span Move&nbsp;Down
             p(data-ng-bind="item.name")
-
       .message.subtle
         h2.mgn-top-0 Add Meal Item
         label Choose item type:
@@ -55,21 +49,69 @@ hr
           option Dessert
         div(data-ng-if="mealsadmin.newItemType")
           label Choose item:
-          select(data-ng-change="mealsadmin.itemSelected()" data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
+          select(data-ng-options="recipe.name for recipe in mealsadmin.recipeList | orderBy: 'name'", data-ng-model="mealsadmin.newItem")
         a.btn.inline(data-ng-click="mealsadmin.addItem()")
           i.icon.icon-plus.mgn-right-8
           | Add To Meal
+      h2 Completion Times
+      label Estimated Meal Cook Time
+        span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+        | :
+      input(type="text", data-ng-model="mealsadmin.mealCookTime")
+      label Estimated Meal Prep Time
+        span.mgn-left-8.helper-text.text-muted (in&nbsp;minutes)
+        | :
+      input(type="text", data-ng-model="mealsadmin.mealPrepTime")
+      h2 Blog URL
+      label Link to Blog Article
+        span.mgn-left-8.helper-text.text-muted (optional)
+        | :
+      input(type="text", data-ng-model="mealsadmin.mealUrl")
 
   .col.thirds
     h2 Preview Meal
-    .meals-calendar.admin-preview
-      .week
+    div(data-ng-hide="mealsadmin.mealDateSelected")
+      .message.subtle.center
+        span.block Please choose a date to preview the meal.
+    .meals-calendar.admin-preview(data-ng-show="mealsadmin.mealDateSelected")
+      .week.this-week
         .day
           .image-container
-            img(src="http://res.cloudinary.com/hesjwyhax/image/upload/a_exif/v1458709914/51485/DSC_1592-lettuce-wraps-sm.jpg")
+            img(data-ng-if="mealsadmin.mainItem.items[0].image.url", data-ng-src="{{ mealsadmin.mainItem.items[0].image.url }}")
           span.date(data-ng-bind="mealsadmin.calendarPreviewDate")
-    p
-      label
-        input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
-        | Publish this meal to calendar
-    input.btn.inline(type="submit", value="Save Meal")
+          h3(data-ng-if="mealsadmin.mainItem.items[0].name")
+            a(href="#", data-ng-bind="mealsadmin.mainItem.items[0].name")
+          .meal-details(data-ng-if="mealsadmin.mealCookTime || mealsadmin.mealPrepTime || mealsadmin.mealUrl || mealsadmin.sections.length")
+            ul.list.meal-list(data-ng-repeat="section in mealsadmin.sections")
+              li(data-ng-repeat="item in section.items")
+                i.icon.icon-plus.mgn-right-8
+                span(data-ng-if="section.name === 'Appetizer'") App:
+                span(data-ng-if="section.name !== 'Appetizer'", data-ng-bind="section.name")
+                //- check if has key && category key
+                strong(data-ng-bind="item.name")
+            ul.list.meal-list.meal-times(data-ng-if="mealsadmin.mealCookTime || mealsadmin.mealPrepTime")
+              li(data-ng-if="mealsadmin.mealPrepTime")
+                i.icon.icon-clock.mgn-right-8
+                span Prep: 
+                strong(data-ng-bind="mealsadmin.mealPrepTime")
+                span.mgn-left-8.helper-text Mins
+              li(data-ng-if="mealsadmin.mealCookTime")
+                i.icon.icon-alarm.mgn-right-8
+                span Cook: 
+                strong(data-ng-bind="mealsadmin.mealCookTime")
+                span.mgn-left-8.helper-text Mins
+            .mgn-top-16(data-ng-if="mealsadmin.mealUrl")
+              h4 View it on our blog
+              a.btn.mgn-btm-0(data-ng-href="{{mealsadmin.mealUrl}}", target="_blank") Meal Details
+
+
+
+
+
+hr
+input.btn.inline.pull-right.mgn-top-0.mgn-left-16(type="submit", value="Save Meal")
+p.pull-right.btn-height
+  label
+    input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
+    | Publish this meal to calendar
+a.btn.btn-subtle Delete Meal
