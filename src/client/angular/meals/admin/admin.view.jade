@@ -79,14 +79,14 @@ hr
           .image-container
             img(data-ng-if="mealsadmin.mainImage", data-ng-src="{{ mealsadmin.mainImage }}")
           span.date(data-ng-bind="mealsadmin.calendarPreviewDate")
-          h3(data-ng-if="mealsadmin.mainItem.items[0].name")
-            a(href="#", data-ng-bind="mealsadmin.mainItem.items[0].name")
+          h3(data-ng-if="mealsadmin.mainItem.name")
+            a(href="#", data-ng-bind="mealsadmin.mainItem.name")
           .meal-details(data-ng-if="mealsadmin.mealCookTime || mealsadmin.mealPrepTime || mealsadmin.mealUrl || mealsadmin.sections.length")
             ul.list.meal-list(data-ng-repeat="section in mealsadmin.sections")
-              li(data-ng-repeat="item in section.items")
+              li(data-ng-repeat="item in section.items", data-ng-if="item !== mealsadmin.mainItem")
                 i.icon.icon-plus.mgn-right-8
                 span(data-ng-if="section.name === 'Appetizer'") App:
-                span(data-ng-if="section.name !== 'Appetizer'", data-ng-bind="section.name")
+                span(data-ng-if="section.name !== 'Appetizer'", data-ng-bind="section.name + ':'")
                 //- check if has key && category key
                 strong(data-ng-bind="item.name")
             ul.list.meal-list.meal-times(data-ng-if="mealsadmin.mealCookTime || mealsadmin.mealPrepTime")

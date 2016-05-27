@@ -45,7 +45,6 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
         }
         vm.sections.push(itemToAdd);
       }
-      console.log(vm.sections);
 
       updatePreview();
     }
@@ -84,11 +83,13 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
       } else {
         vm.mainItem = vm.sections[0];
       }
+
+      vm.mainItem = vm.mainItem.items[0];
     }
 
     // take main image and make sure it displays thumbnail size
-    if(vm.mainItem.items[0].image.url) {
-      vm.mainImage = vm.mainItem.items[0].image.url;
+    if(vm.mainItem.image.url) {
+      vm.mainImage = vm.mainItem.image.url;
       if(vm.mainImage.indexOf('image/upload') > -1) {
         var thumbUrl = vm.mainImage.split('image/upload');
         thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
@@ -130,8 +131,6 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function loadRecipeList() {
-    console.log('vm.newItemType ' + vm.newItemType);
-
     Recipe.getAll()
       .success(function(data, status) {
         vm.recipeList = data;
