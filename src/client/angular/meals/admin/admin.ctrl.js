@@ -16,6 +16,10 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.updatePreview = updatePreview;
   vm.sections = [];
   vm.deleteMeal = deleteMeal;
+  vm.modalShown = false;
+  vm.toggleModal = function() {
+    vm.modalShown = !vm.modalShown;
+  };
 
   function addItem() {
     if(vm.newItemType && vm.newItem) {
@@ -69,16 +73,26 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
       var newIndex = vm.sections[section].items.length + 1;
     }
     vm.sections[section].items.splice(newIndex, 0, itemToMove[0]);
+    updatePreview();
   }
 
   function updatePreview() {
-    console.log("updatePreview");
     if(vm.sections) {
       var section = _.findIndex(vm.sections, function(o) { return o.name == "Entree"; });
       if(section > -1) {
         vm.mainItem = vm.sections[section];
       } else {
         vm.mainItem = vm.sections[0];
+      }
+    }
+
+    // take main image and make sure it displays thumbnail size
+    if(vm.mainItem.items[0].image.url) {
+      vm.mainImage = vm.mainItem.items[0].image.url;
+      if(vm.mainImage.indexOf('image/upload') > -1) {
+        var thumbUrl = vm.mainImage.split('image/upload');
+        thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
+        vm.mainImage = thumbUrl;
       }
     }
   }
