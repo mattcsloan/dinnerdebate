@@ -40,6 +40,10 @@
 
     o.updateMeal = function(date, postData) {
       return $http.put(uri + date, postData);
+    },
+
+    o.delete = function(date) {
+      return $http.delete(uri + date);
     };
 
     return o;

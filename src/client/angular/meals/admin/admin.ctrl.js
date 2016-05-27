@@ -15,6 +15,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.reorderItem = reorderItem;
   vm.updatePreview = updatePreview;
   vm.sections = [];
+  vm.deleteMeal = deleteMeal;
 
   function addItem() {
     if(vm.newItemType && vm.newItem) {
@@ -123,6 +124,13 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
       })
       .error(function(data, status) {
         console.log("Error retrieving recipes");
+      });
+  }
+
+  function deleteMeal(date) {
+    MealsResource.delete(moment(date).format('MMDDYYYY'))
+      .success(function () {
+        console.log('deleted');
       });
   }
 

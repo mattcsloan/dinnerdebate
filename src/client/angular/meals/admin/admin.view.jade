@@ -114,4 +114,4 @@ p.pull-right.btn-height
   label
     input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)
     | Publish this meal to calendar
-a.btn.btn-subtle Delete Meal
+a.btn.btn-subtle(data-ng-click="mealsadmin.deleteMeal(mealsadmin.mealDate)") Delete Meal

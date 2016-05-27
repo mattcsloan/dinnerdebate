@@ -107,6 +107,33 @@ module.exports = function(app) {
         });
     });
 
+    // delete meal
+    app.delete('/api/meals/:mealDate', stormpath.loginRequired, function(req, res) {
+        var mealDate = req.params.mealDate;
+        var month = mealDate.substr(0, 2);
+        var day = mealDate.substr(2, 2);
+        var year = mealDate.substr(4, 4);
+        var timeStamp = year + '-' + month + '-' + day + "T00:00:00.000Z";
+
+        Meals.findOne({
+            date: timeStamp
+        }, function(err, meal) { 
+            if (err) {
+                res.send(err);
+            }
+            if(meal) {
+                if(req.user.groups.items[0].name == 'Admin') {
+                    meal.remove(function(err) {
+                        if(err) {
+                            res.send(err);
+                        }
+                        res.json();
+                    });
+                }
+            }
+        });
+    });
+
     // get all recipes
     app.get('/api/recipes', function(req, res) {
         // use mongoose to get all recipes in the database
