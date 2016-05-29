@@ -109,7 +109,7 @@ hr
 
 div(data-ng-if="mealsadmin.mealDateSelected")
   hr
-  input.btn.inline.pull-right.mgn-top-0.mgn-left-16(type="submit", value="Save Meal")
+  input.btn.inline.pull-right.mgn-top-0.mgn-left-16(type="submit", value="Save Meal", data-ng-click="mealsadmin.addMeal()")
   p.pull-right.btn-height
     label
       input(type="checkbox", name="published", data-ng-model="mealsadmin.published", checked)

@@ -33,12 +33,8 @@ module.exports = function(app) {
         // look for existing meal with same name and category first
         var meal = new Meals({
             date: req.body.date,
-            image: req.body.image,
-            entree: req.body.entree,
-            appetizers: req.body.appetizers,
-            sides: req.body.sides,
-            drinks: req.body.drinks,
-            desserts: req.body.desserts,
+            mainItem: req.body.mainItem,
+            items: req.body.items,
             prepTime: req.body.prepTime,
             cookTime: req.body.cookTime,
             mealUrl: req.body.mealUrl,
@@ -108,7 +104,7 @@ module.exports = function(app) {
     });
 
     // delete meal
-    app.delete('/api/meals/:mealDate', stormpath.loginRequired, function(req, res) {
+    app.delete('/api/meals/:mealDate', function(req, res) {
         var mealDate = req.params.mealDate;
         var month = mealDate.substr(0, 2);
         var day = mealDate.substr(2, 2);
@@ -122,14 +118,14 @@ module.exports = function(app) {
                 res.send(err);
             }
             if(meal) {
-                if(req.user.groups.items[0].name == 'Admin') {
+                // if(req.user.groups.items[0].name == 'Admin') {
                     meal.remove(function(err) {
                         if(err) {
                             res.send(err);
                         }
                         res.json();
                     });
-                }
+                // }
             }
         });
     });

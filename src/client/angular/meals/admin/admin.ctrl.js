@@ -102,14 +102,11 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
     MealsResource.addMeal( 
     { 
       date: vm.mealDate,
-      image: {
-        main: {
-          src: vm.image.main.src
-        }
-      },
-      entree: {
-        title: vm.entree.title
-      },
+      mainItem: vm.mainItem,
+      items: vm.sections,
+      prepTime: vm.mealPrepTime,
+      cookTime: vm.mealCookTime,
+      mealUrl: vm.mealUrl,
       published: vm.published
     })
     .success(function (res) {
