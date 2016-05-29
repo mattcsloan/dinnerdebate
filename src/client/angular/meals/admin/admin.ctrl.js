@@ -4,8 +4,10 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   Page.setTitle('Admin');   
   vm.title = 'Admin';
   vm.mealUrl;
-  vm.mealDate = _removeTime(moment());
+  vm.mealDate;
+  vm.saveMeal = saveMeal;
   vm.addMeal = addMeal;
+  vm.updateMeal = updateMeal;
   vm.getMealForm = getMealForm;
   vm.mealInfo;
   vm.newItemType;
@@ -20,6 +22,8 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   vm.toggleModal = function() {
     vm.modalShown = !vm.modalShown;
   };
+
+  loadRecipeList();
 
   function addItem() {
     if(vm.newItemType && vm.newItem) {
@@ -95,6 +99,16 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
         thumbUrl = thumbUrl[0] + 'image/upload/a_exif,c_fill,h_200,w_300' + thumbUrl[1]
         vm.mainImage = thumbUrl;
       }
+    } else {
+      vm.mainImage = null;
+    }
+  }
+
+  function saveMeal() {
+    if(vm.existingMeal) {
+      updateMeal();
+    } else {
+      addMeal();
     }
   }
 
@@ -114,13 +128,53 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
     });
   }
 
+  function updateMeal() {
+    MealsResource.updateMeal(moment(vm.mealDate).format('MMDDYYYY'),  
+    { 
+      date: vm.mealDate,
+      mainItem: vm.mainItem,
+      items: vm.sections,
+      prepTime: vm.mealPrepTime,
+      cookTime: vm.mealCookTime,
+      mealUrl: vm.mealUrl,
+      published: vm.published
+    })
+    .success(function (res) {
+      console.log("Meal Updated!");
+    });
+  }
+
   function getMealForm(date) {
-    vm.mealDateSelected = moment(date).format('ddd MMMM DD, YYYY');
-    vm.calendarPreviewDate = moment(date).format('D');
-    MealsResource.getByDate(moment(date).format('MMDDYYYY'))
-      .success(function(res) {
-        vm.mealInfo = res;
-      });
+    var dayOfWeek = moment(date).format('e');
+    if(dayOfWeek == 0 || dayOfWeek == 6) {
+      console.log("It's the weekend!")
+    } else {
+      vm.existingMeal = false;
+      vm.mealDateSelected = moment(date).format('ddd MMMM DD, YYYY');
+      vm.calendarPreviewDate = moment(date).format('D');
+      MealsResource.getByDate(moment(date).format('MMDDYYYY'))
+        .success(function(res) {
+          if(res && res !== "Meal does not exist.") {
+            vm.sections = res.items;
+            vm.mealPrepTime = res.prepTime;
+            vm.mealCookTime = res.cookTime;
+            vm.mealUrl = res.mealUrl;
+            vm.published = res.published;
+
+            updatePreview();
+            vm.existingMeal = true;
+          }
+          if(res === "Meal does not exist.") {
+            vm.sections = [];
+            vm.mealPrepTime = null;
+            vm.mealCookTime = null;
+            vm.mealUrl = null;
+            vm.published = null;
+            vm.mainItem = null;
+            vm.mainImage = null;
+          }
+        });
+    }
   }
 
   function _removeTime(date) {
@@ -140,7 +194,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   function deleteMeal(date) {
     MealsResource.delete(moment(date).format('MMDDYYYY'))
       .success(function () {
-        console.log('deleted');
+        console.log('Meal deleted.');
       });
   }
 

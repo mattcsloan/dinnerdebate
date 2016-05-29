@@ -30,7 +30,6 @@ module.exports = function(app) {
     // create meal
     app.post('/api/meals', stormpath.loginRequired, function(req, res) {
         // use mongoose to add a new meal in the database
-        // look for existing meal with same name and category first
         var meal = new Meals({
             date: req.body.date,
             mainItem: req.body.mainItem,
@@ -76,7 +75,11 @@ module.exports = function(app) {
             if (err) {
                 res.send(err);
             }
-            res.status(201).json(meal);
+            if(meal) {
+                res.status(201).json(meal);
+            } else {
+                res.status(201).send("Meal does not exist.");
+            }
         });
     });
 
@@ -103,8 +106,45 @@ module.exports = function(app) {
         });
     });
 
+    // update individual meal
+    app.put('/api/meals/:mealDate', stormpath.loginRequired, function(req, res) {
+        var mealDate = req.params.mealDate;
+        var month = mealDate.substr(0, 2);
+        var day = mealDate.substr(2, 2);
+        var year = mealDate.substr(4, 4);
+        var timeStamp = year + '-' + month + '-' + day + "T00:00:00.000Z";
+
+        if(req.user.groups.items[0].name == 'Admin') {
+            Meals.findOne({
+                date: timeStamp
+            }, function(err, meal) { 
+                if (err) {
+                    res.send(err);
+                } else {
+                    meal.date = req.body.date;
+                    meal.mainItem = req.body.mainItem;
+                    meal.items = req.body.items;
+                    meal.prepTime = req.body.prepTime;
+                    meal.cookTime = req.body.cookTime;
+                    meal.mealUrl = req.body.mealUrl;
+                    meal.published = req.body.published;
+
+                    meal.save(function(err, meal) {
+                        if(err) {
+                            res.send(err);
+                        }
+                        res.status(201).json(meal);
+                    });
+                }
+            });
+        }
+        else {
+            res.send('You do not have access to update this recipe.');
+        }
+    });
+
     // delete meal
-    app.delete('/api/meals/:mealDate', function(req, res) {
+    app.delete('/api/meals/:mealDate', stormpath.loginRequired, function(req, res) {
         var mealDate = req.params.mealDate;
         var month = mealDate.substr(0, 2);
         var day = mealDate.substr(2, 2);
@@ -114,18 +154,18 @@ module.exports = function(app) {
         Meals.findOne({
             date: timeStamp
         }, function(err, meal) { 
-            if (err) {
-                res.send(err);
+            if (err || !meal) {
+                res.send('Meal does not exist.');
             }
             if(meal) {
-                // if(req.user.groups.items[0].name == 'Admin') {
+                if(req.user.groups.items[0].name == 'Admin') {
                     meal.remove(function(err) {
                         if(err) {
                             res.send(err);
                         }
                         res.json();
                     });
-                // }
+                }
             }
         });
     });

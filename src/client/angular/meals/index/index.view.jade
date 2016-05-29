@@ -25,8 +25,8 @@ hr
       .day Sat
     .week(data-ng-repeat="week in weeks", data-ng-class="{ 'this-week': week.isCurrentWeek }")
       .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
-        .image-container(data-ng-if="meals.mealsCollection[day.number - 1].image.main.src")
-          img(data-ng-src="{{meals.mealsCollection[day.number - 1].image.main.src}}")
+        .image-container(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.image.url")
+          img(data-ng-src="{{meals.mealsCollection[day.number - 1].mainItem.image.url}}")
         span.date(data-ng-bind="day.number")
 
 
