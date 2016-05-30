@@ -134,13 +134,13 @@ modal(show="mealDescription")
         a(data-ui-sref="recipes.view({categoryKey: mealDescription.mainItem.categoryKey, recipeName: mealDescription.mainItem.key})", data-ng-bind="mealDescription.mainItem.name" target="_blank")
       h3(data-ng-if="mealDescription.mainItem.name && (!mealDescription.mainItem.categoryKey || !mealDescription.mainItem.key)", data-ng-bind="mealDescription.mainItem.name")
       ul.list.meal-list(data-ng-if="mealDescription.items", data-ng-repeat="section in mealDescription.items")
-        li(data-ng-repeat="item in section.items")
+        li(data-ng-repeat="item in section.items", data-ng-if="item.name !== mealDescription.mainItem.name")
           i.icon.icon-plus.mgn-right-8
           span(data-ng-if="section.name && section.name !== 'Appetizer'", data-ng-bind="section.name + ':'") 
           span(data-ng-if="section.name && section.name === 'Appetizer'") App:
           strong(data-ng-if="!item.categoryKey || !item.key", data-ng-bind="item.name")
-          strong(data-ng-if="item.categoryKey && item.key")
-            a(data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
+          a(data-ng-if="item.categoryKey && item.key && item.name !== mealDescription.mainItem.name", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
+            strong(data-ng-bind="item.name")
       ul.list.meal-list.meal-times(data-ng-if="mealDescription.prepTime || mealDescription.cookTime")
         li(data-ng-if="mealDescription.prepTime")
           i.icon.icon-clock.mgn-right-8
@@ -161,17 +161,29 @@ modal(show="mealDescription")
 
     .col.half
       .image-container
-        img.mgn-btm-8(data-ng-if="mealDescription.mainItem.image.url", data-ng-src="{{mealDescription.mainItem.image.url}}")
-        a.btn(data-ng-if="mealDescription.mainItem.categoryKey && mealDescription.mainItem.key", data-ui-sref="recipes.view({categoryKey: mealDescription.mainItem.categoryKey, recipeName: mealDescription.mainItem.key})", target="_blank")
+        img.mgn-btm-8(data-ng-if="meals.mainImage.url", data-ng-src="{{meals.mainImage.url}}")
+        a.btn(data-ng-if="meals.mainImage.categoryKey && meals.mainImage.key", data-ui-sref="recipes.view({categoryKey: meals.mainImage.categoryKey, recipeName: meals.mainImage.key})", target="_blank")
           i.icon.icon-search
         //- a.btn(data-ng-if="mealDescription.image.main.link", data-ng-href="{{mealDescription.image.main.link}}", target="_blank")
         //-   i.icon.icon-search
-      .columns(data-ng-if="mealDescription.items")
-        .col.half(data-ng-repeat="section in mealDescription.items", data-ng-if="section.items")
-          div(data-ng-repeat="item in section.items", data-ng-if="item.image.url")
+      //- .columns(data-ng-if="mealDescription.items")
+      //-   .col.half(data-ng-repeat="section in mealDescription.items", data-ng-if="section.items")
+      //-     div(data-ng-repeat="item in section.items", data-ng-if="item.image.url && item.image.url !== mealDescription.mainItem.image.url")
+      //-       .image-container
+      //-         img(data-ng-src="{{item.image.url}}")
+      //-         a.btn(data-ng-if="item.categoryKey && item.key", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", target="_blank")
+      //-           i.icon.icon-search
+
+
+
+      div(data-ng-if="mealDescription.items")
+        .columns(data-ng-if="meals.dailyImages")
+          .col.half.mgn-btm-8(data-ng-repeat="img in meals.dailyImages", data-ng-if="img.url && img.url !== mealDescription.mainItem.image.url")
             .image-container
-              img(data-ng-src="{{item.image.url}}")
-              a.btn(data-ng-if="item.categoryKey && item.key", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", target="_blank")
+              img(data-ng-src="{{img.url}}")
+              a.btn(data-ng-if="img.categoryKey && img.key", data-ui-sref="recipes.view({categoryKey: img.categoryKey, recipeName: img.key})", target="_blank")
                 i.icon.icon-search
+
+
               //- a.btn(data-ng-if="secondaryImage.link", data-ng-href="{{secondaryImage.link}}", target="_blank")
               //-   i.icon.icon-search

@@ -32,6 +32,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
     $scope.toggleDescription = function(item, date) {
       $scope.mealDescription = item;
       $scope.mealDate = moment(date).format('MMMM D, YYYY');
+      getDailyImages(item);
     };
 
     $scope.next = function() {
@@ -123,6 +124,10 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       var entry = _.find(data, function(o) { return o.date == currentDate; });
 
       if(entry) {
+        if(entry.mainItem.image && entry.mainItem.image.url) {
+          var sizedImage = getProperImageSize(entry.mainItem.image.url, 300, 200);
+          entry.mainItem.image.url = sizedImage;
+        }
         vm.mealsCollection.push(entry);
       } else {
         //no item exists in data for this date
@@ -130,4 +135,38 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       }
     }
   }
+
+  function getDailyImages(data) {
+    vm.dailyImages = [];
+    if(data.mainItem.image.url) {
+      var mainImage = getProperImageSize(data.mainItem.image.url, 300, 200);
+      vm.mainImage = {
+        url: mainImage,
+        key: data.mainItem.key,
+        categoryKey: data.mainItem.categoryKey
+      }
+    }
+
+    var sections = data.items;
+    for(i=0; i<sections.length; i++) {
+      if(sections[i].items) {
+        var section = sections[i].items;
+        for(j=0; j<section.length; j++) {
+          var item = section[j];
+          if(item.image && item.image.url) {
+            var sizedImage = getProperImageSize(item.image.url, 300, 200);
+            if(sizedImage !== mainImage) {
+              var imageObj = {
+                url: sizedImage,
+                key: item.key,
+                categoryKey: item.categoryKey
+              };
+              vm.dailyImages.push(imageObj);
+            }
+          }
+        }
+      }
+    }
+  }
+
 });
