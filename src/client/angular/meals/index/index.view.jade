@@ -4,9 +4,6 @@ h6.breadcrumb
 
 h1(data-ng-bind="meals.title")
 hr
-
-.message.subtle(data-ng-bind="meals.monthlyMeals | json")
-
 .meals-calendar
   .meals-calendar-head
     a(data-ng-click="previous()")
@@ -24,10 +21,30 @@ hr
       .day Fri
       .day Sat
     .week(data-ng-repeat="week in weeks", data-ng-class="{ 'this-week': week.isCurrentWeek }")
-      .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
-        .image-container(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.image.url")
-          img(data-ng-src="{{meals.mealsCollection[day.number - 1].mainItem.image.url}}")
+      //- .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
+      //-   .image-container(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.image.url")
+      //-     img(data-ng-src="{{meals.mealsCollection[day.number - 1].mainItem.image.url}}")
+      //-     a.btn(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.key && meals.mealsCollection[day.number - 1].mainItem.categoryKey", data-ui-sref="recipes.view({categoryKey: meals.mealsCollection[day.number - 1].mainItem.categoryKey, recipeName: meals.mealsCollection[day.number - 1].mainItem.key})")
+      //-       i.icon.icon-search
+      //-     //- a.btn(data-ng-if="data[day.month][day.number - 1].image.main.link", data-ng-href="{{data[day.month][day.number - 1].image.main.link}}", target="_blank")
+      //-     //-   i.icon.icon-search
+      //-   img.meal-preview(data-ng-if="meals.mealsCollection[day.number - 1].published && meals.mealsCollection[day.number - 1].mainItem.image.url", data-ng-src="{{ meals.mealsCollection[day.number - 1].mainItem.image.url }}")
+        //- span.date(data-ng-bind="day.number")
+
+
+
+      .day(data-ng-if="!week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
+        img(data-ng-if="day.isCurrentMonth && meals.mealsCollection[day.number - 1].published && meals.mealsCollection[day.number - 1].mainItem.image.url", data-ng-src="{{ meals.mealsCollection[day.number - 1].mainItem.image.url }}")
         span.date(data-ng-bind="day.number")
+        a(data-ng-if="day.isCurrentMonth && meals.mealsCollection[day.number - 1].published", data-ng-click="toggleDescription(meals.mealsCollection[day.number - 1], day.date)", scroll-to="header")
+          span.btn.btn-subtle
+            i.icon.icon-search.mgn-right-8
+            | Meal Details
+          span.title(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.name", data-ng-bind="meals.mealsCollection[day.number - 1].mainItem.name")
+
+
+
+
 
 
 
@@ -109,67 +126,52 @@ hr
       i.icon.icon-dd-caret-right
 a.btn.mgn-top-16(if-user-in-group="'Admin'", data-ui-sref="meals.admin") Update Meals
 
-//- modal(show="mealDescription")
-//-   h2.modal-title(data-ng-bind="'Meal Overview - ' + mealDate")
-//-   .columns
-//-     .col.half
-//-       h3(data-ng-if="mealDescription.entree.title && mealDescription.entree.categoryKey && mealDescription.entree.key")
-//-         a(data-ui-sref="recipes.view({categoryKey: mealDescription.entree.categoryKey, recipeName: mealDescription.entree.key})", data-ng-bind="mealDescription.entree.title")
-//-       h3(data-ng-if="mealDescription.entree.title && (!mealDescription.entree.categoryKey || !mealDescription.entree.key)", data-ng-bind="mealDescription.entree.title")
-//-       ul.list.meal-list(data-ng-if="mealDescription.appetizers")
-//-         li(data-ng-repeat="appetizer in mealDescription.appetizers")
-//-           i.icon.icon-plus.mgn-right-8
-//-           span App: 
-//-           strong(data-ng-if="!appetizer.categoryKey || !appetizer.key", data-ng-bind="appetizer.title")
-//-           strong(data-ng-if="appetizer.categoryKey && appetizer.key")
-//-             a(data-ui-sref="recipes.view({categoryKey: appetizer.categoryKey, recipeName: appetizer.key})", data-ng-bind="appetizer.title")
-//-       ul.list.meal-list(data-ng-if="mealDescription.sides")
-//-         li(data-ng-repeat="side in mealDescription.sides")
-//-           i.icon.icon-plus.mgn-right-8
-//-           span Side: 
-//-           strong(data-ng-if="!side.categoryKey || !side.key", data-ng-bind="side.title")
-//-           strong(data-ng-if="side.categoryKey && side.key")
-//-             a(data-ui-sref="recipes.view({categoryKey: side.categoryKey, recipeName: side.key})", data-ng-bind="side.title")
-//-       ul.list.meal-list(data-ng-if="mealDescription.drinks")
-//-         li(data-ng-repeat="drink in mealDescription.drinks")
-//-           i.icon.icon-dd-wine.mgn-right-8
-//-           span Drink: 
-//-           strong(data-ng-if="!drink.categoryKey || !drink.key", data-ng-bind="drink.title")
-//-           strong(data-ng-if="drink.categoryKey && drink.key")
-//-             a(data-ui-sref="recipes.view({categoryKey: drink.categoryKey, recipeName: drink.key})", data-ng-bind="drink.title")
-//-       ul.list.meal-list(data-ng-if="mealDescription.desserts")
-//-         li(data-ng-repeat="dessert in mealDescription.desserts")
-//-           i.icon.icon-plus.mgn-right-8
-//-           span Dessert: 
-//-           strong(data-ng-if="!dessert.categoryKey || !dessert.key", data-ng-bind="dessert.title")
-//-           strong(data-ng-if="dessert.categoryKey && dessert.key")
-//-             a(data-ui-sref="recipes.view({categoryKey: dessert.categoryKey, recipeName: dessert.key})", data-ng-bind="dessert.title")
-//-       ul.list.meal-list.meal-times(data-ng-if="mealDescription.prepTime || mealDescription.cookTime")
-//-         li(data-ng-if="mealDescription.prepTime")
-//-           i.icon.icon-clock.mgn-right-8
-//-           span Prep: 
-//-           strong(data-ng-bind="mealDescription.prepTime")
-//-           span.mgn-left-8.helper-text Minutes
-//-         li(data-ng-if="mealDescription.cookTime")
-//-           i.icon.icon-alarm.mgn-right-8
-//-           span Cook: 
-//-           strong(data-ng-bind="mealDescription.cookTime")
-//-           span.mgn-left-8.helper-text Minutes
-//-       div(data-ng-if="mealDescription.mealUrl")
-//-         h4 View it on our blog
-//-         a.btn(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
-//-     .col.half
-//-       .image-container
-//-         img.mgn-btm-8(data-ng-if="mealDescription.image.main.src", data-ng-src="{{mealDescription.image.main.src}}")
-//-         a.btn(data-ng-if="mealDescription.image.main.categoryKey && mealDescription.image.main.key", data-ui-sref="recipes.view({categoryKey: mealDescription.image.main.categoryKey, recipeName: mealDescription.image.main.key})")
-//-           i.icon.icon-search
-//-         a.btn(data-ng-if="mealDescription.image.main.link", data-ng-href="{{mealDescription.image.main.link}}", target="_blank")
-//-           i.icon.icon-search
-//-       .columns
-//-         .col.half(data-ng-repeat="secondaryImage in mealDescription.image.secondary")
-//-           .image-container
-//-             img(data-ng-if="secondaryImage.src", data-ng-src="{{secondaryImage.src}}")
-//-             a.btn(data-ng-if="secondaryImage.categoryKey && secondaryImage.key", data-ui-sref="recipes.view({categoryKey: secondaryImage.categoryKey, recipeName: secondaryImage.key})")
-//-               i.icon.icon-search
-//-             a.btn(data-ng-if="secondaryImage.link", data-ng-href="{{secondaryImage.link}}", target="_blank")
-//-               i.icon.icon-search
+modal(show="mealDescription")
+  h2.modal-title(data-ng-bind="'Meal Overview - ' + mealDate")
+  .columns
+    .col.half
+      h3(data-ng-if="mealDescription.mainItem.name && mealDescription.mainItem.categoryKey && mealDescription.mainItem.key")
+        a(data-ui-sref="recipes.view({categoryKey: mealDescription.mainItem.categoryKey, recipeName: mealDescription.mainItem.key})", data-ng-bind="mealDescription.mainItem.name" target="_blank")
+      h3(data-ng-if="mealDescription.mainItem.name && (!mealDescription.mainItem.categoryKey || !mealDescription.mainItem.key)", data-ng-bind="mealDescription.mainItem.name")
+      ul.list.meal-list(data-ng-if="mealDescription.items", data-ng-repeat="section in mealDescription.items")
+        li(data-ng-repeat="item in section.items")
+          i.icon.icon-plus.mgn-right-8
+          span(data-ng-if="section.name && section.name !== 'Appetizer'", data-ng-bind="section.name + ':'") 
+          span(data-ng-if="section.name && section.name === 'Appetizer'") App:
+          strong(data-ng-if="!item.categoryKey || !item.key", data-ng-bind="item.name")
+          strong(data-ng-if="item.categoryKey && item.key")
+            a(data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
+      ul.list.meal-list.meal-times(data-ng-if="mealDescription.prepTime || mealDescription.cookTime")
+        li(data-ng-if="mealDescription.prepTime")
+          i.icon.icon-clock.mgn-right-8
+          span Prep: 
+          strong(data-ng-bind="mealDescription.prepTime")
+          span.mgn-left-8.helper-text Minutes
+        li(data-ng-if="mealDescription.cookTime")
+          i.icon.icon-alarm.mgn-right-8
+          span Cook: 
+          strong(data-ng-bind="mealDescription.cookTime")
+          span.mgn-left-8.helper-text Minutes
+      div(data-ng-if="mealDescription.mealUrl && mealDescription.mealUrl.indexOf('blog.thedinnerdebate.com') > -1")
+        h4 View it on our blog
+        a.btn.mgn-btm-8(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
+      div(data-ng-if="mealDescription.mealUrl && mealDescription.mealUrl.indexOf('blog.thedinnerdebate.com') === -1")
+        a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
+
+
+    .col.half
+      .image-container
+        img.mgn-btm-8(data-ng-if="mealDescription.mainItem.image.url", data-ng-src="{{mealDescription.mainItem.image.url}}")
+        a.btn(data-ng-if="mealDescription.mainItem.categoryKey && mealDescription.mainItem.key", data-ui-sref="recipes.view({categoryKey: mealDescription.mainItem.categoryKey, recipeName: mealDescription.mainItem.key})", target="_blank")
+          i.icon.icon-search
+        //- a.btn(data-ng-if="mealDescription.image.main.link", data-ng-href="{{mealDescription.image.main.link}}", target="_blank")
+        //-   i.icon.icon-search
+      .columns(data-ng-if="mealDescription.items")
+        .col.half(data-ng-repeat="section in mealDescription.items", data-ng-if="section.items")
+          div(data-ng-repeat="item in section.items", data-ng-if="item.image.url")
+            .image-container
+              img(data-ng-src="{{item.image.url}}")
+              a.btn(data-ng-if="item.categoryKey && item.key", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", target="_blank")
+                i.icon.icon-search
+              //- a.btn(data-ng-if="secondaryImage.link", data-ng-href="{{secondaryImage.link}}", target="_blank")
+              //-   i.icon.icon-search
