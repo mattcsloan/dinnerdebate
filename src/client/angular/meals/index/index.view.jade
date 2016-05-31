@@ -21,18 +21,6 @@ hr
       .day Fri
       .day Sat
     .week(data-ng-repeat="week in weeks", data-ng-class="{ 'this-week': week.isCurrentWeek }")
-      //- .day(data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
-      //-   .image-container(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.image.url")
-      //-     img(data-ng-src="{{meals.mealsCollection[day.number - 1].mainItem.image.url}}")
-      //-     a.btn(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.key && meals.mealsCollection[day.number - 1].mainItem.categoryKey", data-ui-sref="recipes.view({categoryKey: meals.mealsCollection[day.number - 1].mainItem.categoryKey, recipeName: meals.mealsCollection[day.number - 1].mainItem.key})")
-      //-       i.icon.icon-search
-      //-     //- a.btn(data-ng-if="data[day.month][day.number - 1].image.main.link", data-ng-href="{{data[day.month][day.number - 1].image.main.link}}", target="_blank")
-      //-     //-   i.icon.icon-search
-      //-   img.meal-preview(data-ng-if="meals.mealsCollection[day.number - 1].published && meals.mealsCollection[day.number - 1].mainItem.image.url", data-ng-src="{{ meals.mealsCollection[day.number - 1].mainItem.image.url }}")
-        //- span.date(data-ng-bind="day.number")
-
-
-
       .day(data-ng-if="!week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
         img(data-ng-if="day.isCurrentMonth && meals.mealsCollection[day.number - 1].published && meals.mealsCollection[day.number - 1].mainItem.image.url", data-ng-src="{{ meals.mealsCollection[day.number - 1].mainItem.image.url }}")
         span.date(data-ng-bind="day.number")
@@ -42,82 +30,48 @@ hr
             | Meal Details
           span.title(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.name", data-ng-bind="meals.mealsCollection[day.number - 1].mainItem.name")
 
-
-
-
-
-
-
-      //- .day(data-ng-if="week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
-      //-   .image-container(data-ng-if="data[day.month][day.number - 1].published && data[day.month][day.number - 1].image.main.src")
-      //-     img(data-ng-src="{{data[day.month][day.number - 1].image.main.src}}")
-      //-     a.btn(data-ng-if="data[day.month][day.number - 1].image.main.categoryKey && data[day.month][day.number - 1].image.main.key", data-ui-sref="recipes.view({categoryKey: data[day.month][day.number - 1].image.main.categoryKey, recipeName: data[day.month][day.number - 1].image.main.key})")
-      //-       i.icon.icon-search
-      //-     a.btn(data-ng-if="data[day.month][day.number - 1].image.main.link", data-ng-href="{{data[day.month][day.number - 1].image.main.link}}", target="_blank")
-      //-       i.icon.icon-search
-      //-   img.meal-preview(data-ng-if="data[day.month][day.number - 1].published && data[day.month][day.number - 1].image.main.src", data-ng-src="{{ data[day.month][day.number - 1].image.main.src }}")
-      //-   span.date(data-ng-bind="day.number")
-      //-   a.meal-preview(data-ng-if="data[day.month][day.number - 1].published", data-ng-click="toggleDescription(data[day.month][day.number - 1], day.date)", scroll-to="header")
-      //-     span.btn.btn-subtle
-      //-       i.icon.icon-search.mgn-right-8
-      //-       | Meal Details
-      //-     span.title(data-ng-if="data[day.month][day.number - 1].entree.title", data-ng-bind="data[day.month][day.number - 1].entree.title")
-      //-   h3(data-ng-if="data[day.month][day.number - 1].entree.title && data[day.month][day.number - 1].entree.categoryKey && data[day.month][day.number - 1].entree.key")
-      //-     a(data-ui-sref="recipes.view({categoryKey: data[day.month][day.number - 1].entree.categoryKey, recipeName: data[day.month][day.number - 1].entree.key})", data-ng-bind="data[day.month][day.number - 1].entree.title")
-      //-   h3(data-ng-if="data[day.month][day.number - 1].entree.title && (!data[day.month][day.number - 1].entree.categoryKey || !data[day.month][day.number - 1].entree.key)", data-ng-bind="data[day.month][day.number - 1].entree.title")
-      //-   .meal-details
-      //-     ul.list.meal-list(data-ng-if="data[day.month][day.number - 1].appetizers")
-      //-       li(data-ng-repeat="appetizer in data[day.month][day.number - 1].appetizers")
-      //-         i.icon.icon-plus.mgn-right-8
-      //-         span App: 
-      //-         strong(data-ng-if="!appetizer.categoryKey || !appetizer.key", data-ng-bind="appetizer.title")
-      //-         strong(data-ng-if="appetizer.categoryKey && appetizer.key")
-      //-           a(data-ui-sref="recipes.view({categoryKey: appetizer.categoryKey, recipeName: appetizer.key})", data-ng-bind="appetizer.title")
-      //-     ul.list.meal-list(data-ng-if="data[day.month][day.number - 1].sides")
-      //-       li(data-ng-repeat="side in data[day.month][day.number - 1].sides")
-      //-         i.icon.icon-plus.mgn-right-8
-      //-         span Side: 
-      //-         strong(data-ng-if="!side.categoryKey || !side.key", data-ng-bind="side.title")
-      //-         strong(data-ng-if="side.categoryKey && side.key")
-      //-           a(data-ui-sref="recipes.view({categoryKey: side.categoryKey, recipeName: side.key})", data-ng-bind="side.title")
-      //-     ul.list.meal-list(data-ng-if="data[day.month][day.number - 1].drinks")
-      //-       li(data-ng-repeat="drink in data[day.month][day.number - 1].drinks")
-      //-         i.icon.icon-dd-wine.mgn-right-8
-      //-         span Drink: 
-      //-         strong(data-ng-if="!drink.categoryKey || !drink.key", data-ng-bind="drink.title")
-      //-         strong(data-ng-if="drink.categoryKey && drink.key")
-      //-           a(data-ui-sref="recipes.view({categoryKey: drink.categoryKey, recipeName: drink.key})", data-ng-bind="drink.title")
-      //-     ul.list.meal-list(data-ng-if="data[day.month][day.number - 1].desserts")
-      //-       li(data-ng-repeat="dessert in data[day.month][day.number - 1].desserts")
-      //-         i.icon.icon-plus.mgn-right-8
-      //-         span Dessert: 
-      //-         strong(data-ng-if="!dessert.categoryKey || !dessert.key", data-ng-bind="dessert.title")
-      //-         strong(data-ng-if="dessert.categoryKey && dessert.key")
-      //-           a(data-ui-sref="recipes.view({categoryKey: dessert.categoryKey, recipeName: dessert.key})", data-ng-bind="dessert.title")
-      //-     ul.list.meal-list.meal-times(data-ng-if="data[day.month][day.number - 1].prepTime || data[day.month][day.number - 1].cookTime")
-      //-       li(data-ng-if="data[day.month][day.number - 1].prepTime")
-      //-         i.icon.icon-clock.mgn-right-8
-      //-         span Prep: 
-      //-         strong(data-ng-bind="data[day.month][day.number - 1].prepTime")
-      //-         span.mgn-left-8.helper-text Mins
-      //-       li(data-ng-if="data[day.month][day.number - 1].cookTime")
-      //-         i.icon.icon-alarm.mgn-right-8
-      //-         span Cook: 
-      //-         strong(data-ng-bind="data[day.month][day.number - 1].cookTime")
-      //-         span.mgn-left-8.helper-text Mins
-      //-     .mgn-top-16(data-ng-if="data[day.month][day.number - 1].mealUrl")
-      //-       h4 View it on our blog
-      //-       a.btn.mgn-btm-0(data-ng-href="{{data[day.month][day.number - 1].mealUrl}}", target="_blank") Meal Details
-
-      //- .day(data-ng-if="!week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
-      //-   img(data-ng-if="day.isCurrentMonth && data[day.month][day.number - 1].published && data[day.month][day.number - 1].image.main.src", data-ng-src="{{ data[day.month][day.number - 1].image.main.src }}")
-      //-   span.date(data-ng-bind="day.number")
-      //-   a(data-ng-if="day.isCurrentMonth && data[day.month][day.number - 1].published", data-ng-click="toggleDescription(data[day.month][day.number - 1], day.date)", scroll-to="header")
-      //-     span.btn.btn-subtle
-      //-       i.icon.icon-search.mgn-right-8
-      //-       | Meal Details
-      //-     span.title(data-ng-if="data[day.month][day.number - 1].entree.title", data-ng-bind="data[day.month][day.number - 1].entree.title")
-
+      .day(data-ng-if="week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
+        .image-container(data-ng-if="meals.mealsCollection[day.number - 1].published && meals.mealsCollection[day.number - 1].mainItem.image.url")
+          img(data-ng-src="{{meals.mealsCollection[day.number - 1].mainItem.image.url}}")
+          a.btn(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.categoryKey && meals.mealsCollection[day.number - 1].mainItem.key", data-ui-sref="recipes.view({categoryKey: meals.mealsCollection[day.number - 1].mainItem.categoryKey, recipeName: meals.mealsCollection[day.number - 1].mainItem.key})")
+            i.icon.icon-search
+          //- a.btn(data-ng-if="meals.mealsCollection[day.number - 1].image.main.link", data-ng-href="{{meals.mealsCollection[day.number - 1].image.main.link}}", target="_blank")
+            i.icon.icon-search
+        img.meal-preview(data-ng-if="meals.mealsCollection[day.number - 1].published && meals.mealsCollection[day.number - 1].mainItem.image.url", data-ng-src="{{ meals.mealsCollection[day.number - 1].mainItem.image.url }}")
+        span.date(data-ng-bind="day.number")
+        a.meal-preview(data-ng-if="meals.mealsCollection[day.number - 1].published", data-ng-click="toggleDescription(meals.mealsCollection[day.number - 1], day.date)", scroll-to="header", target="_blank")
+          span.btn.btn-subtle
+            i.icon.icon-search.mgn-right-8
+            | Meal Details
+          span.title(data-ng-if="meals.mealsCollection[day.number - 1].entree.title", data-ng-bind="meals.mealsCollection.mainItem.name")
+        h3(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.name && meals.mealsCollection[day.number - 1].mainItem.categoryKey && meals.mealsCollection[day.number - 1].mainItem.key")
+          a(data-ui-sref="recipes.view({categoryKey: meals.mealsCollection[day.number - 1].mainItem.categoryKey, recipeName: meals.mealsCollection[day.number - 1].mainItem.key})", data-ng-bind="meals.mealsCollection[day.number - 1].mainItem.name", target="_blank")
+        h3(data-ng-if="meals.mealsCollection[day.number - 1].mainItem.name && (!meals.mealsCollection[day.number - 1].mainItem.categoryKey || !meals.mealsCollection[day.number - 1].mainItem.key)", data-ng-bind="meals.mealsCollection[day.number - 1].mainItem.name")
+        .meal-details
+          ul.list.meal-list(data-ng-if="meals.mealsCollection[day.number - 1].items", data-ng-repeat="section in meals.mealsCollection[day.number - 1].items")
+            li(data-ng-repeat="item in section.items", data-ng-if="item.name !== meals.mealsCollection[day.number - 1].mainItem.name")
+              i.icon.icon-plus.mgn-right-8
+              span(data-ng-if="section.name && section.name !== 'Appetizer'", data-ng-bind="section.name + ':'") 
+              span(data-ng-if="section.name && section.name === 'Appetizer'") App:
+              strong(data-ng-if="!item.categoryKey || !item.key", data-ng-bind="item.name")
+              a(data-ng-if="item.categoryKey && item.key && item.name !== mealDescription.mainItem.name", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
+                strong(data-ng-bind="item.name")
+          ul.list.meal-list.meal-times(data-ng-if="meals.mealsCollection[day.number - 1].prepTime || meals.mealsCollection[day.number - 1].cookTime")
+            li(data-ng-if="meals.mealsCollection[day.number - 1].prepTime")
+              i.icon.icon-clock.mgn-right-8
+              span Prep: 
+              strong(data-ng-bind="meals.mealsCollection[day.number - 1].prepTime")
+              span.mgn-left-8.helper-text Minutes
+            li(data-ng-if="meals.mealsCollection[day.number - 1].cookTime")
+              i.icon.icon-alarm.mgn-right-8
+              span Cook: 
+              strong(data-ng-bind="meals.mealsCollection[day.number - 1].cookTime")
+              span.mgn-left-8.helper-text Minutes
+          div(data-ng-if="meals.mealsCollection[day.number - 1].mealUrl && meals.mealsCollection[day.number - 1].mealUrl.indexOf('blog.thedinnerdebate.com') > -1")
+            h4 View it on our blog
+            a.btn.mgn-btm-8(data-ng-href="{{meals.mealsCollection[day.number - 1].mealUrl}}", target="_blank") Full Meal Details
+          div(data-ng-if="meals.mealsCollection[day.number - 1].mealUrl && meals.mealsCollection[day.number - 1].mealUrl.indexOf('blog.thedinnerdebate.com') === -1")
+            a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{meals.mealsCollection[day.number - 1].mealUrl}}", target="_blank") Full Meal Details
   .meals-calendar-head
     a(data-ng-click="previous()")
       i.icon.icon-dd-caret-left
@@ -157,8 +111,6 @@ modal(show="mealDescription")
         a.btn.mgn-btm-8(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
       div(data-ng-if="mealDescription.mealUrl && mealDescription.mealUrl.indexOf('blog.thedinnerdebate.com') === -1")
         a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
-
-
     .col.half
       .image-container
         img.mgn-btm-8(data-ng-if="meals.mainImage.url", data-ng-src="{{meals.mainImage.url}}")
@@ -166,15 +118,6 @@ modal(show="mealDescription")
           i.icon.icon-search
         //- a.btn(data-ng-if="mealDescription.image.main.link", data-ng-href="{{mealDescription.image.main.link}}", target="_blank")
         //-   i.icon.icon-search
-      //- .columns(data-ng-if="mealDescription.items")
-      //-   .col.half(data-ng-repeat="section in mealDescription.items", data-ng-if="section.items")
-      //-     div(data-ng-repeat="item in section.items", data-ng-if="item.image.url && item.image.url !== mealDescription.mainItem.image.url")
-      //-       .image-container
-      //-         img(data-ng-src="{{item.image.url}}")
-      //-         a.btn(data-ng-if="item.categoryKey && item.key", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", target="_blank")
-      //-           i.icon.icon-search
-
-
 
       div(data-ng-if="mealDescription.items")
         .columns(data-ng-if="meals.dailyImages")
@@ -183,7 +126,5 @@ modal(show="mealDescription")
               img(data-ng-src="{{img.url}}")
               a.btn(data-ng-if="img.categoryKey && img.key", data-ui-sref="recipes.view({categoryKey: img.categoryKey, recipeName: img.key})", target="_blank")
                 i.icon.icon-search
-
-
               //- a.btn(data-ng-if="secondaryImage.link", data-ng-href="{{secondaryImage.link}}", target="_blank")
               //-   i.icon.icon-search
