@@ -178,7 +178,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
   }
 
   function _removeTime(date) {
-    return date.hour(0).minute(0).second(0).millisecond(0);
+    return date.day(0).hour(0).minute(0).second(0).millisecond(0);
   }
 
   function loadRecipeList() {
