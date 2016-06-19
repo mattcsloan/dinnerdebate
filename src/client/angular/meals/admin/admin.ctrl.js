@@ -1,4 +1,4 @@
-angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function(Page, MealsResource, Recipe) {
+angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function(Page, MealsResource, Recipe, $location) {
   var vm = this;
 
   Page.setTitle('Admin');   
@@ -51,6 +51,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
       }
 
       updatePreview();
+      vm.newItemType = '';
     }
   }
 
@@ -125,6 +126,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
     })
     .success(function (res) {
       console.log("Meal Added!");
+      $location.url('/meals?message=Meal%20added%20successfully.');
     });
   }
 
@@ -141,6 +143,7 @@ angular.module('MealsAdminCtrl', []).controller('MealsAdminController', function
     })
     .success(function (res) {
       console.log("Meal Updated!");
+      $location.url('/meals?message=Meal%20updated%20successfully.');
     });
   }
 

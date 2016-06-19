@@ -1,9 +1,18 @@
-angular.module('MealsCtrl', []).controller('MealsController', function(Page, MealsResource, $scope, _) {
+angular.module('MealsCtrl', []).controller('MealsController', function(Page, MealsResource, $scope, $location, _) {
   var vm = this;
 
   Page.setTitle('Weekly Meals');   
   vm.title = 'Weekly Meal Suggestions';
   vm.day = moment.utc();
+  vm.qsMessage = $location.search('message');
+  vm.dismiss = dismiss;
+
+  console.log(vm.qsMessage);
+
+  function dismiss() {
+    vm.querystring.message = '';
+    $location.search('message', null);
+  }
 
   calendarSetUp();
 
@@ -51,7 +60,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   }
 
   function _removeTime(date) {
-    return date.day(0).hour(0).minute(0).second(0).millisecond(0);
+    return date.hour(0).minute(0).second(0).millisecond(0);
   }
 
   function _buildMonth(start, month) {
@@ -121,7 +130,12 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       var currentDate = formattedDate(moment(start, "MMDDYYYY").add(i, "days"));
 
       //check if data has an object with a date that matches currentDate
-      var entry = _.find(data, function(o) { return o.date == currentDate; });
+      var entry = _.find(data, function(o) { 
+        console.log('o.date: ' + o.date);
+        console.log('currentDate: ' + currentDate);
+        console.log(o.date == currentDate);
+        return o.date == currentDate; 
+      });
 
       if(entry) {
         if(entry.mainItem.image && entry.mainItem.image.url) {
@@ -134,6 +148,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
         vm.mealsCollection.push({});
       }
     }
+    console.log(vm.mealsCollection);
   }
 
   function getDailyImages(data) {
