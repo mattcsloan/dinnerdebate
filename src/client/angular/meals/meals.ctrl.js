@@ -5,6 +5,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   vm.title = 'Weekly Meal Suggestions';
   vm.day = moment.utc();
   vm.qsMessage = $location.search('message');
+  vm.getMealInfo = getMealInfo;
   vm.dismiss = dismiss;
 
   console.log(vm.qsMessage);
@@ -60,7 +61,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   }
 
   function _removeTime(date) {
-    return date.hour(0).minute(0).second(0).millisecond(0);
+    return date.day(0).hour(0).minute(0).second(0).millisecond(0);
   }
 
   function _buildMonth(start, month) {
@@ -131,9 +132,9 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
 
       //check if data has an object with a date that matches currentDate
       var entry = _.find(data, function(o) { 
-        console.log('o.date: ' + o.date);
-        console.log('currentDate: ' + currentDate);
-        console.log(o.date == currentDate);
+        // console.log('o.date: ' + o.date);
+        // console.log('currentDate: ' + currentDate);
+        // console.log(o.date == currentDate);
         return o.date == currentDate; 
       });
 
@@ -148,7 +149,31 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
         vm.mealsCollection.push({});
       }
     }
-    console.log(vm.mealsCollection);
+    // console.log(vm.mealsCollection);
+  }
+
+  function getMealInfo(date, itemToPull) {
+    var dateToCheck = formattedDate(date);
+    console.log("dateToCheck: " + dateToCheck);
+    var entry = _.find(vm.monthlyMeals, function(o) { 
+      console.log("o.date: " + o.date);
+      return o.date == dateToCheck; 
+    });
+
+
+    if(entry) {
+      switch(itemToPull) {
+        case "mealName":
+          return entry.mainItem.name;
+          break;
+        case "mealImage":
+          return entry.mainItem.image.url;
+        case "mealUrl":
+          return entry.mealUrl;
+          break;
+      }
+      
+    }
   }
 
   function getDailyImages(data) {
