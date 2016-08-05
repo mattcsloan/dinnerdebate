@@ -8,8 +8,6 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   vm.getMealInfo = getMealInfo;
   vm.dismiss = dismiss;
 
-  // console.log(vm.qsMessage);
-
   function dismiss() {
     vm.querystring.message = '';
     $location.search('message', null);
@@ -37,12 +35,6 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
 
     $scope.select = function(day) {
       $scope.selected = day.date;  
-    };
-
-    $scope.toggleDescription = function(item, date) {
-      $scope.mealDescription = item;
-      $scope.mealDate = moment(date).format('MMMM D, YYYY');
-      getDailyImages(item);
     };
 
     $scope.next = function() {
@@ -84,7 +76,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       done = count++ > 2 && monthIndex !== date.month();
       monthIndex = date.month();
     }
-    var endDate = moment(date).subtract(1, "days");
+    var endDate = moment(date).add(5, "days"); // include full week starting with the last Sunday of the month
     var count = endDate.diff(startCount, 'days') + 1;
     endDate = formattedDate(endDate, 'MMDDYYYY');
 
@@ -164,7 +156,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
     // console.log(vm.mealsCollection);
   }
 
-  $scope.getInfo = function(date, itemToPull) {
+  function getMealInfo(date, itemToPull) {
     var entry = _.find(vm.monthlyMeals, function(o) { 
       return o.date == formattedDate(date, 'daily'); 
     });
@@ -172,38 +164,31 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
     if(entry) {
       console.log(entry.mainItem.name);
       switch(itemToPull) {
-        case "mealName":
-          return entry.mainItem.name;
+        case "mainItem":
+          return entry.mainItem;
+          break;
+        case "items":
+          return entry.items;
           break;
         case "mealUrl":
           return entry.mealUrl;
+          break;
+        case "cookTime":
+          return entry.cookTime;
+          break;
+        case "prepTime":
+          return entry.prepTime;
+          break;
+        case "published":
+          return entry.published;
           break;
         case "mainImage":
-          return entry.mainItem.image.url;
-          break;
-      }
-      
-    }
-  }
-
-  function getMealInfo(date, itemToPull) {
-    var dateToCheck = formattedDate(date);
-    // console.log("dateToCheck: " + dateToCheck);
-    var entry = _.find(vm.monthlyMeals, function(o) { 
-      // console.log("o.date: " + o.date);
-      return o.date == dateToCheck; 
-    });
-
-
-    if(entry) {
-      switch(itemToPull) {
-        case "mealName":
-          return entry.mainItem.name;
-          break;
-        case "mealImage":
-          return entry.mainItem.image.url;
-        case "mealUrl":
-          return entry.mealUrl;
+          var mainImage = {
+            url: getProperImageSize(entry.mainItem.image.url, 300, 200),
+            key: entry.mainItem.key,
+            categoryKey: entry.mainItem.categoryKey
+          }
+          return mainImage;
           break;
       }
       
