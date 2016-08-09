@@ -8,6 +8,7 @@ hr
 //-   a.close.pull-right.text-small.mgn-left-8(data-ng-click="meals.dismiss()")
 //-     i.icon.icon-cross
 //-   span(data-ng-bind="meals.qsMessage | json")
+
 .meals-calendar
   .meals-calendar-head
     a(data-ng-click="previous()")
@@ -28,60 +29,55 @@ hr
       .day(data-ng-if="!week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
         img(data-ng-src="{{ meals.getMealInfo(day.date, 'mainImage').url }}")
         span.date(data-ng-bind="day.number")
-        a(data-ng-if="meals.getMealInfo(day.date, 'published')", scroll-to="header", target="_blank")
+        a(data-ng-if="meals.getMealInfo(day.date).published", data-ng-click="meals.toggleDescription(meals.getMealInfo(day.date), day.date)", scroll-to="header", target="_blank")
           span.btn.btn-subtle
             i.icon.icon-search.mgn-right-8
             | Meal Details
-          span.title(data-ng-if="meals.getMealInfo(day.date, 'mealName')", data-ng-bind="meals.getMealInfo(day.date, 'mealName')")
-
-
-
-
-
+          span.title(data-ng-if="meals.getMealInfo(day.date).mainItem", data-ng-bind="meals.getMealInfo(day.date).mainItem.name")
 
       .day(data-ng-if="week.isCurrentWeek", data-ng-class="{ today: day.isToday, 'different-month': !day.isCurrentMonth, selected: day.date.isSame(selected) }", data-ng-click="select(day)", data-ng-repeat="day in week.days")
-        .image-container(data-ng-if="meals.getMealInfo(day.date, 'published') && meals.getMealInfo(day.date, 'mainImage').url")
+        .image-container(data-ng-if="meals.getMealInfo(day.date).published && meals.getMealInfo(day.date, 'mainImage').url")
           img(data-ng-src="{{meals.getMealInfo(day.date, 'mainImage').url}}")
-          a.btn(data-ng-if="meals.getMealInfo(day.date, 'mainItem').categoryKey && meals.getMealInfo(day.date, 'mainItem').key", data-ui-sref="recipes.view({categoryKey: meals.getMealInfo(day.date, 'mainItem').categoryKey, recipeName: meals.getMealInfo(day.date, 'mainItem').key})")
+          a.btn(data-ng-if="meals.getMealInfo(day.date).mainItem.categoryKey && meals.getMealInfo(day.date).mainItem.key", data-ui-sref="recipes.view({categoryKey: meals.getMealInfo(day.date).mainItem.categoryKey, recipeName: meals.getMealInfo(day.date).mainItem.key})", target="_blank")
             i.icon.icon-search
           //- a.btn(data-ng-if="meals.mealsCollection[day.number - 1].image.main.link", data-ng-href="{{meals.mealsCollection[day.number - 1].image.main.link}}", target="_blank")
             i.icon.icon-search
-        img.meal-preview(data-ng-if="meals.getMealInfo(day.date, 'published') && meals.getMealInfo(day.date, 'mainImage').url", data-ng-src="{{ meals.getMealInfo(day.date, 'mainImage').url }}")
+        img.meal-preview(data-ng-if="meals.getMealInfo(day.date).published && meals.getMealInfo(day.date, 'mainImage').url", data-ng-src="{{ meals.getMealInfo(day.date, 'mainImage').url }}")
         span.date(data-ng-bind="day.number")
-        a.meal-preview(data-ng-if="meals.getMealInfo(day.date, 'published')", data-ng-click="", scroll-to="header")
+        a.meal-preview(data-ng-if="meals.getMealInfo(day.date).published", data-ng-click="meals.toggleDescription(meals.getMealInfo(day.date), day.date)", scroll-to="header")
           span.btn.btn-subtle
             i.icon.icon-search.mgn-right-8
             | Meal Details
-          span.title(data-ng-if="meals.getMealInfo(day.date, 'mainItem').name", data-ng-bind="meals.getMealInfo(day.date, 'mainItem').name")
-        h3(data-ng-if="meals.getMealInfo(day.date, 'mainItem').name && meals.getMealInfo(day.date, 'mainItem').categoryKey && meals.getMealInfo(day.date, 'mainItem').key")
-          a(data-ui-sref="recipes.view({categoryKey: meals.getMealInfo(day.date, 'mainItem').categoryKey, recipeName: meals.getMealInfo(day.date, 'mainItem').key})", data-ng-bind="meals.getMealInfo(day.date, 'mainItem').name", target="_blank")
-        h3(data-ng-if="meals.getMealInfo(day.date, 'mainItem').name && (!meals.getMealInfo(day.date, 'mainItem').categoryKey || !meals.getMealInfo(day.date, 'mainItem').key)", data-ng-bind="meals.getMealInfo(day.date, 'mainItem').name")
+          span.title(data-ng-if="meals.getMealInfo(day.date).mainItem.name", data-ng-bind="meals.getMealInfo(day.date).mainItem.name")
+        h3(data-ng-if="meals.getMealInfo(day.date).mainItem.name && meals.getMealInfo(day.date).mainItem.categoryKey && meals.getMealInfo(day.date).mainItem.key")
+          a(data-ui-sref="recipes.view({categoryKey: meals.getMealInfo(day.date).mainItem.categoryKey, recipeName: meals.getMealInfo(day.date).mainItem.key})", data-ng-bind="meals.getMealInfo(day.date).mainItem.name", target="_blank")
+        h3(data-ng-if="meals.getMealInfo(day.date).mainItem.name && (!meals.getMealInfo(day.date).mainItem.categoryKey || !meals.getMealInfo(day.date).mainItem.key)", data-ng-bind="meals.getMealInfo(day.date).mainItem.name")
         .meal-details
-          ul.list.meal-list(data-ng-if="meals.getMealInfo(day.date, 'items')", data-ng-repeat="section in meals.getMealInfo(day.date, 'items')")
-            li(data-ng-repeat="item in section.items", data-ng-if="item.name !== meals.getMealInfo(day.date, 'mainItem').name")
+          ul.list.meal-list(data-ng-if="meals.getMealInfo(day.date).items", data-ng-repeat="section in meals.getMealInfo(day.date).items")
+            li(data-ng-repeat="item in section.items", data-ng-if="item.name !== meals.getMealInfo(day.date).mainItem.name")
               i.icon.icon-plus.mgn-right-8
               span(data-ng-if="section.name && section.name !== 'Appetizer'", data-ng-bind="section.name + ':'") 
               span(data-ng-if="section.name && section.name === 'Appetizer'") App:
               strong(data-ng-if="!item.categoryKey || !item.key", data-ng-bind="item.name")
-              a(data-ng-if="item.categoryKey && item.key && item.name !== mealDescription.mainItem.name", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
+              a(data-ng-if="item.categoryKey && item.key && item.name !== meals.mealInfo.mainItem.name", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
                 strong(data-ng-bind="item.name")
 
-          ul.list.meal-list.meal-times(data-ng-if="meals.getMealInfo(day.date, 'prepTime') || meals.getMealInfo(day.date, 'cookTime')")
-            li(data-ng-if="meals.getMealInfo(day.date, 'prepTime')")
+          ul.list.meal-list.meal-times(data-ng-if="meals.getMealInfo(day.date).prepTime || meals.getMealInfo(day.date).cookTime")
+            li(data-ng-if="meals.getMealInfo(day.date).prepTime")
               i.icon.icon-clock.mgn-right-8
               span Prep: 
-              strong(data-ng-bind="meals.getMealInfo(day.date, 'prepTime')")
+              strong(data-ng-bind="meals.getMealInfo(day.date).prepTime")
               span.mgn-left-8.helper-text Minutes
-            li(data-ng-if="meals.getMealInfo(day.date, 'cookTime')")
+            li(data-ng-if="meals.getMealInfo(day.date).cookTime")
               i.icon.icon-alarm.mgn-right-8
               span Cook: 
-              strong(data-ng-bind="meals.getMealInfo(day.date, 'cookTime')")
+              strong(data-ng-bind="meals.getMealInfo(day.date).cookTime")
               span.mgn-left-8.helper-text Minutes
-          div(data-ng-if="meals.getMealInfo(day.date, 'mealUrl') && meals.getMealInfo(day.date, 'mealUrl').indexOf('blog.thedinnerdebate.com') > -1")
+          div(data-ng-if="meals.getMealInfo(day.date).mealUrl && meals.getMealInfo(day.date).mealUrl.indexOf('blog.thedinnerdebate.com') > -1")
             h4 View it on our blog
-            a.btn.mgn-btm-8(data-ng-href="{{meals.getMealInfo(day.date, 'mealUrl')}}", target="_blank") Full Meal Details
-          div(data-ng-if="meals.getMealInfo(day.date, 'mealUrl') && meals.getMealInfo(day.date, 'mealUrl').indexOf('blog.thedinnerdebate.com') === -1")
-            a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{ meals.getMealInfo(day.date, 'mealUrl') }}", target="_blank") Full Meal Details
+            a.btn.mgn-btm-8(data-ng-href="{{meals.getMealInfo(day.date).mealUrl}}", target="_blank") Full Meal Details
+          div(data-ng-if="meals.getMealInfo(day.date).mealUrl && meals.getMealInfo(day.date).mealUrl.indexOf('blog.thedinnerdebate.com') === -1")
+            a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{ meals.getMealInfo(day.date).mealUrl }}", target="_blank") Full Meal Details
   .meals-calendar-head
     a(data-ng-click="previous()")
       i.icon.icon-dd-caret-left
@@ -90,48 +86,48 @@ hr
       i.icon.icon-dd-caret-right
 a.btn.mgn-top-16(if-user-in-group="'Admin'", data-ui-sref="meals.admin") Update Meals
 
-modal(show="mealDescription")
-  h2.modal-title(data-ng-bind="'Meal Overview - ' + mealDate")
+modal(show="meals.mealInfo")
+  h2.modal-title(data-ng-bind="'Meal Overview - ' + meals.mealDate")
   .columns
     .col.half
-      h3(data-ng-if="mealDescription.mainItem.name && mealDescription.mainItem.categoryKey && mealDescription.mainItem.key")
-        a(data-ui-sref="recipes.view({categoryKey: mealDescription.mainItem.categoryKey, recipeName: mealDescription.mainItem.key})", data-ng-bind="mealDescription.mainItem.name" target="_blank")
-      h3(data-ng-if="mealDescription.mainItem.name && (!mealDescription.mainItem.categoryKey || !mealDescription.mainItem.key)", data-ng-bind="mealDescription.mainItem.name")
-      ul.list.meal-list(data-ng-if="mealDescription.items", data-ng-repeat="section in mealDescription.items")
-        li(data-ng-repeat="item in section.items", data-ng-if="item.name !== mealDescription.mainItem.name")
+      h3(data-ng-if="meals.mealInfo.mainItem.name && meals.mealInfo.mainItem.categoryKey && meals.mealInfo.mainItem.key")
+        a(data-ui-sref="recipes.view({categoryKey: meals.mealInfo.mainItem.categoryKey, recipeName: meals.mealInfo.mainItem.key})", data-ng-bind="meals.mealInfo.mainItem.name" target="_blank")
+      h3(data-ng-if="meals.mealInfo.mainItem.name && (!meals.mealInfo.mainItem.categoryKey || !meals.mealInfo.mainItem.key)", data-ng-bind="meals.mealInfo.mainItem.name")
+      ul.list.meal-list(data-ng-if="meals.mealInfo.items", data-ng-repeat="section in meals.mealInfo.items")
+        li(data-ng-repeat="item in section.items", data-ng-if="item.name !== meals.mealInfo.mainItem.name")
           i.icon.icon-plus.mgn-right-8
           span(data-ng-if="section.name && section.name !== 'Appetizer'", data-ng-bind="section.name + ':'") 
           span(data-ng-if="section.name && section.name === 'Appetizer'") App:
           strong(data-ng-if="!item.categoryKey || !item.key", data-ng-bind="item.name")
-          a(data-ng-if="item.categoryKey && item.key && item.name !== mealDescription.mainItem.name", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
+          a(data-ng-if="item.categoryKey && item.key && item.name !== meals.mealInfo.mainItem.name", data-ui-sref="recipes.view({categoryKey: item.categoryKey, recipeName: item.key})", data-ng-bind="item.name", target="_blank")
             strong(data-ng-bind="item.name")
-      ul.list.meal-list.meal-times(data-ng-if="mealDescription.prepTime || mealDescription.cookTime")
-        li(data-ng-if="mealDescription.prepTime")
+      ul.list.meal-list.meal-times(data-ng-if="meals.mealInfo.prepTime || meals.mealInfo.cookTime")
+        li(data-ng-if="meals.mealInfo.prepTime")
           i.icon.icon-clock.mgn-right-8
           span Prep: 
-          strong(data-ng-bind="mealDescription.prepTime")
+          strong(data-ng-bind="meals.mealInfo.prepTime")
           span.mgn-left-8.helper-text Minutes
-        li(data-ng-if="mealDescription.cookTime")
+        li(data-ng-if="meals.mealInfo.cookTime")
           i.icon.icon-alarm.mgn-right-8
           span Cook: 
-          strong(data-ng-bind="mealDescription.cookTime")
+          strong(data-ng-bind="meals.mealInfo.cookTime")
           span.mgn-left-8.helper-text Minutes
-      div(data-ng-if="mealDescription.mealUrl && mealDescription.mealUrl.indexOf('blog.thedinnerdebate.com') > -1")
+      div(data-ng-if="meals.mealInfo.mealUrl && meals.mealInfo.mealUrl.indexOf('blog.thedinnerdebate.com') > -1")
         h4 View it on our blog
-        a.btn.mgn-btm-8(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
-      div(data-ng-if="mealDescription.mealUrl && mealDescription.mealUrl.indexOf('blog.thedinnerdebate.com') === -1")
-        a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{mealDescription.mealUrl}}", target="_blank") Full Meal Details
+        a.btn.mgn-btm-8(data-ng-href="{{meals.mealInfo.mealUrl}}", target="_blank") Full Meal Details
+      div(data-ng-if="meals.mealInfo.mealUrl && meals.mealInfo.mealUrl.indexOf('blog.thedinnerdebate.com') === -1")
+        a.btn.mgn-top-16.mgn-btm-8(data-ng-href="{{meals.mealInfo.mealUrl}}", target="_blank") Full Meal Details
     .col.half
       .image-container
-        img.mgn-btm-8(data-ng-if="meals.mainImage.url", data-ng-src="{{meals.mainImage.url}}")
-        a.btn(data-ng-if="meals.mainImage.categoryKey && meals.mainImage.key", data-ui-sref="recipes.view({categoryKey: meals.mainImage.categoryKey, recipeName: meals.mainImage.key})", target="_blank")
+        img.mgn-btm-8(data-ng-if="meals.mealInfo.mainItem.image.url", data-ng-src="{{meals.mealInfo.mainItem.image.url}}")
+        a.btn(data-ng-if="meals.mealInfo.mainItem.categoryKey && meals.mealInfo.mainItem.key", data-ui-sref="recipes.view({categoryKey: meals.mealInfo.mainItem.categoryKey, recipeName: meals.mealInfo.mainItem.key})", target="_blank")
           i.icon.icon-search
-        //- a.btn(data-ng-if="mealDescription.image.main.link", data-ng-href="{{mealDescription.image.main.link}}", target="_blank")
+        //- a.btn(data-ng-if="meals.mealInfo.image.main.link", data-ng-href="{{meals.mealInfo.image.main.link}}", target="_blank")
         //-   i.icon.icon-search
 
-      div(data-ng-if="mealDescription.items")
+      div(data-ng-if="meals.mealInfo.items")
         .columns(data-ng-if="meals.dailyImages")
-          .col.half.mgn-btm-8(data-ng-repeat="img in meals.dailyImages", data-ng-if="img.url && img.url !== mealDescription.mainItem.image.url")
+          .col.half.mgn-btm-8(data-ng-repeat="img in meals.dailyImages", data-ng-if="img.url && img.url !== meals.mealInfo.mainItem.image.url")
             .image-container
               img(data-ng-src="{{img.url}}")
               a.btn(data-ng-if="img.categoryKey && img.key", data-ui-sref="recipes.view({categoryKey: img.categoryKey, recipeName: img.key})", target="_blank")

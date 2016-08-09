@@ -7,6 +7,7 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
   vm.qsMessage = $location.search('message');
   vm.getMealInfo = getMealInfo;
   vm.dismiss = dismiss;
+  vm.toggleDescription = toggleDescription;
 
   function dismiss() {
     vm.querystring.message = '';
@@ -162,33 +163,19 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
     });
 
     if(entry) {
-      console.log(entry.mainItem.name);
       switch(itemToPull) {
-        case "mainItem":
-          return entry.mainItem;
-          break;
-        case "items":
-          return entry.items;
-          break;
-        case "mealUrl":
-          return entry.mealUrl;
-          break;
-        case "cookTime":
-          return entry.cookTime;
-          break;
-        case "prepTime":
-          return entry.prepTime;
-          break;
-        case "published":
-          return entry.published;
-          break;
         case "mainImage":
-          var mainImage = {
-            url: getProperImageSize(entry.mainItem.image.url, 300, 200),
-            key: entry.mainItem.key,
-            categoryKey: entry.mainItem.categoryKey
+          if(entry.mainItem) {
+            var mainImage = {
+              url: getProperImageSize(entry.mainItem.image.url, 300, 200),
+              key: entry.mainItem.key,
+              categoryKey: entry.mainItem.categoryKey
+            }
+            return mainImage;
           }
-          return mainImage;
+          break;
+        default:
+          return entry;
           break;
       }
       
@@ -227,5 +214,10 @@ angular.module('MealsCtrl', []).controller('MealsController', function(Page, Mea
       }
     }
   }
+
+  function toggleDescription(item, date) {
+    vm.mealInfo = item;
+    vm.mealDate = moment(date).format('MMMM D, YYYY');
+  };
 
 });
