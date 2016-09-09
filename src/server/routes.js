@@ -3,6 +3,7 @@ var meals = require('./data/meals');
 var mealsDev = require('./data/meals-dev');
 var stormpath = require('express-stormpath');
 var Recipes = require('./models/recipes');
+var Meals = require('./models/meals');
 var cloudinary = require('cloudinary');
 var multer = require('multer');
 var upload = multer({ dest: './uploads'});
@@ -15,20 +16,158 @@ module.exports = function(app) {
         res.status(201).json(navigation.items);
     });
 
+    // get all meals
     app.get('/api/meals', function(req, res) {
-        res.status(201).json(meals.items);
+        // use mongoose to get all recipes in the database
+        Meals.find(function(err, meals) {
+            if (err) {
+                res.send(err);
+            }
+            res.json(meals); // return all meals in JSON format
+        });
     });
 
-    app.get('/api/meals/today', function(req, res) {
-        var d = new Date();
-        var month = d.getMonth();
-        var date = d.getDate() - 1;
-
-        res.status(201).json(meals.items[month][date]);
+    // create meal
+    app.post('/api/meals', stormpath.loginRequired, function(req, res) {
+        // use mongoose to add a new meal in the database
+        var meal = new Meals({
+            date: req.body.date,
+            mainItem: req.body.mainItem,
+            items: req.body.items,
+            prepTime: req.body.prepTime,
+            cookTime: req.body.cookTime,
+            mealUrl: req.body.mealUrl,
+            published: req.body.published
+        });
+        meal.save(function(err, meals) {
+            if(err) {
+                res.send(err);
+            }
+            res.status(201).json(meals);
+        });
     });
 
-    app.get('/api/meals/dev', function(req, res) {
-        res.status(201).json(mealsDev.items);
+    //get today's meal
+    // app.get('/api/meals/today', function(req, res) {
+    //     var d = new Date();
+    //     var month = d.getMonth();
+    //     var date = d.getDate() - 1;
+
+    //     res.status(201).json(meals.items[month][date]);
+    // });
+
+    //get all meals - dev environment
+    // app.get('/api/meals/dev', function(req, res) {
+    //     res.status(201).json(mealsDev.items);
+    // });
+
+    //get meal by date
+    app.get('/api/meals/on/:mealDate', function(req, res) {
+        var mealDate = req.params.mealDate;
+        var month = mealDate.substr(0, 2);
+        var day = mealDate.substr(2, 2);
+        var year = mealDate.substr(4, 4);
+        var timeStamp = year + '-' + month + '-' + day + "T00:00:00.000Z";
+
+        Meals.findOne({
+            date: timeStamp
+        }, function(err, meal) { 
+            if (err) {
+                res.send(err);
+            }
+            if(meal) {
+                res.status(201).json(meal);
+            } else {
+                res.status(201).send("Meal does not exist.");
+            }
+        });
+    });
+
+    //get meals within date range
+    app.get('/api/meals/from/:beginDate/to/:endDate', function(req, res) {
+        var beginDate = req.params.beginDate;
+        var beginMonth = beginDate.substr(0, 2);
+        var beginDay = beginDate.substr(2, 2);
+        var beginYear = beginDate.substr(4, 4);
+        var beginTimeStamp = beginYear + '-' + beginMonth + '-' + beginDay + "T00:00:00.000Z";
+        var endDate = req.params.endDate;
+        var endMonth = endDate.substr(0, 2);
+        var endDay = endDate.substr(2, 2);
+        var endYear = endDate.substr(4, 4);
+        var endTimeStamp = endYear + '-' + endMonth + '-' + endDay + "T00:00:00.000Z";
+
+        Meals.find({
+            date: {$gte: beginTimeStamp, $lte: endTimeStamp}
+        }, function(err, meal) { 
+            if (err) {
+                res.send(err);
+            }
+            res.status(201).json(meal);
+        });
+    });
+
+    // update individual meal
+    app.put('/api/meals/:mealDate', stormpath.loginRequired, function(req, res) {
+        var mealDate = req.params.mealDate;
+        var month = mealDate.substr(0, 2);
+        var day = mealDate.substr(2, 2);
+        var year = mealDate.substr(4, 4);
+        var timeStamp = year + '-' + month + '-' + day + "T00:00:00.000Z";
+
+        if(req.user.groups.items[0].name == 'Admin') {
+            Meals.findOne({
+                date: timeStamp
+            }, function(err, meal) { 
+                if (err) {
+                    res.send(err);
+                } else {
+                    meal.date = req.body.date;
+                    meal.mainItem = req.body.mainItem;
+                    meal.items = req.body.items;
+                    meal.prepTime = req.body.prepTime;
+                    meal.cookTime = req.body.cookTime;
+                    meal.mealUrl = req.body.mealUrl;
+                    meal.published = req.body.published;
+
+                    meal.save(function(err, meal) {
+                        if(err) {
+                            res.send(err);
+                        }
+                        res.status(201).json(meal);
+                    });
+                }
+            });
+        }
+        else {
+            res.send('You do not have access to update this recipe.');
+        }
+    });
+
+    // delete meal
+    app.delete('/api/meals/:mealDate', stormpath.loginRequired, function(req, res) {
+        var mealDate = req.params.mealDate;
+        var month = mealDate.substr(0, 2);
+        var day = mealDate.substr(2, 2);
+        var year = mealDate.substr(4, 4);
+        var timeStamp = year + '-' + month + '-' + day + "T00:00:00.000Z";
+
+        Meals.findOne({
+            date: timeStamp
+        }, function(err, meal) { 
+            if (err || !meal) {
+                res.send('Meal does not exist.');
+            }
+            if(meal) {
+                if(req.user.groups.items[0].name == 'Admin') {
+                    meal.remove(function(err) {
+                        if(err) {
+                            res.send(err);
+                        }
+                        res.json();
+                    });
+                }
+            }
+        });
     });
 
     // get all recipes
@@ -141,8 +280,6 @@ module.exports = function(app) {
                 res.send('Recipe already exists.');
             }
         });
-
-
     });
 
     // get individual recipe by id
