@@ -23,6 +23,10 @@ var app = angular.module('app', [
   'RecipesViewCtrl'
 ]);
 
+app.constant('_',
+    window._
+);
+
 app.run(function($stormpath){
   $stormpath.uiRouter({
     loginState: 'login',

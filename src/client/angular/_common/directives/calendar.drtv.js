@@ -15,7 +15,7 @@
         selected: "="
       },
       link: function(scope) {
-        scope.selected = _removeTime(scope.selected || moment());
+        scope.selected = _removeTime(moment.utc(scope.selected) || moment.utc());
         scope.month = scope.selected.clone();
 
         var start = scope.selected.clone();
